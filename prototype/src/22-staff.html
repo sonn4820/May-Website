@@ -1,0 +1,140 @@
+<section class="view app" id="view-staff" role="tabpanel" aria-labelledby="tab-staff" lang="en" hidden>
+  <div class="signin" id="stSignin">
+    <div class="signin__card">
+      <span class="ic-circle"><svg class="ic"><use href="#i-lock"/></svg></span>
+      <h1 data-i18n="st_signin_t"></h1>
+      <p class="panel__desc" data-i18n="st_signin_d"></p>
+      <button type="button" class="btn btn-google btn--lg" id="stSigninBtn"><svg class="ic"><use href="#i-key"/></svg><span data-i18n="st_signin_btn"></span></button>
+      <p class="hint" data-i18n="st_signin_note"></p>
+      <div class="seg seg--app lang" role="group" data-i18n-attr="aria-label:lang_label">
+        <button type="button" data-lang="en" lang="en" aria-pressed="true">English</button>
+        <button type="button" data-lang="vi" lang="vi" aria-pressed="false">Tiếng Việt</button>
+        <button type="button" data-lang="es" lang="es" aria-pressed="false">Español</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="stApp" hidden>
+    <div class="app__top">
+      <div class="app__inner">
+        <span class="app__title"><span class="brand__logo"><svg class="ic"><use href="#i-tooth"/></svg></span><span data-i18n="st_title"></span></span>
+        <div class="app__user">
+          <span data-i18n="st_signed_as"></span><span class="ph" data-ph="STAFF_GOOGLE_EMAIL"></span>
+          <div class="seg seg--app lang" role="group" data-i18n-attr="aria-label:lang_label">
+            <button type="button" data-lang="en" lang="en" aria-pressed="true">EN</button>
+            <button type="button" data-lang="vi" lang="vi" aria-pressed="false">VI</button>
+            <button type="button" data-lang="es" lang="es" aria-pressed="false">ES</button>
+          </div>
+          <button type="button" class="icon-btn" id="stViewSite"><svg class="ic"><use href="#i-browser"/></svg><span data-i18n="st_view_site"></span></button>
+          <button type="button" class="icon-btn" id="stSignout"><span data-i18n="st_signout"></span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="app__inner app__grid">
+      <div class="app__nav" role="tablist" data-i18n-attr="aria-label:st_title">
+        <button type="button" role="tab" id="st-tab-hours" aria-selected="true" data-st="hours"><svg class="ic"><use href="#i-clock"/></svg><span data-i18n="st_nav_hours"></span></button>
+        <button type="button" role="tab" id="st-tab-dates" aria-selected="false" data-st="dates"><svg class="ic"><use href="#i-cal"/></svg><span data-i18n="st_nav_dates"></span><span class="count" id="stDatesCount">0</span></button>
+        <button type="button" role="tab" id="st-tab-notice" aria-selected="false" data-st="notice"><svg class="ic"><use href="#i-mega"/></svg><span data-i18n="st_nav_notice"></span></button>
+        <button type="button" role="tab" id="st-tab-subs" aria-selected="false" data-st="subs"><svg class="ic"><use href="#i-grid"/></svg><span data-i18n="st_nav_subs"></span><span class="count" id="stSubsCount">0</span></button>
+      </div>
+
+      <div id="stPanels">
+        <section class="panel" data-st-panel="hours" role="tabpanel" aria-labelledby="st-tab-hours">
+          <div class="panel__head">
+            <h2 data-i18n="st_hours_t"></h2>
+            <p class="panel__desc" data-i18n="st_hours_d"></p>
+            <span class="sample-tag"><svg class="ic"><use href="#i-info"/></svg><span data-i18n="st_sample"></span></span>
+          </div>
+          <div class="table-scroll">
+            <table class="htable">
+              <thead><tr><th data-i18n="st_col_day"></th><th data-i18n="st_col_open"></th><th data-i18n="st_col_from"></th><th data-i18n="st_col_to"></th></tr></thead>
+              <tbody id="stHoursBody"></tbody>
+            </table>
+          </div>
+          <div class="pubbar">
+            <button type="button" class="btn btn--primary" id="stHoursPublish"><span data-i18n="st_publish"></span></button>
+            <button type="button" class="btn btn--ghost" id="stHoursUndo"><span data-i18n="st_undo"></span></button>
+            <span class="dirty-chip" id="stHoursDirty" hidden><span data-i18n="st_dirty"></span></span>
+            <span class="pubbar__status" id="stHoursStatus"></span>
+          </div>
+        </section>
+
+        <section class="panel" data-st-panel="dates" role="tabpanel" aria-labelledby="st-tab-dates" hidden>
+          <div class="panel__head"><h2 data-i18n="st_dates_t"></h2><p class="panel__desc" data-i18n="st_dates_d"></p></div>
+          <ul class="sd-list" id="stDatesList"></ul>
+          <form class="sd-form" id="stDateForm" novalidate>
+            <h3 class="full" data-i18n="st_add_t"></h3>
+            <div class="f"><label for="st-date" data-i18n="st_date"></label><input type="date" id="st-date"></div>
+            <div class="f"><span class="preview-label" data-i18n="st_type"></span>
+              <div class="seg seg--app" role="group" data-i18n-attr="aria-label:st_type">
+                <button type="button" data-sdtype="closed" aria-pressed="true" data-i18n="st_type_closed"></button>
+                <button type="button" data-sdtype="special" aria-pressed="false" data-i18n="st_type_special"></button>
+              </div>
+            </div>
+            <div class="full collapse" id="stSdTimes"><div class="collapse__inner">
+              <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem">
+                <div class="f"><label for="st-sd-from" data-i18n="st_col_from"></label><input type="time" id="st-sd-from" value="08:30" step="900"></div>
+                <div class="f"><label for="st-sd-to" data-i18n="st_col_to"></label><input type="time" id="st-sd-to" value="12:00" step="900"></div>
+              </div>
+            </div></div>
+            <div class="f full"><label for="st-sd-en" data-i18n="st_note_en"></label><input type="text" id="st-sd-en"></div>
+            <div class="f"><label for="st-sd-vi" data-i18n="st_note_vi"></label><input type="text" id="st-sd-vi" lang="vi"></div>
+            <div class="f"><label for="st-sd-es" data-i18n="st_note_es"></label><input type="text" id="st-sd-es" lang="es"></div>
+            <p class="hint full" data-i18n="st_note_hint"></p>
+            <div class="full pubbar"><button type="submit" class="btn btn--primary"><svg class="ic"><use href="#i-plus"/></svg><span data-i18n="st_add_btn"></span></button><span class="error-msg" id="stDateErr" hidden></span></div>
+          </form>
+        </section>
+
+        <section class="panel" data-st-panel="notice" role="tabpanel" aria-labelledby="st-tab-notice" hidden>
+          <div class="panel__head"><h2 data-i18n="st_notice_t"></h2><p class="panel__desc" data-i18n="st_notice_d"></p></div>
+          <button type="button" class="switch" role="switch" aria-checked="true" id="stNoticeSwitch"><span class="switch__track"><span class="switch__thumb"></span></span><span data-i18n="st_notice_show"></span></button>
+          <div class="sd-form">
+            <div class="f full"><label for="st-n-en" data-i18n="st_note_en"></label><textarea id="st-n-en"></textarea></div>
+            <div class="f"><label for="st-n-vi" data-i18n="st_note_vi"></label><textarea id="st-n-vi" lang="vi"></textarea></div>
+            <div class="f"><label for="st-n-es" data-i18n="st_note_es"></label><textarea id="st-n-es" lang="es"></textarea></div>
+            <p class="hint full" data-i18n="st_note_hint"></p>
+            <div class="f"><label for="st-n-from" data-i18n="st_notice_from"></label><input type="date" id="st-n-from"></div>
+            <div class="f"><label for="st-n-to" data-i18n="st_notice_to"></label><input type="date" id="st-n-to"></div>
+          </div>
+          <div class="pubbar">
+            <span class="preview-label" data-i18n="st_preview"></span>
+            <div class="seg seg--app" role="group" id="stPrevLang" data-i18n-attr="aria-label:st_preview">
+              <button type="button" data-plang="en" aria-pressed="true">English</button>
+              <button type="button" data-plang="vi" aria-pressed="false">Tiếng Việt</button>
+              <button type="button" data-plang="es" aria-pressed="false">Español</button>
+            </div>
+          </div>
+          <div class="notice-preview"><div class="notice"><div class="notice__inner" style="padding-inline:1rem"><svg class="ic"><use href="#i-mega"/></svg><p class="notice__text" id="stNoticePreviewText"></p></div></div></div>
+          <div class="pubbar">
+            <button type="button" class="btn btn--primary" id="stNoticePublish"><span data-i18n="st_notice_pub"></span></button>
+            <span class="dirty-chip" id="stNoticeDirty" hidden><span data-i18n="st_dirty"></span></span>
+            <span class="pubbar__status" id="stNoticeStatus"></span>
+          </div>
+        </section>
+
+        <section class="panel" data-st-panel="subs" role="tabpanel" aria-labelledby="st-tab-subs" hidden>
+          <div class="panel__head"><h2 data-i18n="st_subs_t"></h2><p class="panel__desc" data-i18n="st_subs_d"></p></div>
+          <div class="sheet">
+            <div class="sheet__bar">
+              <span class="sheet__name"><svg class="ic"><use href="#i-grid"/></svg>Clinic Operations · Google Sheet</span>
+              <div class="sheet__actions">
+                <button type="button" class="icon-btn" data-demo="sheet"><svg class="ic"><use href="#i-external"/></svg><span data-i18n="st_open_sheet"></span></button>
+                <button type="button" class="icon-btn" data-demo="xlsx"><svg class="ic"><use href="#i-download"/></svg><span data-i18n="st_download_xlsx"></span></button>
+              </div>
+            </div>
+            <div class="sheet__scroll"><table class="sheet__grid" id="stSheetGrid"></table></div>
+            <div class="sheet__empty" id="stSheetEmpty" hidden><svg class="ic"><use href="#i-grid"/></svg><p data-i18n="st_empty"></p><p data-i18n="st_empty_hint"></p></div>
+            <div class="sheet__tabs" role="tablist" aria-label="Google Sheet tabs">
+              <button type="button" role="tab" aria-selected="true" data-sheet="appt">Appointment requests (<span id="stCountAppt">0</span>)</button>
+              <button type="button" role="tab" aria-selected="false" data-sheet="np">New patients (<span id="stCountNp">0</span>)</button>
+              <button type="button" role="tab" aria-selected="false" data-sheet="hours">Hours</button>
+              <button type="button" role="tab" aria-selected="false" data-sheet="dates">Special dates</button>
+              <button type="button" role="tab" aria-selected="false" data-sheet="notice">Website notice</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</section>

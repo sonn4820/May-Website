@@ -1,0 +1,16 @@
+{
+  "name": "dental-clinic-website",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Elderly-friendly, trilingual (EN/VI/ES) dental clinic website for Dr. Van Hong Nguyen",
+  "type": "module",
+  "scripts": {
+    "proto:build": "node prototype/build.mjs",
+    "proto:serve": "node prototype/serve.mjs",
+    "proto:test": "node prototype/build.mjs && node prototype/test.mjs",
+    "proto:motion": "node prototype/build.mjs && node prototype/check-motion.mjs"
+  },
+  "devDependencies": {
+    "jsdom": "^26.1.0"
+  }
+}
