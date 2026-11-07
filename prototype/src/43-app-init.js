@@ -1,7 +1,7 @@
 // ---------- Events ----------
 const PROTO_MSG = {
   soon: "Trang này sẽ được làm ở giai đoạn tiếp theo, sau khi bạn xác nhận nội dung.",
-  call: () => "Trên website thật, nút này gọi ngay số " + phToken("CLINIC_PHONE") + ".",
+  call: () => "Trên website thật, nút này gọi ngay số " + CLINIC_INFO.CLINIC_PHONE + ".",
   maps: () => "Trên website thật, nút này mở Google Maps: " + phToken("GOOGLE_MAPS_LINK") + ".",
   link: (n) => "Trên website thật, link này mở: " + phToken(n) + ".",
   sheet: () => "Prototype: hệ thống thật mở Google Sheet " + phToken("GOOGLE_SHEET_LINK") + ".",
@@ -14,6 +14,7 @@ const PROTO_MSG = {
 };
 
 function onClick(e) {
+  if (a11yIsOpen() && !e.target.closest("#a11yPanel, #a11yBtn")) closeA11y(false);
   if (e.target.closest(".mmenu__backdrop")) return closeMenu();
   const dd = $("#servicesMenu");
   if (dd.classList.contains("is-open") && !e.target.closest(".nav__item")) toggleDropdown(false);
@@ -27,6 +28,7 @@ function onClick(e) {
   if (d.motion) { setMotion(d.motion); return toast(d.motion === "full" ? PROTO_MSG.motionFull : PROTO_MSG.motionSystem); }
   if (d.lang) return setLang(d.lang);
   if (d.scale) return setScale(Number(d.scale));
+  if (d.a11y) return stepA11y(d.a11y);
   if (d.closeMenu !== undefined) return closeMenu();
   if (d.skip !== undefined) return $("#main").focus();
   if (d.route) return goPage(d.route, d.scroll);
@@ -67,6 +69,9 @@ function onClick(e) {
   }
   switch (el.id) {
     case "menuBtn": return $("#mobileMenu").classList.contains("is-open") ? closeMenu() : openMenu();
+    case "a11yBtn": return a11yIsOpen() ? closeA11y() : openA11y();
+    case "a11yClose": return closeA11y();
+    case "a11yReset": return resetA11y();
     case "servicesToggle": return toggleDropdown();
     case "noticeClose": return closeNotice();
     case "schAgain": return resetSch();
@@ -114,10 +119,12 @@ function onInput(e) {
 
 function onKey(e) {
   if (e.key === "Escape") {
+    if (a11yIsOpen()) { closeA11y(); return; }
     if ($("#mobileMenu").classList.contains("is-open")) { closeMenu(); return; }
     if ($("#servicesMenu").classList.contains("is-open")) { toggleDropdown(false); $("#servicesToggle").focus(); }
   }
   trapMenuFocus(e);
+  trapA11yFocus(e);
 }
 
 // ---------- Start ----------
@@ -128,6 +135,9 @@ function init() {
   state.sdType = "closed";
   state.confirmDelete = null;
   setMotion(store.get("motion", "full") === "system" ? "system" : "full");
+  state.a11y = loadA11y();
+  buildA11y();
+  applyA11y();
   setScale(state.scale);
   $("#site").lang = state.lang;
   $("#view-staff").lang = state.lang;

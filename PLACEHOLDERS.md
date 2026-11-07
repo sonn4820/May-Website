@@ -7,9 +7,6 @@ Khi có thông tin thật, thay token tương ứng. Bản production sẽ bị 
 |---|---|---|
 | `INPUT_INFO_ABOUT_CLINIC_NAME_HERE` | Tên chính thức của phòng khám | Header, footer, tiêu đề trang |
 | `INPUT_INFO_ABOUT_LOGO_HERE` | Logo (SVG hoặc PNG nền trong suốt) | Header, footer, biểu tượng tab trình duyệt |
-| `INPUT_INFO_ABOUT_CLINIC_PHONE_HERE` | Số điện thoại phòng khám | Header, các nút Call, trang Đặt lịch, footer |
-| `INPUT_INFO_ABOUT_CLINIC_ADDRESS_HERE` | Địa chỉ đầy đủ (số nhà, đường, suite, thành phố, bang, ZIP) | Thanh trên cùng, mục Địa chỉ, bản đồ, footer |
-| `INPUT_INFO_ABOUT_CLINIC_EMAIL_HERE` | Email liên hệ công khai | Footer |
 | `INPUT_INFO_ABOUT_CLINIC_TIMEZONE_HERE` | Múi giờ của phòng khám, ví dụ America/Chicago. Dùng để tính “Đang mở cửa” | Chỉ trong file cấu hình |
 | `INPUT_INFO_ABOUT_GOOGLE_MAPS_LINK_HERE` | Link Google Maps của phòng khám | Nút Chỉ đường, bản đồ |
 | `INPUT_INFO_ABOUT_PARKING_AND_WHEELCHAIR_ACCESS_HERE` | Thông tin bãi đỗ xe, lối xe lăn, thang máy | Mục Giờ mở cửa & địa chỉ |

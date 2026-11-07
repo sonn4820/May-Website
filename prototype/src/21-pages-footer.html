@@ -11,7 +11,7 @@
         <span class="ic-circle"><svg class="ic"><use href="#i-phone"/></svg></span>
         <h2 data-i18n="sch_call_title"></h2>
         <p data-i18n="sch_call_d"></p>
-        <p class="callcard__num"><span class="ph" data-ph="CLINIC_PHONE"></span></p>
+        <p class="callcard__num"><span data-info="CLINIC_PHONE"></span></p>
         <p class="status" data-status="long"><span class="status-dot"></span><span class="status-text"></span></p>
         <a class="btn btn--light btn--lg" href="#" data-call><svg class="ic"><use href="#i-phone"/></svg><span data-i18n="call_now"></span></a>
       </aside>
@@ -175,9 +175,9 @@
         <div class="footer__logo"><span class="brand__logo"><svg class="ic"><use href="#i-tooth"/></svg></span><span class="ph" data-ph="LOGO"></span></div>
         <p class="brand__name"><span class="ph" data-ph="CLINIC_NAME"></span></p>
         <p data-i18n="doctor_name"></p>
-        <p><span class="ph" data-ph="CLINIC_ADDRESS"></span></p>
-        <p><span class="ph" data-ph="CLINIC_PHONE"></span></p>
-        <p><span class="ph" data-ph="CLINIC_EMAIL"></span></p>
+        <p><span data-info="CLINIC_ADDRESS"></span></p>
+        <p><span data-info="CLINIC_PHONE"></span></p>
+        <p><span data-info="CLINIC_EMAIL"></span></p>
         <p><span class="ph" data-ph="SOCIAL_MEDIA_LINKS"></span></p>
       </div>
       <nav data-i18n-attr="aria-label:f_patients"><h2 data-i18n="f_patients"></h2><ul><li><a href="#" data-route="new" data-i18n="nav_new"></a></li><li><a href="#" data-route="schedule" data-i18n="cta_schedule"></a></li><li><a href="#" data-route="home" data-scroll="insurance" data-i18n="nav_insurance"></a></li></ul></nav>
@@ -197,6 +197,25 @@
   <div class="bottombar" id="bottomBar">
     <a class="bottombar__call" href="#" data-call><svg class="ic"><use href="#i-phone"/></svg><span data-i18n="bar_call"></span></a>
     <a class="bottombar__cta" href="#" data-route="schedule"><svg class="ic"><use href="#i-cal"/></svg><span data-i18n="bar_schedule"></span></a>
+  </div>
+
+  <!-- Accessibility menu: round button bottom-left, panel slides in from the left. Built in-house (no third-party overlay). -->
+  <div class="a11y-tint" aria-hidden="true"></div>
+  <button type="button" class="a11y-fab" id="a11yBtn" aria-expanded="false" aria-controls="a11yPanel">
+    <svg class="ic" aria-hidden="true"><use href="#i-access"/></svg>
+    <span class="a11y-fab__tip" data-i18n="a11y_open"></span>
+  </button>
+  <div class="a11y" id="a11yPanel" role="dialog" aria-labelledby="a11yTitle" inert>
+    <div class="a11y__top">
+      <h2 class="a11y__title" id="a11yTitle"><svg class="ic" aria-hidden="true"><use href="#i-access"/></svg><span data-i18n="a11y_title"></span></h2>
+      <button type="button" class="a11y__close" id="a11yClose"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg><span class="sr-only" data-i18n="close"></span></button>
+    </div>
+    <div class="a11y__body">
+      <p class="a11y__intro" data-i18n="a11y_intro"></p>
+      <div class="a11y__grid" id="a11yGrid"></div>
+      <button type="button" class="a11y__reset" id="a11yReset"><svg class="ic" aria-hidden="true"><use href="#i-reset"/></svg><span data-i18n="a11y_reset"></span></button>
+      <p class="sr-only" id="a11yStatus" aria-live="polite"></p>
+    </div>
   </div>
 </div>
 </div>

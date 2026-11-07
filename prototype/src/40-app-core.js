@@ -44,6 +44,7 @@ const state = {
   lang: LANGS.includes(store.get("lang", "en")) ? store.get("lang", "en") : "en",
   scale: [1, 1.15, 1.3].includes(store.get("scale", 1)) ? store.get("scale", 1) : 1,
   phMode: "token",
+  a11y: {},
   device: "desktop",
   view: "site",
   page: "home",
@@ -112,6 +113,7 @@ function renderPlaceholders(root = document) {
     el.classList.toggle("is-label", state.phMode === "label");
     el.title = phToken(name);
   });
+  $$("[data-info]", root).forEach((el) => { el.textContent = CLINIC_INFO[el.dataset.info]; });
 }
 
 // ---------- Prototype chrome ----------
@@ -132,7 +134,7 @@ function toast(msg) {
 // View Transitions; elsewhere the changed area fades in. Skipped while the page is booting.
 let booted = false;
 function smoothUpdate(fn, fallbackEl) {
-  if (booted && document.startViewTransition) {
+  if (booted && document.startViewTransition && !state.a11y.still) {
     try { document.startViewTransition(fn); return; } catch (e) { /* fall back below */ }
   }
   fn();
@@ -153,6 +155,7 @@ function updateBreakpoint() {
 
 function setView(v) {
   if (v === state.view && booted) return;
+  closeA11y(false);
   smoothUpdate(() => {
     state.view = v;
     $$("[data-view]").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.view === v)));
@@ -188,9 +191,10 @@ function setPhMode(m) {
 function setScale(s) {
   smoothUpdate(() => {
     state.scale = s;
-    document.documentElement.style.fontSize = s * 100 + "%";
+    document.documentElement.style.fontSize = Math.round(s * 100) + "%";
     $$("[data-scale]").forEach((b) => b.setAttribute("aria-pressed", String(Number(b.dataset.scale) === s)));
     store.set("scale", s);
+    renderA11y();
     updateBreakpoint();
   }, $("#site"));
 }
@@ -204,6 +208,7 @@ function setLang(l) {
     $("#view-staff").lang = l;
     $$("[data-lang]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === l)));
     applyI18n();
+    renderA11y();
     renderSite();
     if (state.view === "staff") renderStaff();
   }, state.view === "staff" ? $("#view-staff") : $("#site"));

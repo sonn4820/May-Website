@@ -3,9 +3,6 @@
 const PLACEHOLDERS = {
   CLINIC_NAME:                 { label: "Clinic name", need: "Tên chính thức của phòng khám", where: "Header, footer, tiêu đề trang" },
   LOGO:                        { label: "Logo", need: "Logo (SVG hoặc PNG nền trong suốt)", where: "Header, footer, biểu tượng tab trình duyệt" },
-  CLINIC_PHONE:                { label: "Phone number", need: "Số điện thoại phòng khám", where: "Header, các nút Call, trang Đặt lịch, footer" },
-  CLINIC_ADDRESS:              { label: "Street address", need: "Địa chỉ đầy đủ (số nhà, đường, suite, thành phố, bang, ZIP)", where: "Thanh trên cùng, mục Địa chỉ, bản đồ, footer" },
-  CLINIC_EMAIL:                { label: "Email", need: "Email liên hệ công khai", where: "Footer" },
   CLINIC_TIMEZONE:             { label: "Time zone", need: "Múi giờ của phòng khám, ví dụ America/Chicago. Dùng để tính “Đang mở cửa”", where: "Chỉ trong file cấu hình", configOnly: true },
   GOOGLE_MAPS_LINK:            { label: "Map link", need: "Link Google Maps của phòng khám", where: "Nút Chỉ đường, bản đồ" },
   PARKING_AND_WHEELCHAIR_ACCESS: { label: "Parking & access", need: "Thông tin bãi đỗ xe, lối xe lăn, thang máy", where: "Mục Giờ mở cửa & địa chỉ" },
@@ -33,5 +30,11 @@ const PLACEHOLDERS = {
   GOOGLE_SHEET_LINK:           { label: "Google Sheet", need: "Google Sheet “Clinic Operations” (mình sẽ tạo mẫu sẵn các tab)", where: "Staff Portal, cấu hình server", configOnly: true },
   GOOGLE_DRIVE_FOLDER:         { label: "Drive folder", need: "Thư mục Google Drive chứa Google Docs tóm tắt bệnh nhân", where: "Staff Portal, cấu hình server", configOnly: true },
   DOMAIN_NAME:                 { label: "Domain", need: "Tên miền của website", where: "Cấu hình server, SEO", configOnly: true }
+};
+// Real clinic information already confirmed. Markup shows it with data-info="NAME".
+const CLINIC_INFO = {
+  CLINIC_PHONE:   "847-548-2222",
+  CLINIC_ADDRESS: "1227 N Illinois 83 Ste E, Grayslake, IL 60030",
+  CLINIC_EMAIL:   "business@excelcaredental.com"
 };
 const phToken = (name) => "INPUT_INFO_ABOUT_" + name + "_HERE";

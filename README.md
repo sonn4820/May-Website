@@ -14,7 +14,7 @@ Dữ liệu trong prototype chỉ nằm trong trang, không gửi đi đâu. Đ�
 ## Sửa và kiểm tra
 
 - Mã nguồn nằm ở `prototype/src/` (CSS, HTML, 3 file dịch, JS). `npm run proto:build` ghép tất cả thành `prototype/index.html` và sinh lại `PLACEHOLDERS.md`.
-- `npm install` một lần, sau đó `npm run proto:test` chạy 67 bài kiểm tra chức năng bằng jsdom (đổi ngôn ngữ, Staff Portal, form, Google Sheet giả lập, FAQ…).
+- `npm install` một lần, sau đó `npm run proto:test` chạy 82 bài kiểm tra chức năng bằng jsdom (đổi ngôn ngữ, Staff Portal, form, Google Sheet giả lập, FAQ…).
 - `npm run proto:motion` mở Chrome/Edge chạy ngầm và đo xem animation có chạy dần đều thật không. Script đo các thao tác: cuộn khi bấm menu, hiện dần khi cuộn tới, dropdown, chuyển trang, FAQ.
 
 ## Animation
@@ -48,5 +48,6 @@ Theo skill UI/UX Pro Max (các nhóm Dental Practice, Senior Care, Medical Clini
 - Nút Schedule màu cam đậm: nút vàng trên nền trắng khó thấy với mắt người lớn tuổi.
 - Có mục ảnh trước/sau, đánh giá, bảo hiểm.
 - Animation nhẹ, tự tắt khi người dùng bật “giảm chuyển động”.
+- Nút tròn **hỗ trợ dễ đọc** ở góc dưới bên trái (giống nút UserWay trên 4lakesdental.com nhưng tự làm, không tải script bên ngoài): tăng tương phản / nền tối, làm nổi liên kết, chữ to hơn (đồng bộ với A / A+ / A++), giãn chữ, giãn dòng, dừng chuyển động, ẩn hình ảnh, phông chữ dễ đọc, con trỏ chuột lớn, giảm màu / trắng đen. Lựa chọn được lưu trên máy. Mã nguồn: `15-a11y.css`, `42-app-a11y.js`.
 
 Lưu ý: Google Workspace phải là bản trả phí và ký BAA với Google trước khi nhận dữ liệu bệnh nhân thật (HIPAA).

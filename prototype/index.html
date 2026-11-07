@@ -818,6 +818,171 @@ fieldset.field { border: 0; margin: 0 0 1.5rem; padding: 0; min-width: 0; }
 /* Smooth cross-fade for whole-page swaps (language, text size, device) where the browser supports it */
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .38s; animation-timing-function: var(--in-out); }
 
+/* ---------- Accessibility menu ----------
+   Round button bottom-left (above the Call/Schedule bar on phones) opens a panel of tiles, like
+   the UserWay widget on the clinic's current site, but built in-house: nothing loads from a third
+   party, it follows the site's look and 3 languages, and choices are saved on the device.
+   Each choice is a data-a11y-* attribute on .site; the rules below react to it. */
+
+/* Floating button: px sizes so it does not grow with the text-size control */
+.a11y-fab {
+  position: fixed; left: 16px; bottom: 16px; z-index: 76;
+  width: 60px; height: 60px; padding: 0; border: 0; border-radius: 50%; cursor: pointer;
+  display: grid; place-items: center;
+  background: var(--blue); color: var(--on-dark);
+  box-shadow: 0 0 0 3px var(--enamel), 0 8px 22px rgba(8, 40, 64, .35);
+  transition: transform var(--t) var(--out-quart), background-color var(--t) ease;
+}
+.a11y-fab > .ic { width: 42px; height: 42px; stroke-width: 1.7; }
+.a11y-fab:hover { background: var(--blue-deep); transform: scale(calc(1 + .06 * var(--move))); }
+.a11y-fab:focus-visible { outline: 3px solid var(--focus); outline-offset: 5px; border-radius: 50%; }
+.a11y-fab.is-active::after {
+  content: ""; position: absolute; top: 0; right: 0; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--smile); border: 3px solid var(--enamel);
+}
+.a11y-fab__tip {
+  position: absolute; left: calc(100% + 12px); top: 50%; transform: translateY(-50%);
+  white-space: nowrap; pointer-events: none; opacity: 0;
+  background: var(--ink); color: var(--enamel); border-radius: 10px; padding: 6px 12px;
+  font-size: 16px; font-weight: 600; line-height: 1.3;
+  transition: opacity .2s ease;
+}
+.a11y-fab:hover .a11y-fab__tip, .a11y-fab:focus-visible .a11y-fab__tip { opacity: 1; }
+.a11y-fab[aria-expanded="true"] .a11y-fab__tip { opacity: 0; }
+.device[data-w="narrow"] .a11y-fab { left: 12px; bottom: calc(5.4rem + env(safe-area-inset-bottom, 0px)); }
+
+/* Panel: slides in from the left, below the sticky prototype bar */
+.a11y {
+  position: fixed; top: var(--stick); left: 0; bottom: 0; z-index: 90;
+  width: min(27rem, 100%); display: flex; flex-direction: column;
+  background: var(--enamel); color: var(--ink);
+  border-right: 1px solid var(--line); box-shadow: 14px 0 36px rgba(8, 40, 64, .22);
+  font-size: 1.0625rem; line-height: 1.4;
+  visibility: hidden; opacity: 0; transform: translateX(calc(-100% * var(--move)));
+  transition: transform .45s var(--out-quart), opacity .3s ease, visibility 0s linear .45s;
+}
+.a11y.is-open { visibility: visible; opacity: 1; transform: none; transition-delay: 0s; }
+.a11y__top {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: .85rem 1rem .85rem 1.25rem; background: var(--blue); color: var(--on-dark);
+}
+.site .a11y__title { display: flex; align-items: center; gap: .55rem; margin: 0; font-size: 1.375rem; line-height: 1.25; color: inherit; }
+.a11y__title .ic { width: 1.75rem; height: 1.75rem; }
+.a11y__close {
+  flex: none; display: grid; place-items: center; width: 3.25rem; height: 3.25rem; border-radius: 50%;
+  border: 2.5px solid currentColor; background: transparent; color: inherit; cursor: pointer;
+}
+.a11y__close .ic { width: 1.6rem; height: 1.6rem; stroke-width: 2.5; }
+.a11y__close:hover { background: rgba(255, 255, 255, .15); }
+.a11y__top :focus-visible { outline-color: var(--on-dark); }
+.a11y__body { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: 1rem 1rem 1.5rem; display: grid; align-content: start; gap: 1rem; }
+.a11y__intro { color: var(--ink-soft); font-size: 1rem; }
+.a11y__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+
+.a11y-tile {
+  position: relative; display: grid; justify-items: center; align-content: center; gap: .3rem;
+  min-height: 8.5rem; padding: 1rem .5rem .9rem; text-align: center;
+  border: 2px solid var(--line); border-radius: 16px; background: var(--sky); color: var(--ink);
+  cursor: pointer; font-size: 1rem; line-height: 1.25;
+  transition: border-color var(--t) ease, background-color var(--t) ease, transform var(--t) var(--out-quart);
+}
+.a11y-tile:hover { border-color: var(--blue); transform: translateY(calc(-2px * var(--move))); }
+.a11y-tile__ic { width: 2.4rem; height: 2.4rem; color: var(--blue); margin-bottom: .15rem; }
+.a11y-tile__name { font-weight: 600; font-size: 1.0625rem; }
+.a11y-tile__state { font-size: .9375rem; color: var(--ink-soft); }
+.a11y-tile__steps { display: flex; gap: .3rem; margin-top: .15rem; }
+.a11y-tile__steps i { width: 1.5rem; height: .32rem; border-radius: 99px; background: var(--line); transition: background-color var(--t) ease; }
+.a11y-tile__steps i.is-on { background: var(--blue); }
+.a11y-tile[aria-pressed="true"] { border-color: var(--blue); background: var(--enamel); box-shadow: inset 0 0 0 1.5px var(--blue); }
+.a11y-tile[aria-pressed="true"] .a11y-tile__state { color: var(--blue-deep); font-weight: 600; }
+.a11y-tile__check {
+  position: absolute; top: .5rem; right: .5rem; width: 1.6rem; height: 1.6rem; border-radius: 50%;
+  display: none; place-items: center; background: var(--blue); color: var(--on-dark);
+}
+.a11y-tile__check .ic { width: 1rem; height: 1rem; stroke-width: 3.2; }
+.a11y-tile[aria-pressed="true"] .a11y-tile__check { display: grid; }
+.a11y__reset {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem; width: 100%;
+  min-height: 3.5rem; border-radius: 999px; border: 2px solid var(--blue);
+  background: var(--enamel); color: var(--blue); font-weight: 600; font-size: 1.0625rem; cursor: pointer;
+}
+.a11y__reset:hover:not(:disabled) { background: var(--sky); }
+.a11y__reset:disabled { opacity: .5; cursor: default; }
+
+/* Saturation: a see-through layer that greys out what is behind it (keeps fixed bars working,
+   which a filter on the page itself would break) */
+.a11y-tint { display: none; position: fixed; inset: 0; z-index: 86; pointer-events: none; }
+.site[data-a11y-sat="1"] .a11y-tint { display: block; -webkit-backdrop-filter: saturate(.3); backdrop-filter: saturate(.3); }
+.site[data-a11y-sat="2"] .a11y-tint { display: block; -webkit-backdrop-filter: grayscale(1); backdrop-filter: grayscale(1); }
+
+/* Contrast 1: high contrast, light. Text goes black, borders go dark, tints go white. */
+.site[data-a11y-contrast="1"] {
+  --ink: #000; --ink-soft: #000; --line: #1b2733; --field-line: #000; --sky: #fff; --sky-2: #e8ecf0;
+  --blue: #003b6f; --blue-deep: #00284d; --coral: #9a2d07; --coral-deep: #7a2205;
+  --ok: #0a4a24; --closed: #7d1a10; --smile-soft: #fff; --sun: #fff6d6; --sun-line: #000;
+}
+.site[data-a11y-contrast="1"] a:not(.btn) { text-decoration: underline; }
+
+/* Contrast 2: dark. Light text on black; coloured fills turn light with black text. */
+.site[data-a11y-contrast="2"] {
+  --enamel: #000; --sky: #0f1820; --sky-2: #1d2b38; --line: #9fb3c8; --field-line: #c4d0dc;
+  --ink: #fff; --ink-soft: #e3e9ef; --blue: #8cc8ff; --blue-deep: #b9dcff;
+  --smile: #ffd75e; --smile-soft: #2b2410; --coral: #ffb088; --coral-deep: #ff9a66;
+  --sun: #2b2410; --sun-line: #ffd75e; --ok: #7ee2a8; --closed: #ff9f94;
+  --focus: #ffd75e; --on-dark: #000;
+}
+.site[data-a11y-contrast="2"] .footer { background: #000; color: #fff; border-top: 2px solid var(--line); }
+.site[data-a11y-contrast="2"] .footer .seg button:not([aria-pressed="true"]) { color: #fff; }
+.site[data-a11y-contrast="2"] .footer .seg button[aria-pressed="true"] { background: #fff; color: #000; border-color: #fff; }
+.site[data-a11y-contrast="2"] :is(.article__img, .photo, .ba__img) { background: var(--sky) !important; }
+.site[data-a11y-contrast="2"] a:not(.btn) { text-decoration: underline; }
+.site[data-a11y-contrast="2"] .a11y__close:hover { background: rgba(0, 0, 0, .12); }
+
+/* Highlight links: every link is underlined and outlined; plain links get a yellow marker */
+.site[data-a11y-links] a {
+  text-decoration: underline !important; text-decoration-thickness: 3px !important; text-underline-offset: .18em !important;
+  outline: 3px solid var(--ink) !important; outline-offset: 2px;
+}
+.site[data-a11y-links] a:not(.btn):not(.bottombar a) { background-color: #ffe94d !important; color: #000 !important; border-radius: 4px; }
+.site[data-a11y-links] a:not(.btn):not(.bottombar a) :is(span, small, strong, b, em):not([class*="icon"]):not(.ic-circle):not(.ph) { color: #000 !important; }
+
+/* Text spacing (WCAG 1.4.12 levels and beyond) */
+.site[data-a11y-spacing="1"] :not(.a11y, .a11y *) { letter-spacing: .06em !important; word-spacing: .16em !important; }
+.site[data-a11y-spacing="2"] :not(.a11y, .a11y *) { letter-spacing: .12em !important; word-spacing: .32em !important; }
+
+/* Line height */
+.site[data-a11y-lh="1"] :not(.a11y, .a11y *) { line-height: 1.95 !important; }
+.site[data-a11y-lh="2"] :not(.a11y, .a11y *) { line-height: 2.35 !important; }
+.site[data-a11y-lh="1"] :is(h1, h2, h3):not(.a11y__title) { line-height: 1.45 !important; }
+.site[data-a11y-lh="2"] :is(h1, h2, h3):not(.a11y__title) { line-height: 1.7 !important; }
+
+/* Easy-read font: Verdana/Tahoma are wide, open and on every Windows and Mac (with Vietnamese) */
+.site[data-a11y-font] {
+  --font-display: Verdana, Tahoma, "Segoe UI", system-ui, sans-serif;
+  --font-body: Verdana, Tahoma, "Segoe UI", system-ui, sans-serif;
+}
+
+/* Hide images: photos disappear but keep their space, so the page does not jump */
+.site[data-a11y-img] :is(img, picture, video, .photo, .ba__pair, .article__img) { visibility: hidden !important; }
+
+/* Pause animations: everything stops; content that waits for scroll is shown at once */
+.site[data-a11y-still] { --move: 0; }
+.site[data-a11y-still] *, .site[data-a11y-still] *::before, .site[data-a11y-still] *::after {
+  animation-duration: 0s !important; animation-delay: 0s !important; animation-iteration-count: 1 !important;
+  transition-duration: 0s !important; transition-delay: 0s !important; scroll-behavior: auto !important;
+}
+.site[data-a11y-still] .reveal { opacity: 1 !important; }
+
+/* Big cursor: 48px black arrow and hand with a white edge, visible on any background */
+.site[data-a11y-cursor], .site[data-a11y-cursor] * {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath d='M6 3v36l9.5-9 6.5 15 6.5-2.8-6.5-14.7H35z' fill='%23000' stroke='%23fff' stroke-width='2.5' stroke-linejoin='round'/%3E%3C/svg%3E") 6 3, auto !important;
+}
+.site[data-a11y-cursor] :is(a, button, label, select, summary, [role="button"], input[type="radio"], input[type="checkbox"]),
+.site[data-a11y-cursor] :is(a, button, label, summary) * {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath d='M17 4.5C15.1 4.5 13.6 6 13.6 7.9V25L10.9 22.3C9.5 20.9 7.3 20.9 5.9 22.3C4.5 23.7 4.5 25.9 5.9 27.3L15.2 38C17.2 40.3 20.1 41.6 23.1 41.6H29C34.5 41.6 39 37.1 39 31.6V22C39 20.2 37.5 18.7 35.7 18.7C33.9 18.7 32.4 20.2 32.4 22V20C32.4 18.3 31 16.9 29.3 16.9C27.6 16.9 26.2 18.3 26.2 20V18.5C26.2 16.9 24.9 15.6 23.3 15.6C21.7 15.6 20.4 16.9 20.4 18.5V7.9C20.4 6 18.9 4.5 17 4.5Z' fill='%23000' stroke='%23fff' stroke-width='2.5' stroke-linejoin='round'/%3E%3C/svg%3E") 17 5, pointer !important;
+}
+.site[data-a11y-cursor] :is(input[type="text"], input[type="tel"], input[type="email"], input[type="number"], textarea) { cursor: text !important; }
+
 </style>
 </head>
 <body>
@@ -853,6 +1018,18 @@ fieldset.field { border: 0; margin: 0 0 1.5rem; padding: 0; min-width: 0; }
   <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.5 5.5 3.5 9s-1 6.5-3.5 9c-2.5-2.5-3.5-5.5-3.5-9s1-6.5 3.5-9z"/></symbol>
   <symbol id="i-server" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="7" rx="1.5"/><rect x="3" y="13" width="18" height="7" rx="1.5"/><path d="M7 7.5h.01M7 16.5h.01"/></symbol>
   <symbol id="i-browser" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></symbol>
+  <!-- Accessibility menu -->
+  <symbol id="i-access" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.25"/><circle cx="12" cy="6.6" r="1.6" fill="currentColor" stroke="none"/><path d="M6.6 9.6l5.4 1.1 5.4-1.1M12 10.7v3.6M12 14.3l-2.6 4.6M12 14.3l2.6 4.6"/></symbol>
+  <symbol id="i-contrast" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M9.5 14.5l5-5M8 11.5l-2 2a3.5 3.5 0 0 0 5 5l2-2M16 12.5l2-2a3.5 3.5 0 0 0-5-5l-2 2"/></symbol>
+  <symbol id="i-textsize" viewBox="0 0 24 24"><path d="M2.5 7V5h11v2M8 5v14M6 19h4M14 11.5V10h7.5v1.5M17.75 10v9M16.25 19h3"/></symbol>
+  <symbol id="i-spacing" viewBox="0 0 24 24"><path d="M6 8.5L2.5 12 6 15.5M18 8.5l3.5 3.5-3.5 3.5M2.5 12h2M8 12h2M14 12h2M19.5 12h2"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-dasharray="2.2 2.2"/><path d="M10 9v6M14 9v6"/></symbol>
+  <symbol id="i-noimg" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 16l5-5 4 4 2.5-2.5L21 19"/><path d="M3 3l18 18"/></symbol>
+  <symbol id="i-font" viewBox="0 0 24 24"><path d="M3 19L8 5l5 14M4.8 14h6.4M15.5 12.4a2.6 2.6 0 0 1 5 1V19M20.5 15.6h-2.7a2 2 0 0 0 0 4c1.6 0 2.7-1.2 2.7-2.6"/></symbol>
+  <symbol id="i-cursor" viewBox="0 0 24 24"><path d="M5 3l14.5 7.2-6.3 1.9-2.4 6.3z"/><path d="M13.2 12.1l5.3 5.3"/></symbol>
+  <symbol id="i-lineheight" viewBox="0 0 24 24"><path d="M5 4.5v15M2.8 6.7L5 4.5l2.2 2.2M2.8 17.3L5 19.5l2.2-2.2M10.5 6h11M10.5 10h11M10.5 14h11M10.5 18h11"/></symbol>
+  <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.35-5.65M4 4.5V8.5h4"/></symbol>
 </svg>
 <div class="proto-bar" id="protoBar">
   <div class="proto-bar__inner">
@@ -900,7 +1077,7 @@ fieldset.field { border: 0; margin: 0 0 1.5rem; padding: 0; min-width: 0; }
 
   <div class="utility">
     <div class="wrap utility__inner">
-      <span class="utility__item utility__addr"><svg class="ic"><use href="#i-pin"/></svg><span class="ph" data-ph="CLINIC_ADDRESS"></span></span>
+      <span class="utility__item utility__addr"><svg class="ic"><use href="#i-pin"/></svg><span data-info="CLINIC_ADDRESS"></span></span>
       <span class="utility__item status" data-status="short"><span class="status-dot"></span><span class="status-text"></span></span>
       <div class="utility__controls">
         <div class="seg lang" role="group" data-i18n-attr="aria-label:lang_label">
@@ -927,7 +1104,7 @@ fieldset.field { border: 0; margin: 0 0 1.5rem; padding: 0; min-width: 0; }
       <div class="header__actions">
         <a class="header__phone" href="#" data-call>
           <span class="header__phone-icon"><svg class="ic"><use href="#i-phone"/></svg></span>
-          <span class="header__phone-text"><span class="header__phone-label" data-i18n="call_us"></span><span class="header__phone-num"><span class="ph" data-ph="CLINIC_PHONE"></span></span></span>
+          <span class="header__phone-text"><span class="header__phone-label" data-i18n="call_us"></span><span class="header__phone-num"><span data-info="CLINIC_PHONE"></span></span></span>
         </a>
         <a class="btn btn--cta" href="#" data-route="schedule"><svg class="ic"><use href="#i-cal"/></svg><span data-i18n="cta_schedule"></span></a>
         <button type="button" class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mobileMenu"><span class="menu-btn__bars" aria-hidden="true"><i></i><i></i><i></i></span><span data-i18n="menu"></span></button>
@@ -976,7 +1153,7 @@ fieldset.field { border: 0; margin: 0 0 1.5rem; padding: 0; min-width: 0; }
       </ul>
       <div class="mmenu__actions">
         <a class="btn btn--cta btn--block btn--lg" href="#" data-route="schedule"><svg class="ic"><use href="#i-cal"/></svg><span data-i18n="cta_schedule"></span></a>
-        <a class="btn btn--call btn--block btn--lg" href="#" data-call><svg class="ic"><use href="#i-phone"/></svg><span class="btn__stack"><span data-i18n="call_us"></span><small><span class="ph" data-ph="CLINIC_PHONE"></span></small></span></a>
+        <a class="btn btn--call btn--block btn--lg" href="#" data-call><svg class="ic"><use href="#i-phone"/></svg><span class="btn__stack"><span data-i18n="call_us"></span><small><span data-info="CLINIC_PHONE"></span></small></span></a>
       </div>
       <div class="mmenu__prefs">
         <p data-i18n="lang_label"></p>
@@ -1005,7 +1182,7 @@ fieldset.field { border: 0; margin: 0 0 1.5rem; padding: 0; min-width: 0; }
           <p class="hero__lead reveal" style="--d:220ms" data-i18n="hero_lead"></p>
           <div class="hero__actions reveal" style="--d:330ms">
             <a class="btn btn--cta btn--lg" href="#" data-route="schedule"><svg class="ic"><use href="#i-cal"/></svg><span data-i18n="cta_schedule"></span></a>
-            <a class="btn btn--call btn--lg" href="#" data-call><svg class="ic"><use href="#i-phone"/></svg><span class="btn__stack"><span data-i18n="call_us"></span><small><span class="ph" data-ph="CLINIC_PHONE"></span></small></span></a>
+            <a class="btn btn--call btn--lg" href="#" data-call><svg class="ic"><use href="#i-phone"/></svg><span class="btn__stack"><span data-i18n="call_us"></span><small><span data-info="CLINIC_PHONE"></span></small></span></a>
           </div>
           <ul class="checks reveal" style="--d:440ms">
             <li><svg class="ic"><use href="#i-check"/></svg><span data-i18n="hero_check1"></span></li>
@@ -1028,8 +1205,8 @@ fieldset.field { border: 0; margin: 0 0 1.5rem; padding: 0; min-width: 0; }
     <section class="quick" data-i18n-attr="aria-label:quick_label">
       <div class="wrap quick__grid">
         <div class="quick__item reveal" style="--d:0ms"><span class="ic-circle"><svg class="ic"><use href="#i-clock"/></svg></span><div><p class="quick__title" data-i18n="quick_hours"></p><p class="quick__value" id="quickHours"></p><a href="#" data-route="home" data-scroll="visit" data-i18n="quick_hours_link"></a></div></div>
-        <div class="quick__item reveal" style="--d:120ms"><span class="ic-circle"><svg class="ic"><use href="#i-pin"/></svg></span><div><p class="quick__title" data-i18n="quick_address"></p><p class="quick__value"><span class="ph" data-ph="CLINIC_ADDRESS"></span></p><a href="#" data-maps data-i18n="get_directions"></a></div></div>
-        <div class="quick__item reveal" style="--d:240ms"><span class="ic-circle"><svg class="ic"><use href="#i-phone"/></svg></span><div><p class="quick__title" data-i18n="quick_phone"></p><p class="quick__value"><span class="ph" data-ph="CLINIC_PHONE"></span></p><a href="#" data-call data-i18n="call_now"></a></div></div>
+        <div class="quick__item reveal" style="--d:120ms"><span class="ic-circle"><svg class="ic"><use href="#i-pin"/></svg></span><div><p class="quick__title" data-i18n="quick_address"></p><p class="quick__value"><span data-info="CLINIC_ADDRESS"></span></p><a href="#" data-maps data-i18n="get_directions"></a></div></div>
+        <div class="quick__item reveal" style="--d:240ms"><span class="ic-circle"><svg class="ic"><use href="#i-phone"/></svg></span><div><p class="quick__title" data-i18n="quick_phone"></p><p class="quick__value"><span data-info="CLINIC_PHONE"></span></p><a href="#" data-call data-i18n="call_now"></a></div></div>
       </div>
     </section>
 
@@ -1156,7 +1333,7 @@ fieldset.field { border: 0; margin: 0 0 1.5rem; padding: 0; min-width: 0; }
         </div>
         <div class="reveal reveal--right" style="--d:120ms">
           <div class="map" aria-hidden="true"><span class="map__pin"><svg class="ic"><use href="#i-pin"/></svg></span><span class="map__label"><span class="ph" data-ph="GOOGLE_MAPS_LINK"></span></span></div>
-          <p class="visit__addr"><span class="ph" data-ph="CLINIC_ADDRESS"></span></p>
+          <p class="visit__addr"><span data-info="CLINIC_ADDRESS"></span></p>
           <a class="btn btn--primary" href="#" data-maps><svg class="ic"><use href="#i-pin"/></svg><span data-i18n="get_directions"></span></a>
           <div class="visit__access"><h3 data-i18n="access_title"></h3><p><span class="ph" data-ph="PARKING_AND_WHEELCHAIR_ACCESS"></span></p></div>
         </div>
@@ -1188,7 +1365,7 @@ fieldset.field { border: 0; margin: 0 0 1.5rem; padding: 0; min-width: 0; }
         <span class="ic-circle"><svg class="ic"><use href="#i-phone"/></svg></span>
         <h2 data-i18n="sch_call_title"></h2>
         <p data-i18n="sch_call_d"></p>
-        <p class="callcard__num"><span class="ph" data-ph="CLINIC_PHONE"></span></p>
+        <p class="callcard__num"><span data-info="CLINIC_PHONE"></span></p>
         <p class="status" data-status="long"><span class="status-dot"></span><span class="status-text"></span></p>
         <a class="btn btn--light btn--lg" href="#" data-call><svg class="ic"><use href="#i-phone"/></svg><span data-i18n="call_now"></span></a>
       </aside>
@@ -1352,9 +1529,9 @@ fieldset.field { border: 0; margin: 0 0 1.5rem; padding: 0; min-width: 0; }
         <div class="footer__logo"><span class="brand__logo"><svg class="ic"><use href="#i-tooth"/></svg></span><span class="ph" data-ph="LOGO"></span></div>
         <p class="brand__name"><span class="ph" data-ph="CLINIC_NAME"></span></p>
         <p data-i18n="doctor_name"></p>
-        <p><span class="ph" data-ph="CLINIC_ADDRESS"></span></p>
-        <p><span class="ph" data-ph="CLINIC_PHONE"></span></p>
-        <p><span class="ph" data-ph="CLINIC_EMAIL"></span></p>
+        <p><span data-info="CLINIC_ADDRESS"></span></p>
+        <p><span data-info="CLINIC_PHONE"></span></p>
+        <p><span data-info="CLINIC_EMAIL"></span></p>
         <p><span class="ph" data-ph="SOCIAL_MEDIA_LINKS"></span></p>
       </div>
       <nav data-i18n-attr="aria-label:f_patients"><h2 data-i18n="f_patients"></h2><ul><li><a href="#" data-route="new" data-i18n="nav_new"></a></li><li><a href="#" data-route="schedule" data-i18n="cta_schedule"></a></li><li><a href="#" data-route="home" data-scroll="insurance" data-i18n="nav_insurance"></a></li></ul></nav>
@@ -1374,6 +1551,25 @@ fieldset.field { border: 0; margin: 0 0 1.5rem; padding: 0; min-width: 0; }
   <div class="bottombar" id="bottomBar">
     <a class="bottombar__call" href="#" data-call><svg class="ic"><use href="#i-phone"/></svg><span data-i18n="bar_call"></span></a>
     <a class="bottombar__cta" href="#" data-route="schedule"><svg class="ic"><use href="#i-cal"/></svg><span data-i18n="bar_schedule"></span></a>
+  </div>
+
+  <!-- Accessibility menu: round button bottom-left, panel slides in from the left. Built in-house (no third-party overlay). -->
+  <div class="a11y-tint" aria-hidden="true"></div>
+  <button type="button" class="a11y-fab" id="a11yBtn" aria-expanded="false" aria-controls="a11yPanel">
+    <svg class="ic" aria-hidden="true"><use href="#i-access"/></svg>
+    <span class="a11y-fab__tip" data-i18n="a11y_open"></span>
+  </button>
+  <div class="a11y" id="a11yPanel" role="dialog" aria-labelledby="a11yTitle" inert>
+    <div class="a11y__top">
+      <h2 class="a11y__title" id="a11yTitle"><svg class="ic" aria-hidden="true"><use href="#i-access"/></svg><span data-i18n="a11y_title"></span></h2>
+      <button type="button" class="a11y__close" id="a11yClose"><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg><span class="sr-only" data-i18n="close"></span></button>
+    </div>
+    <div class="a11y__body">
+      <p class="a11y__intro" data-i18n="a11y_intro"></p>
+      <div class="a11y__grid" id="a11yGrid"></div>
+      <button type="button" class="a11y__reset" id="a11yReset"><svg class="ic" aria-hidden="true"><use href="#i-reset"/></svg><span data-i18n="a11y_reset"></span></button>
+      <p class="sr-only" id="a11yStatus" aria-live="polite"></p>
+    </div>
   </div>
 </div>
 </div>
@@ -1612,6 +1808,31 @@ I18N.en = {
   close: "Close",
   lang_label: "Language",
   textsize: "Text size",
+  a11y_open: "Accessibility menu",
+  a11y_title: "Accessibility menu",
+  a11y_intro: "Pick what makes the website easier for you to see and read. Your choices are saved on this device.",
+  a11y_contrast: "Contrast +",
+  a11y_links: "Highlight links",
+  a11y_size: "Bigger text",
+  a11y_spacing: "Text spacing",
+  a11y_still: "Pause animations",
+  a11y_img: "Hide images",
+  a11y_font: "Easy-read font",
+  a11y_cursor: "Big cursor",
+  a11y_lh: "Line height",
+  a11y_sat: "Saturation",
+  a11y_on: "On",
+  a11y_off: "Off",
+  a11y_level_1: "Level 1",
+  a11y_level_2: "Level 2",
+  a11y_contrast_1: "High contrast",
+  a11y_contrast_2: "Dark",
+  a11y_size_1: "Large",
+  a11y_size_2: "Extra large",
+  a11y_sat_1: "Less color",
+  a11y_sat_2: "Black & white",
+  a11y_reset: "Reset all settings",
+  a11y_reset_done: "All settings are back to normal.",
   doctor_name: "Dr. Van Hong Nguyen",
   call_us: "Call us",
   cta_schedule: "Schedule an Appointment",
@@ -1909,6 +2130,31 @@ I18N.vi = {
   close: "Đóng",
   lang_label: "Ngôn ngữ",
   textsize: "Cỡ chữ",
+  a11y_open: "Hỗ trợ dễ đọc, dễ xem",
+  a11y_title: "Hỗ trợ dễ đọc, dễ xem",
+  a11y_intro: "Chọn cách giúp bạn xem và đọc website dễ hơn. Lựa chọn được lưu lại trên máy này.",
+  a11y_contrast: "Tăng tương phản",
+  a11y_links: "Làm nổi liên kết",
+  a11y_size: "Chữ to hơn",
+  a11y_spacing: "Giãn chữ",
+  a11y_still: "Dừng chuyển động",
+  a11y_img: "Ẩn hình ảnh",
+  a11y_font: "Phông chữ dễ đọc",
+  a11y_cursor: "Con trỏ chuột lớn",
+  a11y_lh: "Giãn dòng",
+  a11y_sat: "Giảm màu",
+  a11y_on: "Đang bật",
+  a11y_off: "Tắt",
+  a11y_level_1: "Mức 1",
+  a11y_level_2: "Mức 2",
+  a11y_contrast_1: "Tương phản cao",
+  a11y_contrast_2: "Nền tối",
+  a11y_size_1: "Lớn",
+  a11y_size_2: "Rất lớn",
+  a11y_sat_1: "Ít màu",
+  a11y_sat_2: "Trắng đen",
+  a11y_reset: "Đặt lại tất cả",
+  a11y_reset_done: "Đã trở về như ban đầu.",
   doctor_name: "Bác sĩ Van Hong Nguyen",
   call_us: "Gọi cho chúng tôi",
   cta_schedule: "Đặt lịch hẹn",
@@ -2208,6 +2454,31 @@ I18N.es = {
   close: "Cerrar",
   lang_label: "Idioma",
   textsize: "Tamaño del texto",
+  a11y_open: "Menú de accesibilidad",
+  a11y_title: "Menú de accesibilidad",
+  a11y_intro: "Elija lo que le ayude a ver y leer el sitio con más facilidad. Sus opciones se guardan en este dispositivo.",
+  a11y_contrast: "Más contraste",
+  a11y_links: "Resaltar enlaces",
+  a11y_size: "Texto más grande",
+  a11y_spacing: "Espacio entre letras",
+  a11y_still: "Pausar animaciones",
+  a11y_img: "Ocultar imágenes",
+  a11y_font: "Letra fácil de leer",
+  a11y_cursor: "Cursor grande",
+  a11y_lh: "Espacio entre líneas",
+  a11y_sat: "Saturación",
+  a11y_on: "Activado",
+  a11y_off: "Desactivado",
+  a11y_level_1: "Nivel 1",
+  a11y_level_2: "Nivel 2",
+  a11y_contrast_1: "Alto contraste",
+  a11y_contrast_2: "Fondo oscuro",
+  a11y_size_1: "Grande",
+  a11y_size_2: "Muy grande",
+  a11y_sat_1: "Menos color",
+  a11y_sat_2: "Blanco y negro",
+  a11y_reset: "Restablecer todo",
+  a11y_reset_done: "Todo volvió a la normalidad.",
   doctor_name: "Van Hong Nguyen",
   call_us: "Llámenos",
   cta_schedule: "Haga una cita",
@@ -2504,9 +2775,6 @@ I18N.es = {
 const PLACEHOLDERS = {
   CLINIC_NAME:                 { label: "Clinic name", need: "Tên chính thức của phòng khám", where: "Header, footer, tiêu đề trang" },
   LOGO:                        { label: "Logo", need: "Logo (SVG hoặc PNG nền trong suốt)", where: "Header, footer, biểu tượng tab trình duyệt" },
-  CLINIC_PHONE:                { label: "Phone number", need: "Số điện thoại phòng khám", where: "Header, các nút Call, trang Đặt lịch, footer" },
-  CLINIC_ADDRESS:              { label: "Street address", need: "Địa chỉ đầy đủ (số nhà, đường, suite, thành phố, bang, ZIP)", where: "Thanh trên cùng, mục Địa chỉ, bản đồ, footer" },
-  CLINIC_EMAIL:                { label: "Email", need: "Email liên hệ công khai", where: "Footer" },
   CLINIC_TIMEZONE:             { label: "Time zone", need: "Múi giờ của phòng khám, ví dụ America/Chicago. Dùng để tính “Đang mở cửa”", where: "Chỉ trong file cấu hình", configOnly: true },
   GOOGLE_MAPS_LINK:            { label: "Map link", need: "Link Google Maps của phòng khám", where: "Nút Chỉ đường, bản đồ" },
   PARKING_AND_WHEELCHAIR_ACCESS: { label: "Parking & access", need: "Thông tin bãi đỗ xe, lối xe lăn, thang máy", where: "Mục Giờ mở cửa & địa chỉ" },
@@ -2534,6 +2802,12 @@ const PLACEHOLDERS = {
   GOOGLE_SHEET_LINK:           { label: "Google Sheet", need: "Google Sheet “Clinic Operations” (mình sẽ tạo mẫu sẵn các tab)", where: "Staff Portal, cấu hình server", configOnly: true },
   GOOGLE_DRIVE_FOLDER:         { label: "Drive folder", need: "Thư mục Google Drive chứa Google Docs tóm tắt bệnh nhân", where: "Staff Portal, cấu hình server", configOnly: true },
   DOMAIN_NAME:                 { label: "Domain", need: "Tên miền của website", where: "Cấu hình server, SEO", configOnly: true }
+};
+// Real clinic information already confirmed. Markup shows it with data-info="NAME".
+const CLINIC_INFO = {
+  CLINIC_PHONE:   "847-548-2222",
+  CLINIC_ADDRESS: "1227 N Illinois 83 Ste E, Grayslake, IL 60030",
+  CLINIC_EMAIL:   "business@excelcaredental.com"
 };
 const phToken = (name) => "INPUT_INFO_ABOUT_" + name + "_HERE";
 
@@ -2583,6 +2857,7 @@ const state = {
   lang: LANGS.includes(store.get("lang", "en")) ? store.get("lang", "en") : "en",
   scale: [1, 1.15, 1.3].includes(store.get("scale", 1)) ? store.get("scale", 1) : 1,
   phMode: "token",
+  a11y: {},
   device: "desktop",
   view: "site",
   page: "home",
@@ -2651,6 +2926,7 @@ function renderPlaceholders(root = document) {
     el.classList.toggle("is-label", state.phMode === "label");
     el.title = phToken(name);
   });
+  $$("[data-info]", root).forEach((el) => { el.textContent = CLINIC_INFO[el.dataset.info]; });
 }
 
 // ---------- Prototype chrome ----------
@@ -2671,7 +2947,7 @@ function toast(msg) {
 // View Transitions; elsewhere the changed area fades in. Skipped while the page is booting.
 let booted = false;
 function smoothUpdate(fn, fallbackEl) {
-  if (booted && document.startViewTransition) {
+  if (booted && document.startViewTransition && !state.a11y.still) {
     try { document.startViewTransition(fn); return; } catch (e) { /* fall back below */ }
   }
   fn();
@@ -2692,6 +2968,7 @@ function updateBreakpoint() {
 
 function setView(v) {
   if (v === state.view && booted) return;
+  closeA11y(false);
   smoothUpdate(() => {
     state.view = v;
     $$("[data-view]").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.view === v)));
@@ -2727,9 +3004,10 @@ function setPhMode(m) {
 function setScale(s) {
   smoothUpdate(() => {
     state.scale = s;
-    document.documentElement.style.fontSize = s * 100 + "%";
+    document.documentElement.style.fontSize = Math.round(s * 100) + "%";
     $$("[data-scale]").forEach((b) => b.setAttribute("aria-pressed", String(Number(b.dataset.scale) === s)));
     store.set("scale", s);
+    renderA11y();
     updateBreakpoint();
   }, $("#site"));
 }
@@ -2743,6 +3021,7 @@ function setLang(l) {
     $("#view-staff").lang = l;
     $$("[data-lang]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === l)));
     applyI18n();
+    renderA11y();
     renderSite();
     if (state.view === "staff") renderStaff();
   }, state.view === "staff" ? $("#view-staff") : $("#site"));
@@ -2916,7 +3195,7 @@ function renderSite() {
 
 // ---------- Navigation, menu, dropdown ----------
 const scroller = () => (state.device === "phone" ? $("#screen") : window);
-const reducedMotion = () => !document.documentElement.classList.contains("motion-full") && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const reducedMotion = () => !!state.a11y.still || (!document.documentElement.classList.contains("motion-full") && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 function setMotion(mode) {
   state.motion = mode;
   store.set("motion", mode);
@@ -2938,6 +3217,8 @@ function animateScrollTo(y) {
   const to = Math.max(0, Math.min(Math.round(y), Math.max(0, max)));
   const dist = to - start;
   if (Math.abs(dist) < 2) return Promise.resolve();
+  // "Pause animations" in the accessibility menu: jump straight there
+  if (state.a11y.still) { if (isWin) window.scrollTo(0, to); else s.scrollTop = to; return Promise.resolve(); }
   const dur = reducedMotion() ? 300 : Math.min(1200, Math.max(600, Math.abs(dist) * 0.5));
   const ease = (p) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
   return new Promise((resolve) => {
@@ -3288,6 +3569,130 @@ function resetNp() {
   $("#np-first").focus({ preventScroll: true });
 }
 
+// ---------- Accessibility menu (round button bottom-left) ----------
+// Our own version of the UserWay widget on the clinic's current site: no third-party script,
+// same look and 3 languages as the site, and every choice is saved on the person's device.
+// Tiles with levels cycle Off → level 1 → level 2 → Off on each press. "Bigger text" drives the
+// same text size as the A / A+ / A++ buttons, so both always agree.
+const A11Y_TOOLS = [
+  { key: "contrast", icon: "contrast", levels: ["a11y_contrast_1", "a11y_contrast_2"] },
+  { key: "links", icon: "link" },
+  { key: "size", icon: "textsize", levels: ["a11y_size_1", "a11y_size_2"] },
+  { key: "spacing", icon: "spacing", levels: ["a11y_level_1", "a11y_level_2"] },
+  { key: "still", icon: "pause" },
+  { key: "img", icon: "noimg" },
+  { key: "font", icon: "font" },
+  { key: "cursor", icon: "cursor" },
+  { key: "lh", icon: "lineheight", levels: ["a11y_level_1", "a11y_level_2"] },
+  { key: "sat", icon: "drop", levels: ["a11y_sat_1", "a11y_sat_2"] }
+];
+const SCALES = [1, 1.15, 1.3];
+const a11yTool = (key) => A11Y_TOOLS.find((f) => f.key === key);
+const a11yMax = (f) => (f.levels ? f.levels.length : 1);
+const a11yIsOpen = () => $("#a11yPanel").classList.contains("is-open");
+
+function loadA11y() {
+  const saved = store.get("a11y", {});
+  const out = {};
+  A11Y_TOOLS.forEach((f) => {
+    if (f.key === "size") return;
+    const v = saved && typeof saved === "object" ? Number(saved[f.key]) : 0;
+    out[f.key] = Number.isInteger(v) && v > 0 && v <= a11yMax(f) ? v : 0;
+  });
+  return out;
+}
+const a11yLevel = (key) => (key === "size" ? Math.max(0, SCALES.indexOf(state.scale)) : state.a11y[key] || 0);
+
+function buildA11y() {
+  $("#a11yGrid").innerHTML = A11Y_TOOLS.map((f) =>
+    '<button type="button" class="a11y-tile" data-a11y="' + f.key + '" aria-pressed="false">' +
+      '<span class="a11y-tile__check" aria-hidden="true"><svg class="ic"><use href="#i-check"/></svg></span>' +
+      '<svg class="ic a11y-tile__ic" aria-hidden="true"><use href="#i-' + f.icon + '"/></svg>' +
+      '<span class="a11y-tile__name" data-i18n="a11y_' + f.key + '"></span>' +
+      '<span class="a11y-tile__state"></span>' +
+      (f.levels ? '<span class="a11y-tile__steps" aria-hidden="true">' + f.levels.map(() => "<i></i>").join("") + "</span>" : "") +
+    "</button>"
+  ).join("");
+}
+
+function applyA11y() {
+  const site = $("#site");
+  A11Y_TOOLS.forEach((f) => {
+    if (f.key === "size") return;
+    const v = state.a11y[f.key];
+    if (v) site.setAttribute("data-a11y-" + f.key, String(v));
+    else site.removeAttribute("data-a11y-" + f.key);
+  });
+  renderA11y();
+}
+
+// Tile states and the "something is on" dot on the round button
+function renderA11y() {
+  if (!$("#a11yGrid")) return;
+  let any = false;
+  $$("#a11yGrid [data-a11y]").forEach((b) => {
+    const f = a11yTool(b.dataset.a11y);
+    const v = a11yLevel(f.key);
+    if (v) any = true;
+    b.setAttribute("aria-pressed", String(v > 0));
+    b.querySelector(".a11y-tile__state").textContent = v ? (f.levels ? t(f.levels[v - 1]) : t("a11y_on")) : t("a11y_off");
+    $$(".a11y-tile__steps i", b).forEach((i, n) => i.classList.toggle("is-on", n < v));
+  });
+  $("#a11yReset").disabled = !any;
+  $("#a11yBtn").classList.toggle("is-active", any);
+}
+
+function stepA11y(key) {
+  const f = a11yTool(key);
+  if (!f) return;
+  const next = (a11yLevel(key) + 1) % (a11yMax(f) + 1);
+  if (key === "size") { setScale(SCALES[next]); return; }
+  state.a11y[key] = next;
+  store.set("a11y", state.a11y);
+  applyA11y();
+}
+
+function resetA11y() {
+  A11Y_TOOLS.forEach((f) => { if (f.key !== "size") state.a11y[f.key] = 0; });
+  store.set("a11y", state.a11y);
+  if (state.scale !== 1) setScale(1);
+  applyA11y();
+  $("#a11yStatus").textContent = t("a11y_reset_done");
+  $("#a11yClose").focus();
+}
+
+let a11yReturnFocus = null;
+function openA11y() {
+  closeMenu();
+  const p = $("#a11yPanel");
+  a11yReturnFocus = document.activeElement;
+  p.inert = false;
+  p.classList.add("is-open");
+  $("#a11yBtn").setAttribute("aria-expanded", "true");
+  $("#a11yStatus").textContent = "";
+  setTimeout(() => $("#a11yClose").focus(), 60);
+}
+function closeA11y(returnFocus = true) {
+  const p = $("#a11yPanel");
+  if (!p || !p.classList.contains("is-open")) return;
+  p.classList.remove("is-open");
+  p.inert = true;
+  $("#a11yBtn").setAttribute("aria-expanded", "false");
+  if (!returnFocus) return;
+  const back = a11yReturnFocus && document.contains(a11yReturnFocus) && a11yReturnFocus.offsetParent ? a11yReturnFocus : $("#a11yBtn");
+  back.focus({ preventScroll: true });
+}
+// Tab stays inside the panel while it is open
+function trapA11yFocus(e) {
+  if (e.key !== "Tab" || !a11yIsOpen()) return;
+  const f = $$("button:not(:disabled)", $("#a11yPanel")).filter((x) => x.offsetParent !== null);
+  if (!f.length) return;
+  const first = f[0], last = f[f.length - 1];
+  if (!$("#a11yPanel").contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+  else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+}
+
 // ---------- Staff Portal ----------
 const hoursDirty = () => JSON.stringify(state.draft) !== JSON.stringify(state.pub.hours);
 const badDay = (k) => state.draft[k].open && toMin(state.draft[k].to) <= toMin(state.draft[k].from);
@@ -3553,7 +3958,7 @@ function updateSubsCount() {
 // ---------- Events ----------
 const PROTO_MSG = {
   soon: "Trang này sẽ được làm ở giai đoạn tiếp theo, sau khi bạn xác nhận nội dung.",
-  call: () => "Trên website thật, nút này gọi ngay số " + phToken("CLINIC_PHONE") + ".",
+  call: () => "Trên website thật, nút này gọi ngay số " + CLINIC_INFO.CLINIC_PHONE + ".",
   maps: () => "Trên website thật, nút này mở Google Maps: " + phToken("GOOGLE_MAPS_LINK") + ".",
   link: (n) => "Trên website thật, link này mở: " + phToken(n) + ".",
   sheet: () => "Prototype: hệ thống thật mở Google Sheet " + phToken("GOOGLE_SHEET_LINK") + ".",
@@ -3566,6 +3971,7 @@ const PROTO_MSG = {
 };
 
 function onClick(e) {
+  if (a11yIsOpen() && !e.target.closest("#a11yPanel, #a11yBtn")) closeA11y(false);
   if (e.target.closest(".mmenu__backdrop")) return closeMenu();
   const dd = $("#servicesMenu");
   if (dd.classList.contains("is-open") && !e.target.closest(".nav__item")) toggleDropdown(false);
@@ -3579,6 +3985,7 @@ function onClick(e) {
   if (d.motion) { setMotion(d.motion); return toast(d.motion === "full" ? PROTO_MSG.motionFull : PROTO_MSG.motionSystem); }
   if (d.lang) return setLang(d.lang);
   if (d.scale) return setScale(Number(d.scale));
+  if (d.a11y) return stepA11y(d.a11y);
   if (d.closeMenu !== undefined) return closeMenu();
   if (d.skip !== undefined) return $("#main").focus();
   if (d.route) return goPage(d.route, d.scroll);
@@ -3619,6 +4026,9 @@ function onClick(e) {
   }
   switch (el.id) {
     case "menuBtn": return $("#mobileMenu").classList.contains("is-open") ? closeMenu() : openMenu();
+    case "a11yBtn": return a11yIsOpen() ? closeA11y() : openA11y();
+    case "a11yClose": return closeA11y();
+    case "a11yReset": return resetA11y();
     case "servicesToggle": return toggleDropdown();
     case "noticeClose": return closeNotice();
     case "schAgain": return resetSch();
@@ -3666,10 +4076,12 @@ function onInput(e) {
 
 function onKey(e) {
   if (e.key === "Escape") {
+    if (a11yIsOpen()) { closeA11y(); return; }
     if ($("#mobileMenu").classList.contains("is-open")) { closeMenu(); return; }
     if ($("#servicesMenu").classList.contains("is-open")) { toggleDropdown(false); $("#servicesToggle").focus(); }
   }
   trapMenuFocus(e);
+  trapA11yFocus(e);
 }
 
 // ---------- Start ----------
@@ -3680,6 +4092,9 @@ function init() {
   state.sdType = "closed";
   state.confirmDelete = null;
   setMotion(store.get("motion", "full") === "system" ? "system" : "full");
+  state.a11y = loadA11y();
+  buildA11y();
+  applyA11y();
   setScale(state.scale);
   $("#site").lang = state.lang;
   $("#view-staff").lang = state.lang;

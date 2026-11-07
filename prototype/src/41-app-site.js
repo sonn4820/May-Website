@@ -144,7 +144,7 @@ function renderSite() {
 
 // ---------- Navigation, menu, dropdown ----------
 const scroller = () => (state.device === "phone" ? $("#screen") : window);
-const reducedMotion = () => !document.documentElement.classList.contains("motion-full") && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const reducedMotion = () => !!state.a11y.still || (!document.documentElement.classList.contains("motion-full") && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 function setMotion(mode) {
   state.motion = mode;
   store.set("motion", mode);
@@ -166,6 +166,8 @@ function animateScrollTo(y) {
   const to = Math.max(0, Math.min(Math.round(y), Math.max(0, max)));
   const dist = to - start;
   if (Math.abs(dist) < 2) return Promise.resolve();
+  // "Pause animations" in the accessibility menu: jump straight there
+  if (state.a11y.still) { if (isWin) window.scrollTo(0, to); else s.scrollTop = to; return Promise.resolve(); }
   const dur = reducedMotion() ? 300 : Math.min(1200, Math.max(600, Math.abs(dist) * 0.5));
   const ease = (p) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
   return new Promise((resolve) => {

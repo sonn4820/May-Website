@@ -40,7 +40,8 @@ const text = (s) => ($(s) ? $(s).textContent.trim() : "");
 ok("loads without script errors", errors.length === 0, errors.join(" | "));
 ok("English hero title", text("#page-home h1") === "Gentle dental care, at your pace.", text("#page-home h1"));
 ok("placeholders render as tokens", text('.brand__name .ph') === "INPUT_INFO_ABOUT_CLINIC_NAME_HERE");
-ok("placeholder count shown", Number(text("#phCount")) >= 30, text("#phCount"));
+ok("placeholder count shown", Number(text("#phCount")) > 0, text("#phCount"));
+ok("confirmed clinic info shown", text('.header__phone-num') === "847-548-2222" && $$("[data-info]").every((el) => el.textContent.trim()), text(".header__phone-num"));
 ok("7 rows of opening hours", $$("#hoursBody tr").length === 7);
 ok("status text filled", text("[data-status] .status-text").length > 5, text("[data-status] .status-text"));
 ok("notice banner visible", !$("#siteNotice").hidden && text("#noticeText").includes("Thanksgiving"), text("#noticeText"));
@@ -201,6 +202,37 @@ ok("outside click closes dropdown", !$("#servicesMenu").classList.contains("is-o
 click($('[data-scale="1.3"]'));
 ok("text size A++", d.documentElement.style.fontSize === "130%");
 click($('[data-scale="1"]'));
+
+// Accessibility menu
+const tile = (k) => $('#a11yGrid [data-a11y="' + k + '"]');
+ok("accessibility button and 10 tiles", !!$("#a11yBtn") && $$("#a11yGrid [data-a11y]").length === 10);
+click($("#a11yBtn"));
+ok("accessibility panel opens", $("#a11yPanel").classList.contains("is-open") && !$("#a11yPanel").inert && $("#a11yBtn").getAttribute("aria-expanded") === "true");
+ok("accessibility tiles start off", $$("#a11yGrid [data-a11y]").every((b) => b.getAttribute("aria-pressed") === "false") && $("#a11yReset").disabled);
+click(tile("contrast"));
+ok("contrast level 1", $("#site").getAttribute("data-a11y-contrast") === "1" && tile("contrast").getAttribute("aria-pressed") === "true" && tile("contrast").textContent.includes("High contrast"));
+click(tile("contrast"));
+ok("contrast level 2", $("#site").getAttribute("data-a11y-contrast") === "2" && tile("contrast").querySelectorAll(".is-on").length === 2);
+click(tile("contrast"));
+ok("contrast cycles back off", !$("#site").hasAttribute("data-a11y-contrast") && tile("contrast").getAttribute("aria-pressed") === "false");
+click(tile("size"));
+ok("bigger text drives the A+ size", d.documentElement.style.fontSize === "115%" && $('.utility [data-scale="1.15"]').getAttribute("aria-pressed") === "true");
+click($('.utility [data-scale="1.3"]'));
+ok("A++ button updates bigger-text tile", tile("size").querySelectorAll(".is-on").length === 2);
+click(tile("links"));
+click(tile("still"));
+ok("toggles set attributes", $("#site").hasAttribute("data-a11y-links") && $("#site").hasAttribute("data-a11y-still") && $("#a11yBtn").classList.contains("is-active"));
+ok("accessibility choices saved", JSON.parse(w.localStorage.getItem("dentproto:a11y")).links === 1);
+click($('[data-lang="vi"]'));
+ok("accessibility menu in Vietnamese", text("#a11yTitle") === "Hỗ trợ dễ đọc, dễ xem" && tile("links").textContent.includes("Đang bật"));
+click($('[data-lang="en"]'));
+ok("clicking the page outside closes the panel", !$("#a11yPanel").classList.contains("is-open") && $("#a11yBtn").getAttribute("aria-expanded") === "false");
+click($("#a11yBtn"));
+click($("#a11yReset"));
+ok("reset clears everything", !$("#site").hasAttribute("data-a11y-links") && !$("#site").hasAttribute("data-a11y-still") && d.documentElement.style.fontSize === "100%" && !$("#a11yBtn").classList.contains("is-active"));
+d.dispatchEvent(new w.KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+ok("Escape closes accessibility panel", !$("#a11yPanel").classList.contains("is-open") && $("#a11yPanel").inert);
+
 click($('[data-device="phone"]'));
 ok("phone frame", $("#device").classList.contains("is-phone"));
 click($('[data-phmode="label"]'));
