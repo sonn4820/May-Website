@@ -502,13 +502,10 @@ body.menu-open { overflow: hidden; }
     linear-gradient(0deg, rgba(10, 79, 128, .06) 1px, transparent 1px) 0 0 / 2.5rem 2.5rem,
     var(--sky-2);
 }
-.map__pin { position: absolute; left: 50%; top: 40%; transform: translate(-50%, -100%); color: var(--coral); }
-.map__pin .ic { width: 3.5rem; height: 3.5rem; fill: var(--enamel); stroke-width: 2.2; }
-.map__label { position: absolute; left: 1rem; right: 1rem; bottom: 1rem; text-align: center; }
-a.map { display: block; text-decoration: none !important; color: var(--ink) !important; transition: border-color var(--t) ease, box-shadow var(--t) ease; }
-a.map:hover { border-color: var(--blue); box-shadow: var(--shadow); }
-.map__btn { display: inline-flex; align-items: center; gap: .5rem; background: var(--enamel); border: 1.5px solid var(--line); border-radius: 999px; padding: .55rem 1.1rem; font-weight: 600; color: var(--blue-deep); box-shadow: var(--shadow); }
-a.map:hover .map__btn { border-color: var(--blue); }
+/* The street pattern above stays visible only while the live map loads (or if Google Maps is blocked) */
+.map__frame { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+.visit__actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+.device[data-w="narrow"] .visit__actions .btn { width: 100%; }
 .visit__addr { font-size: 1.25rem; font-weight: 600; margin: 1.25rem 0 1rem !important; }
 .visit__access { margin-top: 1.75rem; display: grid; gap: .4rem; }
 .visit__access h3 { font-size: 1.25rem; }
@@ -1451,9 +1448,13 @@ fieldset.field { border: 0; margin: 0 0 1.5rem; padding: 0; min-width: 0; }
           <div class="changes" id="changesBox" hidden><h3 data-i18n="changes_title"></h3><ul id="changesList"></ul></div>
         </div>
         <div class="reveal reveal--right" style="--d:120ms">
-          <a class="map" href="#" data-maps="place"><span class="map__pin" aria-hidden="true"><svg class="ic"><use href="#i-pin"/></svg></span><span class="map__label"><span class="map__btn"><svg class="ic" aria-hidden="true"><use href="#i-external"/></svg><span data-i18n="map_open"></span></span></span></a>
+          <!-- Live Google map of the clinic (src set in renderPlaceholders, in the page language) -->
+          <div class="map"><iframe class="map__frame" data-map-embed data-i18n-attr="title:map_title" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
           <p class="visit__addr"><span data-info="CLINIC_ADDRESS"></span></p>
-          <a class="btn btn--primary" href="#" data-maps="directions"><svg class="ic"><use href="#i-pin"/></svg><span data-i18n="get_directions"></span></a>
+          <div class="visit__actions">
+            <a class="btn btn--primary" href="#" data-maps="directions"><svg class="ic"><use href="#i-pin"/></svg><span data-i18n="get_directions"></span></a>
+            <a class="btn btn--ghost" href="#" data-maps="place"><svg class="ic" aria-hidden="true"><use href="#i-external"/></svg><span data-i18n="map_open"></span></a>
+          </div>
           <div class="visit__access"><h3 data-i18n="access_title"></h3><ul class="access-list"><li><svg class="ic" aria-hidden="true"><use href="#i-car"/></svg><span data-i18n="access_parking"></span></li><li><svg class="ic" aria-hidden="true"><use href="#i-wheelchair"/></svg><span data-i18n="access_ramp"></span></li></ul></div>
         </div>
       </div>
@@ -2040,6 +2041,7 @@ I18N.en = {
   quick_address: "Address",
   get_directions: "Get directions",
   map_open: "Open in Google Maps",
+  map_title: "Map showing Excelcare Dental in Grayslake",
   new_tab: "(opens in a new tab)",
   quick_phone: "Phone",
   call_now: "Call now",
@@ -2382,6 +2384,7 @@ I18N.vi = {
   quick_address: "Địa chỉ",
   get_directions: "Chỉ đường",
   map_open: "Mở trên Google Maps",
+  map_title: "Bản đồ vị trí Excelcare Dental ở Grayslake",
   new_tab: "(mở trong tab mới)",
   quick_phone: "Điện thoại",
   call_now: "Gọi ngay",
@@ -2726,6 +2729,7 @@ I18N.es = {
   quick_address: "Dirección",
   get_directions: "Cómo llegar",
   map_open: "Abrir en Google Maps",
+  map_title: "Mapa con la ubicación de Excelcare Dental en Grayslake",
   new_tab: "(se abre en una pestaña nueva)",
   quick_phone: "Teléfono",
   call_now: "Llamar ahora",
@@ -3311,7 +3315,7 @@ DOCS.en = {
       { h: "Your health information", p: "Information about your health and care is protected by HIPAA. Our Notice of Privacy Practices explains how we use and share it, and your rights." },
       { more: "privacy-practices" },
       { h: "Who we share it with", p: "We do not sell your information. We share it only with companies that help us run our office, such as our dental records system and our secure email and document service, under agreements that require them to protect it, or when the law requires it." },
-      { h: "Cookies and settings", p: "We do not use cookies for advertising. Your choices on this website, such as language, text size and accessibility settings, are saved only in your own browser." },
+      { h: "Cookies and settings", p: "We do not use cookies for advertising. Your choices on this website, such as language, text size and accessibility settings, are saved only in your own browser. The map in Hours and location comes from Google Maps, and Google may set its own cookies when it loads (see Google's privacy policy)." },
       { h: "Security", p: "Forms are sent over a secure, encrypted connection. Only our office team can see what you send." },
       { h: "Children", p: "This website is not meant for children under 13. A parent or guardian should fill out forms for a child." },
       { h: "Questions", p: "Call us at {info:CLINIC_PHONE} or email {info:CLINIC_EMAIL}." },
@@ -3620,7 +3624,7 @@ DOCS.vi = {
       { h: "Thông tin sức khoẻ", p: "Thông tin về sức khoẻ và việc điều trị của quý vị được luật HIPAA bảo vệ. Thông báo về Quyền riêng tư giải thích cách chúng tôi sử dụng, chia sẻ thông tin đó và các quyền của quý vị." },
       { more: "privacy-practices" },
       { h: "Chúng tôi chia sẻ với ai", p: "Chúng tôi không bán thông tin của quý vị. Chúng tôi chỉ chia sẻ với các công ty giúp phòng khám vận hành, như phần mềm hồ sơ nha khoa và dịch vụ email, tài liệu bảo mật, theo hợp đồng bắt buộc họ bảo vệ thông tin, hoặc khi luật pháp yêu cầu." },
-      { h: "Cookie và cài đặt", p: "Chúng tôi không dùng cookie để quảng cáo. Các lựa chọn của quý vị trên website, như ngôn ngữ, cỡ chữ và cài đặt hỗ trợ dễ đọc, chỉ được lưu trong trình duyệt của chính quý vị." },
+      { h: "Cookie và cài đặt", p: "Chúng tôi không dùng cookie để quảng cáo. Các lựa chọn của quý vị trên website, như ngôn ngữ, cỡ chữ và cài đặt hỗ trợ dễ đọc, chỉ được lưu trong trình duyệt của chính quý vị. Bản đồ ở mục Giờ mở cửa và địa chỉ là của Google Maps; Google có thể đặt cookie riêng khi bản đồ hiện ra (xem chính sách quyền riêng tư của Google)." },
       { h: "Bảo mật", p: "Form được gửi qua kết nối bảo mật, có mã hoá. Chỉ nhân viên phòng khám mới xem được thông tin quý vị gửi." },
       { h: "Trẻ em", p: "Website này không dành cho trẻ em dưới 13 tuổi. Cha mẹ hoặc người giám hộ nên điền form giúp trẻ." },
       { h: "Câu hỏi", p: "Gọi cho chúng tôi theo số {info:CLINIC_PHONE} hoặc email {info:CLINIC_EMAIL}." },
@@ -3930,7 +3934,7 @@ DOCS.es = {
       { h: "Su información de salud", p: "La información sobre su salud y su atención está protegida por la ley HIPAA. Nuestro Aviso de Prácticas de Privacidad explica cómo la usamos y compartimos, y cuáles son sus derechos." },
       { more: "privacy-practices" },
       { h: "Con quién la compartimos", p: "No vendemos su información. Solo la compartimos con empresas que nos ayudan a operar el consultorio, como nuestro sistema de expedientes dentales y nuestro servicio seguro de correo y documentos, bajo contratos que les exigen protegerla, o cuando la ley lo exige." },
-      { h: "Cookies y preferencias", p: "No usamos cookies para publicidad. Sus preferencias en este sitio, como el idioma, el tamaño de letra y la accesibilidad, se guardan solo en su propio navegador." },
+      { h: "Cookies y preferencias", p: "No usamos cookies para publicidad. Sus preferencias en este sitio, como el idioma, el tamaño de letra y la accesibilidad, se guardan solo en su propio navegador. El mapa de la sección de horario y ubicación es de Google Maps, y Google puede guardar sus propias cookies al cargarlo (vea la política de privacidad de Google)." },
       { h: "Seguridad", p: "Los formularios se envían por una conexión segura y cifrada. Solo el equipo de nuestro consultorio puede ver lo que usted envía." },
       { h: "Niños", p: "Este sitio no está dirigido a menores de 13 años. Un padre, madre o tutor debe llenar los formularios de un niño." },
       { h: "Preguntas", p: "Llámenos al {info:CLINIC_PHONE} o escriba a {info:CLINIC_EMAIL}." },
@@ -4127,6 +4131,11 @@ function renderPlaceholders(root = document) {
     el.title = phToken(name);
   });
   $$("[data-info]", root).forEach((el) => { el.textContent = CLINIC_INFO[el.dataset.info]; });
+  // Live map, in the page language. Only reload the frame when the address or language really changes.
+  $$("[data-map-embed]", root).forEach((el) => {
+    const src = "https://maps.google.com/maps?q=" + encodeURIComponent(CLINIC_INFO.CLINIC_NAME + ", " + CLINIC_INFO.CLINIC_ADDRESS) + "&z=16&hl=" + state.lang + "&output=embed";
+    if (el.getAttribute("src") !== src) el.setAttribute("src", src);
+  });
   // Google Maps links open in a new tab; screen readers hear that too
   $$("[data-maps]", root).forEach((el) => {
     el.href = el.dataset.maps === "place" ? CLINIC_INFO.CLINIC_MAPS_URL : directionsUrl();

@@ -119,6 +119,11 @@ function renderPlaceholders(root = document) {
     el.title = phToken(name);
   });
   $$("[data-info]", root).forEach((el) => { el.textContent = CLINIC_INFO[el.dataset.info]; });
+  // Live map, in the page language. Only reload the frame when the address or language really changes.
+  $$("[data-map-embed]", root).forEach((el) => {
+    const src = "https://maps.google.com/maps?q=" + encodeURIComponent(CLINIC_INFO.CLINIC_NAME + ", " + CLINIC_INFO.CLINIC_ADDRESS) + "&z=16&hl=" + state.lang + "&output=embed";
+    if (el.getAttribute("src") !== src) el.setAttribute("src", src);
+  });
   // Google Maps links open in a new tab; screen readers hear that too
   $$("[data-maps]", root).forEach((el) => {
     el.href = el.dataset.maps === "place" ? CLINIC_INFO.CLINIC_MAPS_URL : directionsUrl();

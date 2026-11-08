@@ -231,7 +231,7 @@ DOCS.vi = {
       { h: "Thông tin sức khoẻ", p: "Thông tin về sức khoẻ và việc điều trị của quý vị được luật HIPAA bảo vệ. Thông báo về Quyền riêng tư giải thích cách chúng tôi sử dụng, chia sẻ thông tin đó và các quyền của quý vị." },
       { more: "privacy-practices" },
       { h: "Chúng tôi chia sẻ với ai", p: "Chúng tôi không bán thông tin của quý vị. Chúng tôi chỉ chia sẻ với các công ty giúp phòng khám vận hành, như phần mềm hồ sơ nha khoa và dịch vụ email, tài liệu bảo mật, theo hợp đồng bắt buộc họ bảo vệ thông tin, hoặc khi luật pháp yêu cầu." },
-      { h: "Cookie và cài đặt", p: "Chúng tôi không dùng cookie để quảng cáo. Các lựa chọn của quý vị trên website, như ngôn ngữ, cỡ chữ và cài đặt hỗ trợ dễ đọc, chỉ được lưu trong trình duyệt của chính quý vị." },
+      { h: "Cookie và cài đặt", p: "Chúng tôi không dùng cookie để quảng cáo. Các lựa chọn của quý vị trên website, như ngôn ngữ, cỡ chữ và cài đặt hỗ trợ dễ đọc, chỉ được lưu trong trình duyệt của chính quý vị. Bản đồ ở mục Giờ mở cửa và địa chỉ là của Google Maps; Google có thể đặt cookie riêng khi bản đồ hiện ra (xem chính sách quyền riêng tư của Google)." },
       { h: "Bảo mật", p: "Form được gửi qua kết nối bảo mật, có mã hoá. Chỉ nhân viên phòng khám mới xem được thông tin quý vị gửi." },
       { h: "Trẻ em", p: "Website này không dành cho trẻ em dưới 13 tuổi. Cha mẹ hoặc người giám hộ nên điền form giúp trẻ." },
       { h: "Câu hỏi", p: "Gọi cho chúng tôi theo số {info:CLINIC_PHONE} hoặc email {info:CLINIC_EMAIL}." },

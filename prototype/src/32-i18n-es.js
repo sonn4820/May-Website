@@ -57,6 +57,7 @@ I18N.es = {
   quick_address: "Dirección",
   get_directions: "Cómo llegar",
   map_open: "Abrir en Google Maps",
+  map_title: "Mapa con la ubicación de Excelcare Dental en Grayslake",
   new_tab: "(se abre en una pestaña nueva)",
   quick_phone: "Teléfono",
   call_now: "Llamar ahora",

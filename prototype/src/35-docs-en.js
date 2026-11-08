@@ -233,7 +233,7 @@ DOCS.en = {
       { h: "Your health information", p: "Information about your health and care is protected by HIPAA. Our Notice of Privacy Practices explains how we use and share it, and your rights." },
       { more: "privacy-practices" },
       { h: "Who we share it with", p: "We do not sell your information. We share it only with companies that help us run our office, such as our dental records system and our secure email and document service, under agreements that require them to protect it, or when the law requires it." },
-      { h: "Cookies and settings", p: "We do not use cookies for advertising. Your choices on this website, such as language, text size and accessibility settings, are saved only in your own browser." },
+      { h: "Cookies and settings", p: "We do not use cookies for advertising. Your choices on this website, such as language, text size and accessibility settings, are saved only in your own browser. The map in Hours and location comes from Google Maps, and Google may set its own cookies when it loads (see Google's privacy policy)." },
       { h: "Security", p: "Forms are sent over a secure, encrypted connection. Only our office team can see what you send." },
       { h: "Children", p: "This website is not meant for children under 13. A parent or guardian should fill out forms for a child." },
       { h: "Questions", p: "Call us at {info:CLINIC_PHONE} or email {info:CLINIC_EMAIL}." },

@@ -232,7 +232,7 @@ DOCS.es = {
       { h: "Su información de salud", p: "La información sobre su salud y su atención está protegida por la ley HIPAA. Nuestro Aviso de Prácticas de Privacidad explica cómo la usamos y compartimos, y cuáles son sus derechos." },
       { more: "privacy-practices" },
       { h: "Con quién la compartimos", p: "No vendemos su información. Solo la compartimos con empresas que nos ayudan a operar el consultorio, como nuestro sistema de expedientes dentales y nuestro servicio seguro de correo y documentos, bajo contratos que les exigen protegerla, o cuando la ley lo exige." },
-      { h: "Cookies y preferencias", p: "No usamos cookies para publicidad. Sus preferencias en este sitio, como el idioma, el tamaño de letra y la accesibilidad, se guardan solo en su propio navegador." },
+      { h: "Cookies y preferencias", p: "No usamos cookies para publicidad. Sus preferencias en este sitio, como el idioma, el tamaño de letra y la accesibilidad, se guardan solo en su propio navegador. El mapa de la sección de horario y ubicación es de Google Maps, y Google puede guardar sus propias cookies al cargarlo (vea la política de privacidad de Google)." },
       { h: "Seguridad", p: "Los formularios se envían por una conexión segura y cifrada. Solo el equipo de nuestro consultorio puede ver lo que usted envía." },
       { h: "Niños", p: "Este sitio no está dirigido a menores de 13 años. Un padre, madre o tutor debe llenar los formularios de un niño." },
       { h: "Preguntas", p: "Llámenos al {info:CLINIC_PHONE} o escriba a {info:CLINIC_EMAIL}." },

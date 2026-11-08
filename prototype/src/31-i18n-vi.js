@@ -55,6 +55,7 @@ I18N.vi = {
   quick_address: "Địa chỉ",
   get_directions: "Chỉ đường",
   map_open: "Mở trên Google Maps",
+  map_title: "Bản đồ vị trí Excelcare Dental ở Grayslake",
   new_tab: "(mở trong tab mới)",
   quick_phone: "Điện thoại",
   call_now: "Gọi ngay",

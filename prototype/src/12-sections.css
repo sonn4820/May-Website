@@ -182,13 +182,10 @@
     linear-gradient(0deg, rgba(10, 79, 128, .06) 1px, transparent 1px) 0 0 / 2.5rem 2.5rem,
     var(--sky-2);
 }
-.map__pin { position: absolute; left: 50%; top: 40%; transform: translate(-50%, -100%); color: var(--coral); }
-.map__pin .ic { width: 3.5rem; height: 3.5rem; fill: var(--enamel); stroke-width: 2.2; }
-.map__label { position: absolute; left: 1rem; right: 1rem; bottom: 1rem; text-align: center; }
-a.map { display: block; text-decoration: none !important; color: var(--ink) !important; transition: border-color var(--t) ease, box-shadow var(--t) ease; }
-a.map:hover { border-color: var(--blue); box-shadow: var(--shadow); }
-.map__btn { display: inline-flex; align-items: center; gap: .5rem; background: var(--enamel); border: 1.5px solid var(--line); border-radius: 999px; padding: .55rem 1.1rem; font-weight: 600; color: var(--blue-deep); box-shadow: var(--shadow); }
-a.map:hover .map__btn { border-color: var(--blue); }
+/* The street pattern above stays visible only while the live map loads (or if Google Maps is blocked) */
+.map__frame { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+.visit__actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+.device[data-w="narrow"] .visit__actions .btn { width: 100%; }
 .visit__addr { font-size: 1.25rem; font-weight: 600; margin: 1.25rem 0 1rem !important; }
 .visit__access { margin-top: 1.75rem; display: grid; gap: .4rem; }
 .visit__access h3 { font-size: 1.25rem; }

@@ -292,9 +292,13 @@
           <div class="changes" id="changesBox" hidden><h3 data-i18n="changes_title"></h3><ul id="changesList"></ul></div>
         </div>
         <div class="reveal reveal--right" style="--d:120ms">
-          <a class="map" href="#" data-maps="place"><span class="map__pin" aria-hidden="true"><svg class="ic"><use href="#i-pin"/></svg></span><span class="map__label"><span class="map__btn"><svg class="ic" aria-hidden="true"><use href="#i-external"/></svg><span data-i18n="map_open"></span></span></span></a>
+          <!-- Live Google map of the clinic (src set in renderPlaceholders, in the page language) -->
+          <div class="map"><iframe class="map__frame" data-map-embed data-i18n-attr="title:map_title" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
           <p class="visit__addr"><span data-info="CLINIC_ADDRESS"></span></p>
-          <a class="btn btn--primary" href="#" data-maps="directions"><svg class="ic"><use href="#i-pin"/></svg><span data-i18n="get_directions"></span></a>
+          <div class="visit__actions">
+            <a class="btn btn--primary" href="#" data-maps="directions"><svg class="ic"><use href="#i-pin"/></svg><span data-i18n="get_directions"></span></a>
+            <a class="btn btn--ghost" href="#" data-maps="place"><svg class="ic" aria-hidden="true"><use href="#i-external"/></svg><span data-i18n="map_open"></span></a>
+          </div>
           <div class="visit__access"><h3 data-i18n="access_title"></h3><ul class="access-list"><li><svg class="ic" aria-hidden="true"><use href="#i-car"/></svg><span data-i18n="access_parking"></span></li><li><svg class="ic" aria-hidden="true"><use href="#i-wheelchair"/></svg><span data-i18n="access_ramp"></span></li></ul></div>
         </div>
       </div>

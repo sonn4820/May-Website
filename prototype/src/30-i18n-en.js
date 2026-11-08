@@ -58,6 +58,7 @@ I18N.en = {
   quick_address: "Address",
   get_directions: "Get directions",
   map_open: "Open in Google Maps",
+  map_title: "Map showing Excelcare Dental in Grayslake",
   new_tab: "(opens in a new tab)",
   quick_phone: "Phone",
   call_now: "Call now",
