@@ -49,6 +49,7 @@ const state = {
   device: "desktop",
   view: "site",
   page: "home",
+  doc: null,
   pub: { hours: clone(SAMPLE_HOURS), at: null },
   draft: clone(SAMPLE_HOURS),
   dates: [

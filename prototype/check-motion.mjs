@@ -47,13 +47,13 @@ await sleep(2500);
 ok("prototype defaults to full motion", await js("document.documentElement.classList.contains('motion-full')"));
 
 // Nav link -> smooth scroll down to the section
-await js("window.scrollTo(0, 0); document.querySelector('.nav__link[data-scroll=\"doctor\"]').click(); true");
+await js("window.scrollTo(0, 0); document.querySelector('.nav__link[data-scroll=\"insurance\"]').click(); true");
 const scrolls = await sample("Math.round(window.scrollY)", 16, 70);
 ok("nav click scrolls smoothly (many in-between positions)", varied(scrolls) >= 7, scrolls.join(" "));
 await sleep(400);
-const gap = await js("Math.round(document.getElementById('doctor').getBoundingClientRect().top - (document.getElementById('protoBar').offsetHeight + document.getElementById('siteHeader').offsetHeight + 12))");
+const gap = await js("0 + Math.round(document.getElementById('insurance').getBoundingClientRect().top - (document.getElementById('protoBar').offsetHeight + document.getElementById('siteHeader').offsetHeight + 12))");
 ok("lands right under the sticky header", Math.abs(gap) <= 3, "offset " + gap);
-ok("arrival underline on the heading", await js("document.getElementById('doctor').classList.contains('is-arrived')"));
+ok("arrival underline on the heading", await js("document.getElementById('insurance').classList.contains('is-arrived')"));
 
 // Content fades and slides in when scrolled to
 await js("window.scrollTo(0, document.getElementById('articles').offsetTop - 200); true");

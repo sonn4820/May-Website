@@ -187,6 +187,47 @@
       </div>
     </section>
   </div>
+
+  <!-- Content pages (services, about the doctor, health tips, privacy & legal). One template; text comes from 35–37-docs-*.js -->
+  <div class="page" id="page-doc" data-page="doc" hidden>
+    <div class="pagehead">
+      <div class="wrap">
+        <p class="crumbs" id="docCrumbs"></p>
+        <p class="eyebrow" id="docEyebrow"></p>
+        <h1 id="docTitle"></h1>
+        <p class="lead" id="docLead"></p>
+        <p class="doc__meta" id="docMeta" hidden></p>
+      </div>
+    </div>
+    <div class="wrap doc">
+      <article class="doc__body" aria-labelledby="docTitle">
+        <div class="doc-about" id="docAbout" hidden>
+          <div class="photo photo--doctor photo--real"><img src="assets/doctor.jpg" width="640" height="800" alt="" data-i18n-attr="alt:doctor_photo_alt"></div>
+          <div class="doc-about__text">
+            <p class="doctor__bio"><span class="ph" data-ph="DOCTOR_BIO"></span></p>
+            <dl class="facts">
+              <div><dt data-i18n="fact_edu"></dt><dd><span class="ph" data-ph="DOCTOR_EDUCATION"></span></dd></div>
+              <div><dt data-i18n="fact_exp"></dt><dd><span class="ph" data-ph="DOCTOR_YEARS_OF_EXPERIENCE"></span></dd></div>
+              <div><dt data-i18n="fact_lang"></dt><dd><span class="ph" data-ph="LANGUAGES_SPOKEN"></span></dd></div>
+              <div><dt data-i18n="fact_member"></dt><dd><span class="ph" data-ph="PROFESSIONAL_MEMBERSHIPS"></span></dd></div>
+            </dl>
+          </div>
+        </div>
+        <div id="docBody" class="doc__sections"></div>
+      </article>
+      <aside class="doc__aside">
+        <div class="callcard">
+          <h2 data-i18n="doc_aside_title"></h2>
+          <p data-i18n="doc_aside_d"></p>
+          <p class="callcard__num"><span data-info="CLINIC_PHONE"></span></p>
+          <p class="status" data-status="long"><span class="status-dot"></span><span class="status-text"></span></p>
+          <a class="btn btn--cta btn--block" href="#schedule" data-route="schedule"><svg class="ic"><use href="#i-cal"/></svg><span data-i18n="cta_schedule"></span></a>
+          <a class="btn btn--light btn--block" href="#" data-call><svg class="ic"><use href="#i-phone"/></svg><span data-i18n="call_now"></span></a>
+        </div>
+        <nav class="doc-related" id="docRelated" aria-labelledby="docRelatedTitle"><h2 id="docRelatedTitle"></h2><ul id="docRelatedList"></ul></nav>
+      </aside>
+    </div>
+  </div>
   </div>
 
   <footer class="footer">
@@ -201,8 +242,8 @@
         <p><span class="ph" data-ph="SOCIAL_MEDIA_LINKS"></span></p>
       </div>
       <nav data-i18n-attr="aria-label:f_patients"><h2 data-i18n="f_patients"></h2><ul><li><a href="#" data-route="new" data-i18n="nav_new"></a></li><li><a href="#" data-route="schedule" data-i18n="cta_schedule"></a></li><li><a href="#" data-route="home" data-scroll="insurance" data-i18n="nav_insurance"></a></li></ul></nav>
-      <nav data-i18n-attr="aria-label:f_office"><h2 data-i18n="f_office"></h2><ul><li><a href="#" data-route="home" data-scroll="doctor" data-i18n="nav_about"></a></li><li><a href="#" data-route="home" data-scroll="services" data-i18n="nav_services"></a></li><li><a href="#" data-route="home" data-scroll="articles" data-i18n="nav_articles"></a></li><li><a href="#" data-route="home" data-scroll="visit" data-i18n="nav_contact"></a></li></ul></nav>
-      <nav data-i18n-attr="aria-label:f_legal"><h2 data-i18n="f_legal"></h2><ul><li><a href="#" data-soon data-i18n="f_privacy"></a></li><li><a href="#" data-soon data-i18n="f_npp"></a></li><li><a href="#" data-soon data-i18n="f_access"></a></li><li><a href="#" data-soon data-i18n="f_nondisc"></a></li></ul></nav>
+      <nav data-i18n-attr="aria-label:f_office"><h2 data-i18n="f_office"></h2><ul><li><a href="#about" data-route="doc" data-doc="about" data-i18n="nav_about"></a></li><li><a href="#" data-route="home" data-scroll="services" data-i18n="nav_services"></a></li><li><a href="#" data-route="home" data-scroll="articles" data-i18n="nav_articles"></a></li><li><a href="#" data-route="home" data-scroll="visit" data-i18n="nav_contact"></a></li></ul></nav>
+      <nav data-i18n-attr="aria-label:f_legal"><h2 data-i18n="f_legal"></h2><ul><li><a href="#privacy" data-route="doc" data-doc="privacy" data-i18n="f_privacy"></a></li><li><a href="#privacy-practices" data-route="doc" data-doc="privacy-practices" data-i18n="f_npp"></a></li><li><a href="#accessibility" data-route="doc" data-doc="accessibility" data-i18n="f_access"></a></li><li><a href="#nondiscrimination" data-route="doc" data-doc="nondiscrimination" data-i18n="f_nondisc"></a></li></ul></nav>
     </div>
     <div class="wrap footer__bottom">
       <p>© 2026 <span data-info="CLINIC_NAME"></span></p>

@@ -86,16 +86,16 @@
         <li class="nav__item">
           <button type="button" class="nav__link nav__toggle" id="servicesToggle" aria-expanded="false" aria-controls="servicesMenu"><span data-i18n="nav_services"></span><svg class="ic"><use href="#i-chev"/></svg></button>
           <div class="dropdown" id="servicesMenu">
-            <a href="#" data-route="home" data-scroll="services"><span class="ic-circle"><svg class="ic"><use href="#i-sparkle"/></svg></span><span data-i18n="svc1_t"></span></a>
-            <a href="#" data-route="home" data-scroll="services"><span class="ic-circle"><svg class="ic"><use href="#i-crown"/></svg></span><span data-i18n="svc2_t"></span></a>
-            <a href="#" data-route="home" data-scroll="services"><span class="ic-circle"><svg class="ic"><use href="#i-denture"/></svg></span><span data-i18n="svc3_t"></span></a>
-            <a href="#" data-route="home" data-scroll="services"><span class="ic-circle"><svg class="ic"><use href="#i-implant"/></svg></span><span data-i18n="svc4_t"></span></a>
-            <a href="#" data-route="home" data-scroll="services"><span class="ic-circle"><svg class="ic"><use href="#i-drop"/></svg></span><span data-i18n="svc5_t"></span></a>
-            <a href="#" data-route="home" data-scroll="services"><span class="ic-circle"><svg class="ic"><use href="#i-bolt"/></svg></span><span data-i18n="svc6_t"></span></a>
+            <a href="#services/checkups" data-route="doc" data-doc="services/checkups"><span class="ic-circle"><svg class="ic"><use href="#i-sparkle"/></svg></span><span data-i18n="svc1_t"></span></a>
+            <a href="#services/fillings-crowns" data-route="doc" data-doc="services/fillings-crowns"><span class="ic-circle"><svg class="ic"><use href="#i-crown"/></svg></span><span data-i18n="svc2_t"></span></a>
+            <a href="#services/dentures" data-route="doc" data-doc="services/dentures"><span class="ic-circle"><svg class="ic"><use href="#i-denture"/></svg></span><span data-i18n="svc3_t"></span></a>
+            <a href="#services/implants" data-route="doc" data-doc="services/implants"><span class="ic-circle"><svg class="ic"><use href="#i-implant"/></svg></span><span data-i18n="svc4_t"></span></a>
+            <a href="#services/gum-care" data-route="doc" data-doc="services/gum-care"><span class="ic-circle"><svg class="ic"><use href="#i-drop"/></svg></span><span data-i18n="svc5_t"></span></a>
+            <a href="#services/emergency" data-route="doc" data-doc="services/emergency"><span class="ic-circle"><svg class="ic"><use href="#i-bolt"/></svg></span><span data-i18n="svc6_t"></span></a>
           </div>
         </li>
         <li><a class="nav__link" href="#" data-route="new" data-i18n="nav_new"></a></li>
-        <li><a class="nav__link" href="#" data-route="home" data-scroll="doctor" data-i18n="nav_about"></a></li>
+        <li><a class="nav__link" href="#about" data-route="doc" data-doc="about" data-i18n="nav_about"></a></li>
         <li><a class="nav__link" href="#" data-route="home" data-scroll="insurance" data-i18n="nav_insurance"></a></li>
         <li><a class="nav__link" href="#" data-route="home" data-scroll="articles" data-i18n="nav_articles"></a></li>
         <li><a class="nav__link" href="#" data-route="home" data-scroll="visit" data-i18n="nav_contact"></a></li>
@@ -114,7 +114,7 @@
         <li><a href="#" data-route="home" data-scroll="top" style="--i:0"><span data-i18n="nav_home"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
         <li><a href="#" data-route="home" data-scroll="services" style="--i:1"><span data-i18n="nav_services"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
         <li><a href="#" data-route="new" style="--i:2"><span data-i18n="nav_new"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#" data-route="home" data-scroll="doctor" style="--i:3"><span data-i18n="nav_about"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
+        <li><a href="#about" data-route="doc" data-doc="about" style="--i:3"><span data-i18n="nav_about"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
         <li><a href="#" data-route="home" data-scroll="insurance" style="--i:4"><span data-i18n="nav_insurance"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
         <li><a href="#" data-route="home" data-scroll="articles" style="--i:5"><span data-i18n="nav_articles"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
         <li><a href="#" data-route="home" data-scroll="visit" style="--i:6"><span data-i18n="nav_contact"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
@@ -186,12 +186,12 @@
           <p class="section__lead" data-i18n="services_lead"></p>
         </div>
         <ul class="cards">
-          <li class="card reveal"><span class="ic-circle"><svg class="ic"><use href="#i-sparkle"/></svg></span><h3 data-i18n="svc1_t"></h3><p data-i18n="svc1_d"></p><a class="card__link" href="#" data-soon><span data-i18n="learn_more"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
-          <li class="card reveal"><span class="ic-circle"><svg class="ic"><use href="#i-crown"/></svg></span><h3 data-i18n="svc2_t"></h3><p data-i18n="svc2_d"></p><a class="card__link" href="#" data-soon><span data-i18n="learn_more"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
-          <li class="card reveal"><span class="ic-circle"><svg class="ic"><use href="#i-denture"/></svg></span><h3 data-i18n="svc3_t"></h3><p data-i18n="svc3_d"></p><a class="card__link" href="#" data-soon><span data-i18n="learn_more"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
-          <li class="card reveal"><span class="ic-circle"><svg class="ic"><use href="#i-implant"/></svg></span><h3 data-i18n="svc4_t"></h3><p data-i18n="svc4_d"></p><a class="card__link" href="#" data-soon><span data-i18n="learn_more"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
-          <li class="card reveal"><span class="ic-circle"><svg class="ic"><use href="#i-drop"/></svg></span><h3 data-i18n="svc5_t"></h3><p data-i18n="svc5_d"></p><a class="card__link" href="#" data-soon><span data-i18n="learn_more"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
-          <li class="card reveal"><span class="ic-circle"><svg class="ic"><use href="#i-bolt"/></svg></span><h3 data-i18n="svc6_t"></h3><p data-i18n="svc6_d"></p><a class="card__link" href="#" data-soon><span data-i18n="learn_more"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
+          <li class="card reveal"><span class="ic-circle"><svg class="ic"><use href="#i-sparkle"/></svg></span><h3 data-i18n="svc1_t"></h3><p data-i18n="svc1_d"></p><a class="card__link" href="#services/checkups" data-route="doc" data-doc="services/checkups"><span data-i18n="learn_more"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
+          <li class="card reveal"><span class="ic-circle"><svg class="ic"><use href="#i-crown"/></svg></span><h3 data-i18n="svc2_t"></h3><p data-i18n="svc2_d"></p><a class="card__link" href="#services/fillings-crowns" data-route="doc" data-doc="services/fillings-crowns"><span data-i18n="learn_more"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
+          <li class="card reveal"><span class="ic-circle"><svg class="ic"><use href="#i-denture"/></svg></span><h3 data-i18n="svc3_t"></h3><p data-i18n="svc3_d"></p><a class="card__link" href="#services/dentures" data-route="doc" data-doc="services/dentures"><span data-i18n="learn_more"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
+          <li class="card reveal"><span class="ic-circle"><svg class="ic"><use href="#i-implant"/></svg></span><h3 data-i18n="svc4_t"></h3><p data-i18n="svc4_d"></p><a class="card__link" href="#services/implants" data-route="doc" data-doc="services/implants"><span data-i18n="learn_more"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
+          <li class="card reveal"><span class="ic-circle"><svg class="ic"><use href="#i-drop"/></svg></span><h3 data-i18n="svc5_t"></h3><p data-i18n="svc5_d"></p><a class="card__link" href="#services/gum-care" data-route="doc" data-doc="services/gum-care"><span data-i18n="learn_more"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
+          <li class="card reveal"><span class="ic-circle"><svg class="ic"><use href="#i-bolt"/></svg></span><h3 data-i18n="svc6_t"></h3><p data-i18n="svc6_d"></p><a class="card__link" href="#services/emergency" data-route="doc" data-doc="services/emergency"><span data-i18n="learn_more"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
         </ul>
       </div>
     </section>
@@ -209,7 +209,7 @@
             <div><dt data-i18n="fact_lang"></dt><dd><span class="ph" data-ph="LANGUAGES_SPOKEN"></span></dd></div>
             <div><dt data-i18n="fact_member"></dt><dd><span class="ph" data-ph="PROFESSIONAL_MEMBERSHIPS"></span></dd></div>
           </dl>
-          <a class="btn btn--ghost" href="#" data-soon data-i18n="doctor_more"></a>
+          <a class="btn btn--ghost" href="#about" data-route="doc" data-doc="about" data-i18n="doctor_more"></a>
         </div>
       </div>
     </section>
@@ -276,9 +276,9 @@
           <h2 id="art-title" data-i18n="art_title"></h2>
         </div>
         <ul class="cards">
-          <li class="article reveal"><div class="article__img"><svg class="ic"><use href="#i-denture"/></svg></div><div class="article__body"><p class="chip" data-i18n="art1_c"></p><h3 data-i18n="art1_t"></h3><p data-i18n="art1_d"></p><p class="article__meta" data-i18n="read_5"></p><a class="card__link" href="#" data-soon><span data-i18n="read_article"></span><svg class="ic"><use href="#i-arrow"/></svg></a></div></li>
-          <li class="article reveal"><div class="article__img article__img--2"><svg class="ic"><use href="#i-drop"/></svg></div><div class="article__body"><p class="chip" data-i18n="art2_c"></p><h3 data-i18n="art2_t"></h3><p data-i18n="art2_d"></p><p class="article__meta" data-i18n="read_4"></p><a class="card__link" href="#" data-soon><span data-i18n="read_article"></span><svg class="ic"><use href="#i-arrow"/></svg></a></div></li>
-          <li class="article reveal"><div class="article__img article__img--3"><svg class="ic"><use href="#i-implant"/></svg></div><div class="article__body"><p class="chip" data-i18n="art3_c"></p><h3 data-i18n="art3_t"></h3><p data-i18n="art3_d"></p><p class="article__meta" data-i18n="read_6"></p><a class="card__link" href="#" data-soon><span data-i18n="read_article"></span><svg class="ic"><use href="#i-arrow"/></svg></a></div></li>
+          <li class="article reveal"><div class="article__img"><svg class="ic"><use href="#i-denture"/></svg></div><div class="article__body"><p class="chip" data-i18n="art1_c"></p><h3 data-i18n="art1_t"></h3><p data-i18n="art1_d"></p><p class="article__meta" data-readtime="tips/denture-care"></p><a class="card__link" href="#tips/denture-care" data-route="doc" data-doc="tips/denture-care"><span data-i18n="read_article"></span><svg class="ic"><use href="#i-arrow"/></svg></a></div></li>
+          <li class="article reveal"><div class="article__img article__img--2"><svg class="ic"><use href="#i-drop"/></svg></div><div class="article__body"><p class="chip" data-i18n="art2_c"></p><h3 data-i18n="art2_t"></h3><p data-i18n="art2_d"></p><p class="article__meta" data-readtime="tips/dry-mouth"></p><a class="card__link" href="#tips/dry-mouth" data-route="doc" data-doc="tips/dry-mouth"><span data-i18n="read_article"></span><svg class="ic"><use href="#i-arrow"/></svg></a></div></li>
+          <li class="article reveal"><div class="article__img article__img--3"><svg class="ic"><use href="#i-implant"/></svg></div><div class="article__body"><p class="chip" data-i18n="art3_c"></p><h3 data-i18n="art3_t"></h3><p data-i18n="art3_d"></p><p class="article__meta" data-readtime="tips/implants-guide"></p><a class="card__link" href="#tips/implants-guide" data-route="doc" data-doc="tips/implants-guide"><span data-i18n="read_article"></span><svg class="ic"><use href="#i-arrow"/></svg></a></div></li>
         </ul>
       </div>
     </section>

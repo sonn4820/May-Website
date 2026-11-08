@@ -389,6 +389,50 @@ body.menu-open { overflow: hidden; }
 .facts dd { margin: 0; min-width: 0; }
 .device[data-w="narrow"] .facts > div { grid-template-columns: minmax(0, 1fr); gap: .25rem; }
 
+/* ---------- Content pages (services, about, health tips, legal) ---------- */
+.doc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 21rem); gap: 3rem; align-items: start; padding-block: 3rem 4.5rem; }
+.device[data-w="narrow"] .doc, .device[data-w="medium"] .doc { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
+.doc__body { min-width: 0; max-width: 46rem; display: grid; gap: 2.25rem; }
+.doc__sections { display: grid; gap: 2.25rem; }
+.doc__meta { color: var(--ink-soft); font-size: 1rem; margin-top: .6rem !important; }
+#docEyebrow { margin-top: 1.25rem !important; }
+.doc-sec { display: grid; gap: .8rem; }
+.doc-sec > h2 { font-size: 1.6rem !important; margin: 0 !important; }
+.doc-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; }
+.doc-list li { display: flex; gap: .65rem; align-items: flex-start; }
+.doc-list .ic { color: var(--ok); flex: none; margin-top: .25em; }
+.doc-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: .9rem; }
+.doc-steps li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1rem; align-items: start; background: var(--sky); border-radius: 18px; padding: 1.1rem 1.25rem; }
+.doc-steps__num { width: 2.6rem; height: 2.6rem; border-radius: 50%; background: var(--blue); color: var(--on-dark); display: grid; place-items: center; font-family: var(--font-display); font-weight: 800; font-size: 1.2rem; }
+.doc-steps h3 { font-size: 1.2rem !important; margin-bottom: .2rem !important; }
+.doc-steps p { color: var(--ink-soft); }
+.doc-warn, .doc-note { display: flex; gap: .75rem; align-items: flex-start; border-radius: 16px; padding: 1.1rem 1.25rem; font-weight: 500; }
+.doc-warn { border: 2px solid var(--closed); background: #fdf1ef; }
+.doc-warn .ic { color: var(--closed); flex: none; margin-top: .2em; }
+.doc-note { border: 2px solid var(--sun-line); background: var(--sun); }
+.doc-note .ic { color: var(--ink); flex: none; margin-top: .2em; }
+.doc-more { display: flex; align-items: center; gap: 1rem; border: 2px solid var(--line); border-radius: 18px; padding: 1rem 1.25rem; text-decoration: none !important; color: var(--ink) !important; background: var(--enamel); }
+.doc-more:hover { border-color: var(--blue); }
+.doc-more > .ic:first-child { width: 2rem; height: 2rem; color: var(--blue); flex: none; }
+.doc-more > .ic:last-child { margin-left: auto; color: var(--blue); flex: none; }
+.doc-more small { display: block; color: var(--ink-soft); font-size: .95rem; }
+.doc-more strong { font-family: var(--font-display); font-size: 1.15rem; }
+.doc-taglines { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; }
+.doc-taglines li { border-left: 4px solid var(--sky-2); padding: .3rem 0 .3rem .9rem; }
+.doc-disclaimer { color: var(--ink-soft); font-size: 1rem; border-top: 1px solid var(--line); padding-top: 1.25rem !important; }
+.doc__aside { display: grid; gap: 1.5rem; min-width: 0; }
+.doc__aside .btn { justify-content: center; }
+.doc-related h2 { font-size: 1.3rem !important; margin: 0 0 .6rem !important; }
+.doc-related ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.doc-related a { display: flex; justify-content: space-between; align-items: center; gap: .75rem; padding: .85rem .25rem; border-bottom: 1px solid var(--line); text-decoration: none !important; color: var(--ink) !important; font-weight: 600; }
+.doc-related a:hover { color: var(--blue) !important; }
+.doc-related a .ic { color: var(--blue); flex: none; }
+.doc-about { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); gap: 2rem; align-items: start; }
+.device[data-w="narrow"] .doc-about { grid-template-columns: minmax(0, 1fr); }
+.device[data-w="narrow"] .doc-about .photo { max-width: 16rem; }
+.doc-about__text { display: grid; gap: 1rem; }
+.doc .faq { display: grid; gap: .75rem; }
+
 /* Real photo inside a .photo frame (doctor portrait) */
 .photo--real { padding: 0; border: 0; overflow: hidden; background: var(--sky-2); display: block; }
 .photo--real img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; }
@@ -1196,16 +1240,16 @@ fieldset.field { border: 0; margin: 0 0 1.5rem; padding: 0; min-width: 0; }
         <li class="nav__item">
           <button type="button" class="nav__link nav__toggle" id="servicesToggle" aria-expanded="false" aria-controls="servicesMenu"><span data-i18n="nav_services"></span><svg class="ic"><use href="#i-chev"/></svg></button>
           <div class="dropdown" id="servicesMenu">
-            <a href="#" data-route="home" data-scroll="services"><span class="ic-circle"><svg class="ic"><use href="#i-sparkle"/></svg></span><span data-i18n="svc1_t"></span></a>
-            <a href="#" data-route="home" data-scroll="services"><span class="ic-circle"><svg class="ic"><use href="#i-crown"/></svg></span><span data-i18n="svc2_t"></span></a>
-            <a href="#" data-route="home" data-scroll="services"><span class="ic-circle"><svg class="ic"><use href="#i-denture"/></svg></span><span data-i18n="svc3_t"></span></a>
-            <a href="#" data-route="home" data-scroll="services"><span class="ic-circle"><svg class="ic"><use href="#i-implant"/></svg></span><span data-i18n="svc4_t"></span></a>
-            <a href="#" data-route="home" data-scroll="services"><span class="ic-circle"><svg class="ic"><use href="#i-drop"/></svg></span><span data-i18n="svc5_t"></span></a>
-            <a href="#" data-route="home" data-scroll="services"><span class="ic-circle"><svg class="ic"><use href="#i-bolt"/></svg></span><span data-i18n="svc6_t"></span></a>
+            <a href="#services/checkups" data-route="doc" data-doc="services/checkups"><span class="ic-circle"><svg class="ic"><use href="#i-sparkle"/></svg></span><span data-i18n="svc1_t"></span></a>
+            <a href="#services/fillings-crowns" data-route="doc" data-doc="services/fillings-crowns"><span class="ic-circle"><svg class="ic"><use href="#i-crown"/></svg></span><span data-i18n="svc2_t"></span></a>
+            <a href="#services/dentures" data-route="doc" data-doc="services/dentures"><span class="ic-circle"><svg class="ic"><use href="#i-denture"/></svg></span><span data-i18n="svc3_t"></span></a>
+            <a href="#services/implants" data-route="doc" data-doc="services/implants"><span class="ic-circle"><svg class="ic"><use href="#i-implant"/></svg></span><span data-i18n="svc4_t"></span></a>
+            <a href="#services/gum-care" data-route="doc" data-doc="services/gum-care"><span class="ic-circle"><svg class="ic"><use href="#i-drop"/></svg></span><span data-i18n="svc5_t"></span></a>
+            <a href="#services/emergency" data-route="doc" data-doc="services/emergency"><span class="ic-circle"><svg class="ic"><use href="#i-bolt"/></svg></span><span data-i18n="svc6_t"></span></a>
           </div>
         </li>
         <li><a class="nav__link" href="#" data-route="new" data-i18n="nav_new"></a></li>
-        <li><a class="nav__link" href="#" data-route="home" data-scroll="doctor" data-i18n="nav_about"></a></li>
+        <li><a class="nav__link" href="#about" data-route="doc" data-doc="about" data-i18n="nav_about"></a></li>
         <li><a class="nav__link" href="#" data-route="home" data-scroll="insurance" data-i18n="nav_insurance"></a></li>
         <li><a class="nav__link" href="#" data-route="home" data-scroll="articles" data-i18n="nav_articles"></a></li>
         <li><a class="nav__link" href="#" data-route="home" data-scroll="visit" data-i18n="nav_contact"></a></li>
@@ -1224,7 +1268,7 @@ fieldset.field { border: 0; margin: 0 0 1.5rem; padding: 0; min-width: 0; }
         <li><a href="#" data-route="home" data-scroll="top" style="--i:0"><span data-i18n="nav_home"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
         <li><a href="#" data-route="home" data-scroll="services" style="--i:1"><span data-i18n="nav_services"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
         <li><a href="#" data-route="new" style="--i:2"><span data-i18n="nav_new"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#" data-route="home" data-scroll="doctor" style="--i:3"><span data-i18n="nav_about"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
+        <li><a href="#about" data-route="doc" data-doc="about" style="--i:3"><span data-i18n="nav_about"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
         <li><a href="#" data-route="home" data-scroll="insurance" style="--i:4"><span data-i18n="nav_insurance"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
         <li><a href="#" data-route="home" data-scroll="articles" style="--i:5"><span data-i18n="nav_articles"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
         <li><a href="#" data-route="home" data-scroll="visit" style="--i:6"><span data-i18n="nav_contact"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
@@ -1296,12 +1340,12 @@ fieldset.field { border: 0; margin: 0 0 1.5rem; padding: 0; min-width: 0; }
           <p class="section__lead" data-i18n="services_lead"></p>
         </div>
         <ul class="cards">
-          <li class="card reveal"><span class="ic-circle"><svg class="ic"><use href="#i-sparkle"/></svg></span><h3 data-i18n="svc1_t"></h3><p data-i18n="svc1_d"></p><a class="card__link" href="#" data-soon><span data-i18n="learn_more"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
-          <li class="card reveal"><span class="ic-circle"><svg class="ic"><use href="#i-crown"/></svg></span><h3 data-i18n="svc2_t"></h3><p data-i18n="svc2_d"></p><a class="card__link" href="#" data-soon><span data-i18n="learn_more"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
-          <li class="card reveal"><span class="ic-circle"><svg class="ic"><use href="#i-denture"/></svg></span><h3 data-i18n="svc3_t"></h3><p data-i18n="svc3_d"></p><a class="card__link" href="#" data-soon><span data-i18n="learn_more"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
-          <li class="card reveal"><span class="ic-circle"><svg class="ic"><use href="#i-implant"/></svg></span><h3 data-i18n="svc4_t"></h3><p data-i18n="svc4_d"></p><a class="card__link" href="#" data-soon><span data-i18n="learn_more"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
-          <li class="card reveal"><span class="ic-circle"><svg class="ic"><use href="#i-drop"/></svg></span><h3 data-i18n="svc5_t"></h3><p data-i18n="svc5_d"></p><a class="card__link" href="#" data-soon><span data-i18n="learn_more"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
-          <li class="card reveal"><span class="ic-circle"><svg class="ic"><use href="#i-bolt"/></svg></span><h3 data-i18n="svc6_t"></h3><p data-i18n="svc6_d"></p><a class="card__link" href="#" data-soon><span data-i18n="learn_more"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
+          <li class="card reveal"><span class="ic-circle"><svg class="ic"><use href="#i-sparkle"/></svg></span><h3 data-i18n="svc1_t"></h3><p data-i18n="svc1_d"></p><a class="card__link" href="#services/checkups" data-route="doc" data-doc="services/checkups"><span data-i18n="learn_more"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
+          <li class="card reveal"><span class="ic-circle"><svg class="ic"><use href="#i-crown"/></svg></span><h3 data-i18n="svc2_t"></h3><p data-i18n="svc2_d"></p><a class="card__link" href="#services/fillings-crowns" data-route="doc" data-doc="services/fillings-crowns"><span data-i18n="learn_more"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
+          <li class="card reveal"><span class="ic-circle"><svg class="ic"><use href="#i-denture"/></svg></span><h3 data-i18n="svc3_t"></h3><p data-i18n="svc3_d"></p><a class="card__link" href="#services/dentures" data-route="doc" data-doc="services/dentures"><span data-i18n="learn_more"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
+          <li class="card reveal"><span class="ic-circle"><svg class="ic"><use href="#i-implant"/></svg></span><h3 data-i18n="svc4_t"></h3><p data-i18n="svc4_d"></p><a class="card__link" href="#services/implants" data-route="doc" data-doc="services/implants"><span data-i18n="learn_more"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
+          <li class="card reveal"><span class="ic-circle"><svg class="ic"><use href="#i-drop"/></svg></span><h3 data-i18n="svc5_t"></h3><p data-i18n="svc5_d"></p><a class="card__link" href="#services/gum-care" data-route="doc" data-doc="services/gum-care"><span data-i18n="learn_more"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
+          <li class="card reveal"><span class="ic-circle"><svg class="ic"><use href="#i-bolt"/></svg></span><h3 data-i18n="svc6_t"></h3><p data-i18n="svc6_d"></p><a class="card__link" href="#services/emergency" data-route="doc" data-doc="services/emergency"><span data-i18n="learn_more"></span><svg class="ic"><use href="#i-arrow"/></svg></a></li>
         </ul>
       </div>
     </section>
@@ -1319,7 +1363,7 @@ fieldset.field { border: 0; margin: 0 0 1.5rem; padding: 0; min-width: 0; }
             <div><dt data-i18n="fact_lang"></dt><dd><span class="ph" data-ph="LANGUAGES_SPOKEN"></span></dd></div>
             <div><dt data-i18n="fact_member"></dt><dd><span class="ph" data-ph="PROFESSIONAL_MEMBERSHIPS"></span></dd></div>
           </dl>
-          <a class="btn btn--ghost" href="#" data-soon data-i18n="doctor_more"></a>
+          <a class="btn btn--ghost" href="#about" data-route="doc" data-doc="about" data-i18n="doctor_more"></a>
         </div>
       </div>
     </section>
@@ -1386,9 +1430,9 @@ fieldset.field { border: 0; margin: 0 0 1.5rem; padding: 0; min-width: 0; }
           <h2 id="art-title" data-i18n="art_title"></h2>
         </div>
         <ul class="cards">
-          <li class="article reveal"><div class="article__img"><svg class="ic"><use href="#i-denture"/></svg></div><div class="article__body"><p class="chip" data-i18n="art1_c"></p><h3 data-i18n="art1_t"></h3><p data-i18n="art1_d"></p><p class="article__meta" data-i18n="read_5"></p><a class="card__link" href="#" data-soon><span data-i18n="read_article"></span><svg class="ic"><use href="#i-arrow"/></svg></a></div></li>
-          <li class="article reveal"><div class="article__img article__img--2"><svg class="ic"><use href="#i-drop"/></svg></div><div class="article__body"><p class="chip" data-i18n="art2_c"></p><h3 data-i18n="art2_t"></h3><p data-i18n="art2_d"></p><p class="article__meta" data-i18n="read_4"></p><a class="card__link" href="#" data-soon><span data-i18n="read_article"></span><svg class="ic"><use href="#i-arrow"/></svg></a></div></li>
-          <li class="article reveal"><div class="article__img article__img--3"><svg class="ic"><use href="#i-implant"/></svg></div><div class="article__body"><p class="chip" data-i18n="art3_c"></p><h3 data-i18n="art3_t"></h3><p data-i18n="art3_d"></p><p class="article__meta" data-i18n="read_6"></p><a class="card__link" href="#" data-soon><span data-i18n="read_article"></span><svg class="ic"><use href="#i-arrow"/></svg></a></div></li>
+          <li class="article reveal"><div class="article__img"><svg class="ic"><use href="#i-denture"/></svg></div><div class="article__body"><p class="chip" data-i18n="art1_c"></p><h3 data-i18n="art1_t"></h3><p data-i18n="art1_d"></p><p class="article__meta" data-readtime="tips/denture-care"></p><a class="card__link" href="#tips/denture-care" data-route="doc" data-doc="tips/denture-care"><span data-i18n="read_article"></span><svg class="ic"><use href="#i-arrow"/></svg></a></div></li>
+          <li class="article reveal"><div class="article__img article__img--2"><svg class="ic"><use href="#i-drop"/></svg></div><div class="article__body"><p class="chip" data-i18n="art2_c"></p><h3 data-i18n="art2_t"></h3><p data-i18n="art2_d"></p><p class="article__meta" data-readtime="tips/dry-mouth"></p><a class="card__link" href="#tips/dry-mouth" data-route="doc" data-doc="tips/dry-mouth"><span data-i18n="read_article"></span><svg class="ic"><use href="#i-arrow"/></svg></a></div></li>
+          <li class="article reveal"><div class="article__img article__img--3"><svg class="ic"><use href="#i-implant"/></svg></div><div class="article__body"><p class="chip" data-i18n="art3_c"></p><h3 data-i18n="art3_t"></h3><p data-i18n="art3_d"></p><p class="article__meta" data-readtime="tips/implants-guide"></p><a class="card__link" href="#tips/implants-guide" data-route="doc" data-doc="tips/implants-guide"><span data-i18n="read_article"></span><svg class="ic"><use href="#i-arrow"/></svg></a></div></li>
         </ul>
       </div>
     </section>
@@ -1611,6 +1655,47 @@ fieldset.field { border: 0; margin: 0 0 1.5rem; padding: 0; min-width: 0; }
       </div>
     </section>
   </div>
+
+  <!-- Content pages (services, about the doctor, health tips, privacy & legal). One template; text comes from 35–37-docs-*.js -->
+  <div class="page" id="page-doc" data-page="doc" hidden>
+    <div class="pagehead">
+      <div class="wrap">
+        <p class="crumbs" id="docCrumbs"></p>
+        <p class="eyebrow" id="docEyebrow"></p>
+        <h1 id="docTitle"></h1>
+        <p class="lead" id="docLead"></p>
+        <p class="doc__meta" id="docMeta" hidden></p>
+      </div>
+    </div>
+    <div class="wrap doc">
+      <article class="doc__body" aria-labelledby="docTitle">
+        <div class="doc-about" id="docAbout" hidden>
+          <div class="photo photo--doctor photo--real"><img src="data:image/jpeg;base64,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" width="640" height="800" alt="" data-i18n-attr="alt:doctor_photo_alt"></div>
+          <div class="doc-about__text">
+            <p class="doctor__bio"><span class="ph" data-ph="DOCTOR_BIO"></span></p>
+            <dl class="facts">
+              <div><dt data-i18n="fact_edu"></dt><dd><span class="ph" data-ph="DOCTOR_EDUCATION"></span></dd></div>
+              <div><dt data-i18n="fact_exp"></dt><dd><span class="ph" data-ph="DOCTOR_YEARS_OF_EXPERIENCE"></span></dd></div>
+              <div><dt data-i18n="fact_lang"></dt><dd><span class="ph" data-ph="LANGUAGES_SPOKEN"></span></dd></div>
+              <div><dt data-i18n="fact_member"></dt><dd><span class="ph" data-ph="PROFESSIONAL_MEMBERSHIPS"></span></dd></div>
+            </dl>
+          </div>
+        </div>
+        <div id="docBody" class="doc__sections"></div>
+      </article>
+      <aside class="doc__aside">
+        <div class="callcard">
+          <h2 data-i18n="doc_aside_title"></h2>
+          <p data-i18n="doc_aside_d"></p>
+          <p class="callcard__num"><span data-info="CLINIC_PHONE"></span></p>
+          <p class="status" data-status="long"><span class="status-dot"></span><span class="status-text"></span></p>
+          <a class="btn btn--cta btn--block" href="#schedule" data-route="schedule"><svg class="ic"><use href="#i-cal"/></svg><span data-i18n="cta_schedule"></span></a>
+          <a class="btn btn--light btn--block" href="#" data-call><svg class="ic"><use href="#i-phone"/></svg><span data-i18n="call_now"></span></a>
+        </div>
+        <nav class="doc-related" id="docRelated" aria-labelledby="docRelatedTitle"><h2 id="docRelatedTitle"></h2><ul id="docRelatedList"></ul></nav>
+      </aside>
+    </div>
+  </div>
   </div>
 
   <footer class="footer">
@@ -1625,8 +1710,8 @@ fieldset.field { border: 0; margin: 0 0 1.5rem; padding: 0; min-width: 0; }
         <p><span class="ph" data-ph="SOCIAL_MEDIA_LINKS"></span></p>
       </div>
       <nav data-i18n-attr="aria-label:f_patients"><h2 data-i18n="f_patients"></h2><ul><li><a href="#" data-route="new" data-i18n="nav_new"></a></li><li><a href="#" data-route="schedule" data-i18n="cta_schedule"></a></li><li><a href="#" data-route="home" data-scroll="insurance" data-i18n="nav_insurance"></a></li></ul></nav>
-      <nav data-i18n-attr="aria-label:f_office"><h2 data-i18n="f_office"></h2><ul><li><a href="#" data-route="home" data-scroll="doctor" data-i18n="nav_about"></a></li><li><a href="#" data-route="home" data-scroll="services" data-i18n="nav_services"></a></li><li><a href="#" data-route="home" data-scroll="articles" data-i18n="nav_articles"></a></li><li><a href="#" data-route="home" data-scroll="visit" data-i18n="nav_contact"></a></li></ul></nav>
-      <nav data-i18n-attr="aria-label:f_legal"><h2 data-i18n="f_legal"></h2><ul><li><a href="#" data-soon data-i18n="f_privacy"></a></li><li><a href="#" data-soon data-i18n="f_npp"></a></li><li><a href="#" data-soon data-i18n="f_access"></a></li><li><a href="#" data-soon data-i18n="f_nondisc"></a></li></ul></nav>
+      <nav data-i18n-attr="aria-label:f_office"><h2 data-i18n="f_office"></h2><ul><li><a href="#about" data-route="doc" data-doc="about" data-i18n="nav_about"></a></li><li><a href="#" data-route="home" data-scroll="services" data-i18n="nav_services"></a></li><li><a href="#" data-route="home" data-scroll="articles" data-i18n="nav_articles"></a></li><li><a href="#" data-route="home" data-scroll="visit" data-i18n="nav_contact"></a></li></ul></nav>
+      <nav data-i18n-attr="aria-label:f_legal"><h2 data-i18n="f_legal"></h2><ul><li><a href="#privacy" data-route="doc" data-doc="privacy" data-i18n="f_privacy"></a></li><li><a href="#privacy-practices" data-route="doc" data-doc="privacy-practices" data-i18n="f_npp"></a></li><li><a href="#accessibility" data-route="doc" data-doc="accessibility" data-i18n="f_access"></a></li><li><a href="#nondiscrimination" data-route="doc" data-doc="nondiscrimination" data-i18n="f_nondisc"></a></li></ul></nav>
     </div>
     <div class="wrap footer__bottom">
       <p>© 2026 <span data-info="CLINIC_NAME"></span></p>
@@ -1877,8 +1962,9 @@ fieldset.field { border: 0; margin: 0 0 1.5rem; padding: 0; min-width: 0; }
       <ul>
         <li>Giờ làm việc đã theo phòng khám (T2 10–7, T3–T5 9–5, T7 9–2, T6 và CN nghỉ). Các ngày lễ trong mục “Thay đổi sắp tới” vẫn là ví dụ, nhân viên tự sửa trong Staff Portal.</li>
         <li>Giờ trống trên trang Đặt lịch lấy từ OpenDental giả lập (mỗi lượt khám 60 phút, cho đặt trước 8 tuần). Mở file trực tiếp thì dùng dữ liệu giả ngay trong trang.</li>
-        <li>Danh sách 6 dịch vụ và phần mô tả ngắn của từng dịch vụ.</li>
-        <li>3 bài viết mẫu ở mục Health tips.</li>
+        <li>6 trang dịch vụ: nha sĩ xem lại nội dung, nhất là những gì phòng khám thực sự làm (ví dụ có tự cấy implant hay không).</li>
+        <li>3 bài viết Health tips: viết theo hướng dẫn chung của ADA, cần nha sĩ duyệt.</li>
+        <li>4 trang chính sách (Privacy Policy, Notice of Privacy Practices, Accessibility, Nondiscrimination): bản nháp theo mẫu của HHS, cần luật sư hoặc chuyên viên HIPAA duyệt. Trang Nondiscrimination hiện mới có câu hỗ trợ ngôn ngữ cho tiếng Tây Ban Nha và tiếng Việt.</li>
         <li>Câu giới thiệu ở đầu trang.</li>
         <li>Bản tiếng Tây Ban Nha tạm tránh dùng danh xưng Dr./Dra. cho đến khi có token DOCTOR_SPANISH_TITLE.</li>
       </ul>
@@ -2019,10 +2105,18 @@ I18N.en = {
   art3_c: "Implants",
   art3_t: "Are dental implants right for you?",
   art3_d: "What to expect, how long it takes, and questions to ask at your visit.",
-  read_4: "4 minute read",
-  read_5: "5 minute read",
-  read_6: "6 minute read",
   read_article: "Read the article",
+  read_n: "{n} minute read",
+  doc_read_tip: "Read the article",
+  doc_read_more: "Read more",
+  doc_all_tips: "All health tips",
+  doc_related_service: "Other services",
+  doc_related_tip: "More health tips",
+  doc_related_about: "Helpful pages",
+  doc_aside_title: "Questions? We are happy to help.",
+  doc_aside_d: "Call us or book a visit online.",
+  doc_effective: "Effective date: {ph:LEGAL_EFFECTIVE_DATE}",
+  doc_tip_disclaimer: "This article is general information, not medical advice. Ask us about your own situation.",
 
   visit_eyebrow: "Visit us",
   visit_title: "Hours and location",
@@ -2351,10 +2445,18 @@ I18N.vi = {
   art3_c: "Implant",
   art3_t: "Cấy ghép implant có phù hợp với quý vị?",
   art3_d: "Quá trình ra sao, mất bao lâu, và nên hỏi gì khi đi khám.",
-  read_4: "Đọc trong 4 phút",
-  read_5: "Đọc trong 5 phút",
-  read_6: "Đọc trong 6 phút",
   read_article: "Đọc bài viết",
+  read_n: "Đọc trong {n} phút",
+  doc_read_tip: "Đọc bài viết",
+  doc_read_more: "Đọc thêm",
+  doc_all_tips: "Tất cả bài viết",
+  doc_related_service: "Dịch vụ khác",
+  doc_related_tip: "Thêm kiến thức nha khoa",
+  doc_related_about: "Trang hữu ích",
+  doc_aside_title: "Có câu hỏi? Chúng tôi sẵn lòng giúp.",
+  doc_aside_d: "Gọi cho chúng tôi hoặc đặt lịch online.",
+  doc_effective: "Ngày hiệu lực: {ph:LEGAL_EFFECTIVE_DATE}",
+  doc_tip_disclaimer: "Bài viết này là thông tin chung, không thay cho lời khuyên y tế. Hãy hỏi chúng tôi về trường hợp của quý vị.",
 
   visit_eyebrow: "Ghé thăm chúng tôi",
   visit_title: "Giờ mở cửa và địa chỉ",
@@ -2685,10 +2787,18 @@ I18N.es = {
   art3_c: "Implantes",
   art3_t: "¿Son los implantes dentales una buena opción para usted?",
   art3_d: "Qué esperar, cuánto tiempo toma y qué preguntar en su visita.",
-  read_4: "Lectura de 4 minutos",
-  read_5: "Lectura de 5 minutos",
-  read_6: "Lectura de 6 minutos",
   read_article: "Leer el artículo",
+  read_n: "Lectura de {n} minutos",
+  doc_read_tip: "Leer el artículo",
+  doc_read_more: "Leer más",
+  doc_all_tips: "Todos los consejos",
+  doc_related_service: "Otros servicios",
+  doc_related_tip: "Más consejos de salud",
+  doc_related_about: "Páginas útiles",
+  doc_aside_title: "¿Tiene preguntas? Con gusto le ayudamos.",
+  doc_aside_d: "Llámenos o haga su cita en línea.",
+  doc_effective: "Fecha de vigencia: {ph:LEGAL_EFFECTIVE_DATE}",
+  doc_tip_disclaimer: "Este artículo es información general, no un consejo médico. Pregúntenos sobre su caso.",
 
   visit_eyebrow: "Visítenos",
   visit_title: "Horario y ubicación",
@@ -2913,6 +3023,9 @@ const PLACEHOLDERS = {
   ACCEPTED_INSURANCE:          { label: "Insurance list", need: "Danh sách bảo hiểm phòng khám nhận (Mây sẽ gửi sau)", where: "Mục Bảo hiểm & thanh toán" },
   OPENDENTAL_API_KEYS:         { label: "OpenDental API keys", need: "Developer Key (đăng ký với OpenDental) và Customer Key (phòng khám dán vào Setup > Advanced Setup > API trong OpenDental). Xem server/README.md", where: "Cấu hình server (đặt lịch online)", configOnly: true },
   OPENDENTAL_PROV_AND_OP:      { label: "ProvNum / OpNum", need: "Số ProvNum của bác sĩ và OpNum của ghế (operatory) nhận lịch hẹn đặt online, xem trong OpenDental", where: "Cấu hình server (đặt lịch online)", configOnly: true },
+  AFTER_HOURS_EMERGENCY:       { label: "After-hours help", need: "Khi phòng khám đóng cửa, bệnh nhân cấp cứu gọi đâu (lời nhắn tổng đài, số trực, hay hướng dẫn đến phòng cấp cứu)", where: "Trang Cấp cứu nha khoa" },
+  PRIVACY_CONTACT:             { label: "Privacy officer", need: "Tên và chức danh người phụ trách quyền riêng tư (HIPAA) và dân quyền (Section 1557) của phòng khám", where: "Trang Notice of Privacy Practices, Nondiscrimination" },
+  LEGAL_EFFECTIVE_DATE:        { label: "Effective date", need: "Ngày bắt đầu áp dụng các trang chính sách (sau khi luật sư duyệt)", where: "Các trang Privacy & legal" },
   SOCIAL_MEDIA_LINKS:          { label: "Social links", need: "Link Facebook, Instagram (nếu có)", where: "Footer" },
   STAFF_GOOGLE_EMAIL:          { label: "Staff email", need: "Danh sách email Google Workspace của nhân viên được vào Staff Portal", where: "Staff Portal" },
   GOOGLE_SHEET_LINK:           { label: "Google Sheet", need: "Google Sheet “Clinic Operations” (mình sẽ tạo mẫu sẵn các tab)", where: "Staff Portal, cấu hình server", configOnly: true },
@@ -2927,6 +3040,957 @@ const CLINIC_INFO = {
   CLINIC_EMAIL:   "business@excelcaredental.com"
 };
 const phToken = (name) => "INPUT_INFO_ABOUT_" + name + "_HERE";
+
+// Content pages. The key is also the address: index.html#services/dentures, #tips/dry-mouth, #privacy …
+// Titles reuse the dictionary keys already shown on the home page cards, so card and page always match.
+// The page text itself lives in 35–37-docs-*.js (one file per language; missing text falls back to English).
+const DOC_META = {
+  "services/checkups":       { kind: "service", titleKey: "svc1_t", icon: "i-sparkle" },
+  "services/fillings-crowns": { kind: "service", titleKey: "svc2_t", icon: "i-crown" },
+  "services/dentures":       { kind: "service", titleKey: "svc3_t", icon: "i-denture" },
+  "services/implants":       { kind: "service", titleKey: "svc4_t", icon: "i-implant" },
+  "services/gum-care":       { kind: "service", titleKey: "svc5_t", icon: "i-drop" },
+  "services/emergency":      { kind: "service", titleKey: "svc6_t", icon: "i-bolt" },
+  "about":                   { kind: "about",   titleKey: "doctor_name" },
+  "tips/denture-care":       { kind: "tip",     titleKey: "art1_t", chipKey: "art1_c" },
+  "tips/dry-mouth":          { kind: "tip",     titleKey: "art2_t", chipKey: "art2_c" },
+  "tips/implants-guide":     { kind: "tip",     titleKey: "art3_t", chipKey: "art3_c" },
+  "privacy":                 { kind: "legal",   titleKey: "f_privacy" },
+  "privacy-practices":       { kind: "legal",   titleKey: "f_npp" },
+  "accessibility":           { kind: "legal",   titleKey: "f_access" },
+  "nondiscrimination":       { kind: "legal",   titleKey: "f_nondisc" }
+};
+const DOCS = {};
+
+// English text of the content pages. Section types: { h, p, list, steps: [[title, text]], faq: [[q, a]] },
+// { warn }, { note }, { more: "<page key>" }, { taglines: [[lang, text]] }. {ph:NAME} = placeholder, {info:NAME} = confirmed clinic info.
+// Medical and legal text is a draft for the dentist and a lawyer to review before the site goes live.
+DOCS.en = {
+  "services/checkups": {
+    lead: "Regular visits keep your teeth and gums healthy, and help us find small problems before they become painful or costly.",
+    sections: [
+      { h: "What a checkup includes", list: [
+        "A look at your teeth, gums, tongue and the inside of your cheeks",
+        "An oral cancer screening",
+        "X-rays when you need them, at a low dose",
+        "A check of your dentures, partials or bridges, if you wear them",
+        "Time to ask about anything that bothers you"
+      ] },
+      { h: "Your cleaning", steps: [
+        ["Gentle cleaning", "We remove plaque and tartar (hard buildup) that brushing at home cannot reach."],
+        ["Polish", "We polish your teeth so they feel smooth and clean."],
+        ["Tips for home", "We show you easy ways to brush and clean between your teeth, even with stiff or sore hands."]
+      ] },
+      { h: "How often should I come?", p: "Most people come every 6 months. If you have gum disease, dry mouth or many fillings, we may suggest coming more often. We will tell you what is right for you." },
+      { faq: [
+        ["Will the cleaning hurt?", "Most people feel little or no discomfort. Tell us if anything feels sore, and we will slow down or numb the area."],
+        ["Do you take X-rays at every visit?", "No. We take X-rays only when they help us check your health, and we explain why first."]
+      ] }
+    ]
+  },
+  "services/fillings-crowns": {
+    lead: "A filling repairs a cavity. A crown covers and protects a tooth that is weak, cracked or has a large filling.",
+    sections: [
+      { h: "Fillings", p: "We remove the decay and fill the space with a tooth-colored material. Most fillings take one visit. We numb the area first so you stay comfortable." },
+      { h: "Crowns", p: "A crown is a cap that fits over the whole tooth. It makes a broken or weak tooth strong again and helps it look natural. A crown usually takes two visits: one to shape the tooth and fit a temporary crown, and one to place the final crown." },
+      { h: "Signs you may need a filling or a crown", list: [
+        "A tooth hurts when you eat something sweet, hot or cold",
+        "A tooth feels rough, chipped or cracked",
+        "Food gets stuck in the same spot again and again",
+        "An old filling feels loose or has fallen out"
+      ] },
+      { h: "Caring for fillings and crowns", list: [
+        "Brush twice a day with fluoride toothpaste",
+        "Clean between your teeth once a day",
+        "Do not chew ice or very hard foods",
+        "Come for regular checkups so we can check the edges"
+      ] },
+      { faq: [
+        ["How long does a crown last?", "With good care, many crowns last 10 years or more."],
+        ["Will my insurance help pay?", "Many plans help pay for fillings and crowns. We check your benefits and explain the cost before we start."]
+      ] }
+    ]
+  },
+  "services/dentures": {
+    lead: "Complete dentures replace all the teeth in the upper or lower jaw. Partial dentures fill the gaps when you still have some natural teeth.",
+    sections: [
+      { h: "What we offer", list: [
+        "Complete dentures",
+        "Partial dentures",
+        "Repairs for cracked or broken dentures",
+        "Relines, so loose dentures fit better",
+        "Adjustments for sore spots"
+      ] },
+      { h: "Getting new dentures", steps: [
+        ["Exam and planning", "We check your mouth and talk about the type of denture that fits your needs and budget."],
+        ["Impressions", "We take molds of your mouth so the dentures match its shape."],
+        ["Try-in", "You try a model of the dentures so we can check the fit, the bite and the look before they are finished."],
+        ["Fitting and follow-up", "We fit your new dentures, then see you again to fix any sore spots."]
+      ] },
+      { h: "Getting used to new dentures", p: "New dentures often feel strange at first. Start with soft foods cut into small pieces, and chew on both sides at once. Speaking may feel different for a few days; reading out loud helps. If a spot is sore, call us. Please do not try to adjust the dentures yourself." },
+      { h: "When to call us", list: [
+        "Your dentures feel loose or click when you talk",
+        "A sore spot does not heal within a few days",
+        "Your denture is cracked, chipped or missing a tooth"
+      ] },
+      { more: "tips/denture-care" }
+    ]
+  },
+  "services/implants": {
+    lead: "A dental implant is a small post placed in the jawbone. It works like a tooth root and holds a crown, a bridge or a denture firmly in place.",
+    sections: [
+      { h: "Why people choose implants", list: [
+        "They feel and work much like natural teeth",
+        "They do not slip when you eat or talk",
+        "They can hold a denture firmly so it does not move",
+        "They help keep the jawbone healthy where a tooth is missing"
+      ] },
+      { h: "How it works", steps: [
+        ["Exam and X-rays", "We check your gums and bone, and talk about your health and your medicines."],
+        ["Placing the implant", "The implant is placed in the jaw. The area is numbed so you stay comfortable."],
+        ["Healing", "The bone grows around the implant. This usually takes a few months."],
+        ["Your new tooth", "A crown, bridge or denture is attached to the implant."]
+      ] },
+      { h: "Is an implant right for me?", p: "Many people can have implants at any age. Healthy gums and enough bone are what matter most. Smoking and some health conditions, such as diabetes that is not well controlled, can slow healing. We explain all your choices, including bridges and dentures, so you can decide what is best for you." },
+      { faq: [
+        ["Am I too old for implants?", "Age alone is usually not a problem. Your general health and your bone matter more."],
+        ["Does insurance cover implants?", "Some plans pay for part of the cost. We check your benefits and explain the cost before you decide."]
+      ] },
+      { more: "tips/implants-guide" }
+    ]
+  },
+  "services/gum-care": {
+    lead: "Healthy gums hold your teeth in place. Gum disease is common in older adults, and it often does not hurt until it is advanced.",
+    sections: [
+      { h: "Warning signs", list: [
+        "Gums that bleed when you brush or floss",
+        "Red, swollen or tender gums",
+        "Gums pulling back from the teeth",
+        "Bad breath that does not go away",
+        "Teeth that feel loose or are moving apart"
+      ] },
+      { h: "How we treat gum disease", steps: [
+        ["Check", "We gently measure the space between your teeth and gums to see how healthy they are."],
+        ["Deep cleaning", "We clean below the gum line to remove tartar and germs. This is called scaling and root planing."],
+        ["Follow-up", "We check how your gums are healing and plan regular cleanings to keep them healthy."]
+      ] },
+      { h: "Why it matters", p: "Without treatment, gum disease can lead to tooth loss. It is also linked to other health problems, such as diabetes and heart disease. Treating it early is easier and more comfortable." },
+      { h: "Help at home", list: [
+        "Brush gently twice a day with a soft toothbrush",
+        "Clean between your teeth with floss, a small brush or a water flosser",
+        "An electric toothbrush or a brush with a thick handle helps if your hands are stiff",
+        "Do not smoke"
+      ] }
+    ]
+  },
+  "services/emergency": {
+    lead: "Tooth pain or a broken tooth? Call us. We will help you as soon as we can.",
+    sections: [
+      { warn: "Call 911 or go to the emergency room if you have swelling that makes it hard to breathe or swallow, a high fever with a swollen face, bleeding that will not stop, or an injury to your face or jaw." },
+      { h: "Call us right away for", list: [
+        "A bad toothache",
+        "A broken, cracked or knocked-out tooth",
+        "Swelling in your gums or face",
+        "A lost filling or crown",
+        "A broken denture"
+      ] },
+      { h: "What to do until you see us", list: [
+        "Toothache: rinse with warm salt water. You can take a pain reliever you normally use, as the label says. Do not put aspirin on your gums.",
+        "Knocked-out tooth: hold it by the top, not the root. Rinse it gently and try to put it back in place, or keep it in milk. Call us right away: time matters.",
+        "Broken tooth: rinse your mouth and keep any pieces. Hold a cold pack on your cheek to help with swelling.",
+        "Lost crown: keep it safe and bring it with you."
+      ] },
+      { h: "When the office is closed", p: "Call {info:CLINIC_PHONE}. {ph:AFTER_HOURS_EMERGENCY}" }
+    ]
+  },
+  "about": {
+    lead: "Meet your dentist at Excelcare Dental in Grayslake.",
+    sections: [
+      { h: "How we care for you", list: [
+        "We listen first, and explain each step before we start",
+        "We go at your pace. You can ask us to pause at any time",
+        "We talk about costs before any treatment",
+        "Free parking right in front, and a ramp at the door for wheelchairs and walkers"
+      ] },
+      { h: "Visit us", p: "{info:CLINIC_ADDRESS}" }
+    ]
+  },
+  "tips/denture-care": {
+    lead: "Five easy steps keep dentures clean, comfortable and lasting longer.",
+    sections: [
+      { h: "Your daily routine", steps: [
+        ["Rinse after eating", "Take your dentures out and rinse them with water to remove food."],
+        ["Brush them every day", "Use a soft denture brush and a denture cleaner. Regular toothpaste can scratch dentures."],
+        ["Clean your mouth", "Brush your gums, your tongue and any natural teeth with a soft toothbrush."],
+        ["Keep them moist overnight", "Most dentures need to stay moist. Soak them in water or a denture solution. Never use hot water: it can bend them."],
+        ["Handle them with care", "Clean your dentures over a folded towel or a sink filled with water, so they do not break if you drop them."]
+      ] },
+      { h: "Give your gums a rest", p: "Take your dentures out at night, unless we tell you otherwise. This lets your gums rest and stay healthy." },
+      { h: "Things to avoid", list: [
+        "Bleach or whitening products",
+        "Very hot or boiling water",
+        "Bending or fixing dentures yourself",
+        "Store-bought glue for repairs"
+      ] },
+      { h: "See us regularly", p: "Even with no natural teeth, regular visits matter. We check the fit of your dentures, look for sore spots and do an oral cancer screening. Your mouth changes over time, so dentures may need a reline to keep fitting well." }
+    ]
+  },
+  "tips/dry-mouth": {
+    lead: "Many medicines cause dry mouth. Here is how to protect your teeth.",
+    sections: [
+      { h: "Why it matters", p: "Saliva washes away food and helps protect your teeth. When your mouth is dry, cavities can form faster, dentures may feel uncomfortable, and it can be harder to talk, chew and swallow." },
+      { h: "Common causes", list: [
+        "Medicines, such as some for blood pressure, allergies, depression, pain and bladder control",
+        "Health conditions, such as diabetes and Sjögren's syndrome",
+        "Radiation treatment to the head or neck",
+        "Not drinking enough water",
+        "Breathing through your mouth at night"
+      ] },
+      { h: "What helps", list: [
+        "Sip water often during the day",
+        "Chew sugar-free gum or suck on sugar-free candy to help saliva flow",
+        "Use a humidifier in your bedroom at night",
+        "Choose a mouthwash without alcohol",
+        "Limit coffee, alcohol and tobacco",
+        "Use fluoride toothpaste, and ask us if extra fluoride is right for you"
+      ] },
+      { note: "Do not stop or change a medicine on your own. Ask your doctor or pharmacist if there is another choice that causes less dry mouth." },
+      { h: "When to see us", p: "Tell us if your mouth feels dry most of the time, or if you notice new cavities, sore spots under your dentures or trouble swallowing. We can look for the cause and suggest products that help." }
+    ]
+  },
+  "tips/implants-guide": {
+    lead: "What to expect, how long it takes, and questions to ask at your visit.",
+    sections: [
+      { h: "What is a dental implant?", p: "An implant is a small post, usually made of titanium, that replaces the root of a missing tooth. Once it has healed in the jawbone, it can hold a single crown, a bridge or a full denture." },
+      { h: "Who can get implants?", p: "Many adults can, including older adults. What matters most is healthy gums, enough bone to hold the implant, and general health that allows healing. Smoking and diabetes that is not well controlled can slow healing. If there is not enough bone, a bone graft may help." },
+      { h: "How long does it take?", steps: [
+        ["Planning", "An exam, X-rays and a talk about your health and medicines."],
+        ["Placement", "The implant is placed in a short procedure, with numbing medicine."],
+        ["Healing", "Usually a few months. The bone grows around the implant and holds it firmly."],
+        ["The final tooth", "Your crown, bridge or denture is attached."]
+      ] },
+      { h: "Questions to ask at your visit", list: [
+        "Am I a good candidate for an implant?",
+        "Will I need a bone graft or other treatment first?",
+        "How many visits will it take, and over how long?",
+        "What will it cost, and will my insurance help?",
+        "What are my other choices, such as a bridge or a denture?",
+        "How do I care for an implant at home?"
+      ] },
+      { h: "Caring for an implant", p: "Brush and clean between your teeth every day, just as you would natural teeth, and come for regular checkups. Implants cannot get cavities, but the gums around them can become infected." }
+    ]
+  },
+  "privacy": {
+    lead: "How this website collects and uses your information.",
+    sections: [
+      { h: "What we collect", list: [
+        "What you type into our forms, such as your name, date of birth, phone number, email, insurance and health details",
+        "The appointment time you choose when you book online",
+        "Basic technical information every website receives, such as your browser type and IP address"
+      ] },
+      { h: "How we use it", list: [
+        "To book and confirm your appointment",
+        "To prepare for your visit and check your insurance",
+        "To contact you about your care",
+        "To keep this website working and secure"
+      ] },
+      { h: "Your health information", p: "Information about your health and care is protected by HIPAA. Our Notice of Privacy Practices explains how we use and share it, and your rights." },
+      { more: "privacy-practices" },
+      { h: "Who we share it with", p: "We do not sell your information. We share it only with companies that help us run our office, such as our dental records system and our secure email and document service, under agreements that require them to protect it, or when the law requires it." },
+      { h: "Cookies and settings", p: "We do not use cookies for advertising. Your choices on this website, such as language, text size and accessibility settings, are saved only in your own browser." },
+      { h: "Security", p: "Forms are sent over a secure, encrypted connection. Only our office team can see what you send." },
+      { h: "Children", p: "This website is not meant for children under 13. A parent or guardian should fill out forms for a child." },
+      { h: "Questions", p: "Call us at {info:CLINIC_PHONE} or email {info:CLINIC_EMAIL}." },
+      { h: "Changes to this policy", p: "If we change this policy, we will post the new version on this page with a new effective date." }
+    ]
+  },
+  "privacy-practices": {
+    lead: "This notice describes how medical information about you may be used and disclosed and how you can get access to this information. Please review it carefully.",
+    sections: [
+      { h: "Your rights", p: "When it comes to your health information, you have the right to:", list: [
+        "Get a copy of your paper or electronic dental record",
+        "Ask us to correct your record if you think it is wrong or incomplete",
+        "Ask us to contact you in a certain way, for example by cell phone or at a different address",
+        "Ask us to limit what we use or share. If you pay for a service in full yourself, you can ask us not to share that information with your health insurer",
+        "Get a list of those with whom we have shared your information",
+        "Get a paper copy of this notice at any time",
+        "Choose someone to act for you, such as a legal guardian",
+        "File a complaint if you feel your rights have been violated"
+      ] },
+      { h: "Your choices", p: ["You can tell us whether to share information with family and friends involved in your care, or in a disaster relief situation. If you cannot tell us, for example because you are unconscious, we may share it if we believe it is in your best interest.", "We never use or share your information for marketing, and never sell it, unless you give us written permission."] },
+      { h: "How we use and share your information", list: [
+        "To treat you, for example by sharing with a specialist who also treats you",
+        "To run our office, for example to improve your care and contact you when needed",
+        "To bill for your care and get payment from your insurance",
+        "For public health and safety, such as preventing disease or reporting suspected abuse",
+        "When the law requires it, including to respond to lawsuits, legal actions and law enforcement",
+        "For workers' compensation, health oversight agencies and other government requests"
+      ] },
+      { h: "Appointment reminders", p: "We may contact you by phone, text message or email to remind you of appointments or to share information about your care." },
+      { h: "Our responsibilities", list: [
+        "We are required by law to keep your health information private and secure",
+        "We will tell you promptly if a breach happens that may have put your information at risk",
+        "We must follow the duties and privacy practices in this notice and give you a copy",
+        "We will not use or share your information in other ways unless you tell us in writing that we can. You may change your mind at any time by letting us know in writing"
+      ] },
+      { h: "Changes to this notice", p: "We can change the terms of this notice, and the changes will apply to all the information we have about you. The new notice will be available on request, in our office and on this website." },
+      { h: "Questions and complaints", p: ["Contact our Privacy Officer, {ph:PRIVACY_CONTACT}, at {info:CLINIC_PHONE} or {info:CLINIC_EMAIL}.", "You can also file a complaint with the U.S. Department of Health and Human Services Office for Civil Rights by sending a letter to 200 Independence Avenue, S.W., Washington, D.C. 20201, calling 1-877-696-6775, or visiting www.hhs.gov/ocr/privacy/hipaa/complaints/.", "We will not take action against you for filing a complaint."] }
+    ]
+  },
+  "accessibility": {
+    lead: "We want everyone to be able to use our website and visit our office.",
+    sections: [
+      { h: "Our website", p: "We aim to meet the Web Content Accessibility Guidelines (WCAG) 2.1, level AA. This website has:", list: [
+        "Large, easy-to-read text and strong color contrast",
+        "Text size buttons (A, A+, A++) at the top of every page",
+        "An accessibility menu (the round button at the bottom left) to raise contrast, highlight links, add spacing, pause animations and more",
+        "Full use with a keyboard and with screen readers",
+        "Pages in English, Tiếng Việt and Español"
+      ] },
+      { h: "Our office", list: [
+        "Free parking right in front of the office",
+        "A ramp at the entrance for wheelchairs and walkers",
+        "Tell us when you book if you need extra time or help, and we will plan for it"
+      ] },
+      { h: "Need help or found a problem?", p: "If any part of this website is hard to use, please call us at {info:CLINIC_PHONE} or email {info:CLINIC_EMAIL}. We will help you by phone and work to fix the problem." }
+    ]
+  },
+  "nondiscrimination": {
+    lead: "Excelcare Dental complies with applicable federal civil rights laws and does not discriminate on the basis of race, color, national origin, age, disability or sex.",
+    sections: [
+      { p: "Excelcare Dental does not exclude people or treat them differently because of race, color, national origin, age, disability or sex." },
+      { h: "Free help we provide", list: [
+        "Free aids and services to people with disabilities, such as qualified sign language interpreters and written information in other formats (large print, accessible electronic formats)",
+        "Free language services to people whose main language is not English, such as qualified interpreters and information written in other languages"
+      ], p: "If you need these services, call {info:CLINIC_PHONE}." },
+      { h: "If you believe we have not provided these services or have discriminated", p: "You can file a grievance with our Civil Rights Coordinator, {ph:PRIVACY_CONTACT}, in person, by mail, by phone at {info:CLINIC_PHONE} or by email at {info:CLINIC_EMAIL}. If you need help filing a grievance, our coordinator can help you." },
+      { h: "Complaints to the U.S. government", p: "You can also file a civil rights complaint with the U.S. Department of Health and Human Services, Office for Civil Rights, online at ocrportal.hhs.gov/ocr/portal/lobby.jsf, by mail at 200 Independence Avenue SW, Room 509F, HHH Building, Washington, DC 20201, or by phone at 1-800-368-1019 (TDD: 1-800-537-7697)." },
+      { h: "Language help", taglines: [
+        ["es", "ATENCIÓN: si habla español, tiene a su disposición servicios gratuitos de asistencia lingüística. Llame al {info:CLINIC_PHONE}."],
+        ["vi", "CHÚ Ý: Nếu bạn nói Tiếng Việt, có các dịch vụ hỗ trợ ngôn ngữ miễn phí dành cho bạn. Gọi số {info:CLINIC_PHONE}."]
+      ] }
+    ]
+  }
+};
+
+// Tiếng Việt cho các trang nội dung. Cùng cấu trúc với 35-docs-en.js. Gọi bệnh nhân là "quý vị".
+DOCS.vi = {
+  "services/checkups": {
+    lead: "Khám định kỳ giúp răng và nướu khoẻ mạnh, và giúp chúng tôi phát hiện sớm các vấn đề nhỏ trước khi chúng gây đau hoặc tốn kém.",
+    sections: [
+      { h: "Một lần khám gồm những gì", list: [
+        "Kiểm tra răng, nướu, lưỡi và mặt trong của má",
+        "Tầm soát ung thư miệng",
+        "Chụp X-quang khi cần, với liều thấp",
+        "Kiểm tra răng giả, hàm tháo lắp hoặc cầu răng, nếu quý vị đang dùng",
+        "Thời gian để quý vị hỏi về bất cứ điều gì làm quý vị khó chịu"
+      ] },
+      { h: "Làm sạch răng", steps: [
+        ["Làm sạch nhẹ nhàng", "Chúng tôi lấy mảng bám và cao răng (lớp bám cứng) mà việc chải răng ở nhà không lấy được."],
+        ["Đánh bóng", "Chúng tôi đánh bóng răng để răng nhẵn và sạch."],
+        ["Hướng dẫn chăm sóc tại nhà", "Chúng tôi chỉ cách chải răng và làm sạch kẽ răng đơn giản, kể cả khi tay bị cứng hoặc đau."]
+      ] },
+      { h: "Bao lâu nên đi khám một lần?", p: "Đa số mọi người đi khám mỗi 6 tháng. Nếu quý vị bị bệnh nướu, khô miệng hoặc có nhiều chỗ trám, chúng tôi có thể đề nghị khám thường xuyên hơn. Chúng tôi sẽ cho quý vị biết lịch phù hợp." },
+      { faq: [
+        ["Làm sạch răng có đau không?", "Đa số mọi người thấy rất ít hoặc không khó chịu. Hãy cho chúng tôi biết nếu thấy đau, chúng tôi sẽ làm chậm lại hoặc gây tê chỗ đó."],
+        ["Lần khám nào cũng phải chụp X-quang sao?", "Không. Chúng tôi chỉ chụp X-quang khi cần để kiểm tra sức khoẻ răng, và luôn giải thích lý do trước."]
+      ] }
+    ]
+  },
+  "services/fillings-crowns": {
+    lead: "Trám răng sửa chỗ răng sâu. Mão răng (bọc răng) che và bảo vệ chiếc răng yếu, nứt hoặc có chỗ trám lớn.",
+    sections: [
+      { h: "Trám răng", p: "Chúng tôi lấy sạch phần răng sâu rồi trám bằng vật liệu cùng màu với răng. Đa số chỉ cần một lần hẹn. Chúng tôi gây tê trước để quý vị thấy thoải mái." },
+      { h: "Mão răng", p: "Mão răng là một chiếc mũ chụp lên toàn bộ chiếc răng. Mão giúp răng bị vỡ hoặc yếu chắc lại và trông tự nhiên. Thường cần hai lần hẹn: lần đầu mài chỉnh răng và gắn mão tạm, lần sau gắn mão chính thức." },
+      { h: "Dấu hiệu có thể cần trám hoặc bọc răng", list: [
+        "Răng đau khi ăn đồ ngọt, nóng hoặc lạnh",
+        "Răng có cảm giác nhám, bị mẻ hoặc nứt",
+        "Thức ăn hay bị kẹt ở cùng một chỗ",
+        "Chỗ trám cũ bị lỏng hoặc rơi ra"
+      ] },
+      { h: "Giữ gìn chỗ trám và mão răng", list: [
+        "Chải răng hai lần mỗi ngày với kem đánh răng có fluoride",
+        "Làm sạch kẽ răng mỗi ngày một lần",
+        "Không nhai đá hoặc đồ ăn quá cứng",
+        "Đi khám định kỳ để chúng tôi kiểm tra các mép trám và mão"
+      ] },
+      { faq: [
+        ["Mão răng dùng được bao lâu?", "Nếu chăm sóc tốt, nhiều mão răng dùng được 10 năm hoặc lâu hơn."],
+        ["Bảo hiểm có trả không?", "Nhiều chương trình bảo hiểm trả một phần chi phí trám và bọc răng. Chúng tôi kiểm tra quyền lợi và giải thích chi phí trước khi làm."]
+      ] }
+    ]
+  },
+  "services/dentures": {
+    lead: "Hàm giả toàn phần thay cho tất cả răng ở hàm trên hoặc hàm dưới. Hàm giả bán phần lấp các khoảng trống khi quý vị vẫn còn một số răng thật.",
+    sections: [
+      { h: "Dịch vụ của chúng tôi", list: [
+        "Hàm giả toàn phần",
+        "Hàm giả bán phần",
+        "Sửa hàm giả bị nứt hoặc gãy",
+        "Đệm lại hàm, để hàm lỏng vừa khít hơn",
+        "Chỉnh hàm khi bị cấn đau"
+      ] },
+      { h: "Làm hàm giả mới", steps: [
+        ["Khám và lên kế hoạch", "Chúng tôi khám miệng và cùng quý vị chọn loại hàm giả hợp với nhu cầu và chi phí."],
+        ["Lấy dấu", "Chúng tôi lấy khuôn miệng để hàm giả vừa đúng hình dáng miệng của quý vị."],
+        ["Thử hàm", "Quý vị đeo thử mẫu hàm để chúng tôi kiểm tra độ vừa, khớp cắn và thẩm mỹ trước khi hoàn thiện."],
+        ["Gắn hàm và tái khám", "Chúng tôi gắn hàm mới, rồi hẹn lại để chỉnh những chỗ cấn đau."]
+      ] },
+      { h: "Làm quen với hàm giả mới", p: "Lúc đầu đeo hàm mới thường thấy lạ. Hãy bắt đầu với đồ ăn mềm cắt nhỏ, và nhai đều cả hai bên. Nói chuyện có thể hơi khác trong vài ngày; đọc to thành tiếng sẽ giúp quen nhanh. Nếu bị cấn đau, xin gọi cho chúng tôi. Xin đừng tự chỉnh sửa hàm." },
+      { h: "Khi nào nên gọi cho chúng tôi", list: [
+        "Hàm bị lỏng hoặc kêu lách cách khi nói",
+        "Chỗ cấn đau không lành sau vài ngày",
+        "Hàm bị nứt, mẻ hoặc rơi mất răng"
+      ] },
+      { more: "tips/denture-care" }
+    ]
+  },
+  "services/implants": {
+    lead: "Implant là một trụ nhỏ được đặt vào xương hàm. Trụ này hoạt động như chân răng và giữ chắc mão răng, cầu răng hoặc hàm giả.",
+    sections: [
+      { h: "Vì sao nhiều người chọn implant", list: [
+        "Cảm giác và chức năng gần giống răng thật",
+        "Không bị trượt khi ăn hoặc nói chuyện",
+        "Có thể giữ chắc hàm giả, không bị xê dịch",
+        "Giúp giữ xương hàm khoẻ ở chỗ mất răng"
+      ] },
+      { h: "Quá trình làm implant", steps: [
+        ["Khám và chụp X-quang", "Chúng tôi kiểm tra nướu, xương, và hỏi về sức khoẻ cũng như thuốc quý vị đang dùng."],
+        ["Đặt implant", "Implant được đặt vào xương hàm. Chỗ đó được gây tê để quý vị thấy thoải mái."],
+        ["Chờ lành", "Xương mọc bám quanh implant. Thường mất vài tháng."],
+        ["Gắn răng mới", "Mão răng, cầu răng hoặc hàm giả được gắn lên implant."]
+      ] },
+      { h: "Implant có hợp với tôi không?", p: "Nhiều người ở mọi lứa tuổi đều làm được implant. Quan trọng nhất là nướu khoẻ và đủ xương. Hút thuốc và một số bệnh, như tiểu đường chưa kiểm soát tốt, có thể làm vết thương lành chậm hơn. Chúng tôi giải thích mọi lựa chọn, kể cả cầu răng và hàm giả, để quý vị quyết định điều tốt nhất cho mình." },
+      { faq: [
+        ["Tôi có quá lớn tuổi để làm implant không?", "Tuổi tác thường không phải là trở ngại. Sức khoẻ chung và xương hàm quan trọng hơn."],
+        ["Bảo hiểm có trả tiền implant không?", "Một số chương trình trả một phần chi phí. Chúng tôi kiểm tra quyền lợi và giải thích chi phí trước khi quý vị quyết định."]
+      ] },
+      { more: "tips/implants-guide" }
+    ]
+  },
+  "services/gum-care": {
+    lead: "Nướu khoẻ giữ răng chắc. Bệnh nướu rất thường gặp ở người lớn tuổi, và thường không đau cho đến khi đã nặng.",
+    sections: [
+      { h: "Dấu hiệu cần chú ý", list: [
+        "Nướu chảy máu khi chải răng hoặc dùng chỉ nha khoa",
+        "Nướu đỏ, sưng hoặc đau",
+        "Nướu bị tụt khỏi chân răng",
+        "Hơi thở hôi không hết",
+        "Răng lung lay hoặc thưa dần ra"
+      ] },
+      { h: "Cách chúng tôi điều trị bệnh nướu", steps: [
+        ["Kiểm tra", "Chúng tôi nhẹ nhàng đo khe giữa răng và nướu để biết nướu khoẻ đến đâu."],
+        ["Làm sạch sâu", "Chúng tôi làm sạch bên dưới viền nướu để lấy cao răng và vi khuẩn. Cách này gọi là cạo vôi và xử lý mặt chân răng."],
+        ["Tái khám", "Chúng tôi kiểm tra nướu lành ra sao và hẹn làm sạch định kỳ để giữ nướu khoẻ."]
+      ] },
+      { h: "Vì sao cần điều trị", p: "Nếu không điều trị, bệnh nướu có thể làm mất răng. Bệnh nướu cũng liên quan đến các bệnh khác như tiểu đường và bệnh tim. Điều trị sớm thì dễ hơn và nhẹ nhàng hơn." },
+      { h: "Chăm sóc tại nhà", list: [
+        "Chải răng nhẹ nhàng hai lần mỗi ngày bằng bàn chải lông mềm",
+        "Làm sạch kẽ răng bằng chỉ nha khoa, bàn chải kẽ hoặc máy tăm nước",
+        "Bàn chải điện hoặc bàn chải cán to giúp ích nếu tay bị cứng",
+        "Không hút thuốc"
+      ] }
+    ]
+  },
+  "services/emergency": {
+    lead: "Đau răng hay gãy răng? Hãy gọi cho chúng tôi. Chúng tôi sẽ giúp quý vị sớm nhất có thể.",
+    sections: [
+      { warn: "Hãy gọi 911 hoặc đến phòng cấp cứu nếu bị sưng làm khó thở hoặc khó nuốt, sốt cao kèm sưng mặt, chảy máu không cầm được, hoặc bị chấn thương ở mặt hay hàm." },
+      { h: "Gọi ngay cho chúng tôi khi", list: [
+        "Đau răng nhiều",
+        "Răng bị gãy, nứt hoặc rơi ra",
+        "Sưng nướu hoặc sưng mặt",
+        "Rơi chỗ trám hoặc mão răng",
+        "Hàm giả bị gãy"
+      ] },
+      { h: "Làm gì trong lúc chờ gặp chúng tôi", list: [
+        "Đau răng: súc miệng bằng nước muối ấm. Có thể uống loại thuốc giảm đau quý vị vẫn dùng, theo hướng dẫn trên nhãn. Không đặt viên aspirin lên nướu.",
+        "Răng bị rơi ra: cầm phần thân răng, không cầm phần chân răng. Rửa nhẹ rồi thử đặt lại vào chỗ cũ, hoặc ngâm trong sữa. Gọi ngay cho chúng tôi: càng sớm càng tốt.",
+        "Răng bị gãy: súc miệng và giữ lại các mảnh vỡ. Chườm lạnh lên má để đỡ sưng.",
+        "Rơi mão răng: giữ mão cẩn thận và mang theo khi đến khám."
+      ] },
+      { h: "Khi phòng khám đóng cửa", p: "Gọi số {info:CLINIC_PHONE}. {ph:AFTER_HOURS_EMERGENCY}" }
+    ]
+  },
+  "about": {
+    lead: "Gặp nha sĩ của quý vị tại Excelcare Dental ở Grayslake.",
+    sections: [
+      { h: "Cách chúng tôi chăm sóc quý vị", list: [
+        "Lắng nghe trước, và giải thích từng bước trước khi bắt đầu",
+        "Làm theo nhịp của quý vị. Quý vị có thể xin dừng lại bất cứ lúc nào",
+        "Nói rõ chi phí trước khi điều trị",
+        "Đậu xe miễn phí ngay trước cửa, lối vào có dốc cho xe lăn và khung tập đi"
+      ] },
+      { h: "Địa chỉ", p: "{info:CLINIC_ADDRESS}" }
+    ]
+  },
+  "tips/denture-care": {
+    lead: "Năm bước đơn giản giúp răng giả sạch, dễ chịu và dùng được lâu hơn.",
+    sections: [
+      { h: "Thói quen mỗi ngày", steps: [
+        ["Rửa sau khi ăn", "Tháo hàm giả và rửa bằng nước cho sạch thức ăn."],
+        ["Chải hàm mỗi ngày", "Dùng bàn chải mềm dành cho hàm giả và chất làm sạch hàm giả. Kem đánh răng thường có thể làm trầy hàm."],
+        ["Làm sạch miệng", "Chải nướu, lưỡi và các răng thật còn lại bằng bàn chải lông mềm."],
+        ["Giữ ẩm qua đêm", "Đa số hàm giả cần được giữ ẩm. Ngâm hàm trong nước hoặc dung dịch ngâm hàm giả. Không bao giờ dùng nước nóng: nước nóng làm hàm bị cong."],
+        ["Cầm cẩn thận", "Rửa hàm phía trên một chiếc khăn gấp đôi hoặc bồn có nước, để hàm không vỡ nếu lỡ rơi."]
+      ] },
+      { h: "Cho nướu nghỉ ngơi", p: "Tháo hàm giả ra khi ngủ, trừ khi chúng tôi dặn khác. Như vậy nướu được nghỉ và khoẻ hơn." },
+      { h: "Những điều nên tránh", list: [
+        "Thuốc tẩy hoặc sản phẩm làm trắng",
+        "Nước rất nóng hoặc nước sôi",
+        "Tự bẻ hoặc tự sửa hàm",
+        "Keo dán mua ở tiệm để sửa hàm"
+      ] },
+      { h: "Đi khám định kỳ", p: "Dù không còn răng thật, quý vị vẫn nên đi khám định kỳ. Chúng tôi kiểm tra độ vừa của hàm, tìm chỗ cấn đau và tầm soát ung thư miệng. Miệng thay đổi theo thời gian, nên hàm giả có thể cần đệm lại để luôn vừa khít." }
+    ]
+  },
+  "tips/dry-mouth": {
+    lead: "Nhiều loại thuốc gây khô miệng. Đây là cách bảo vệ răng của quý vị.",
+    sections: [
+      { h: "Vì sao cần quan tâm", p: "Nước bọt giúp rửa trôi thức ăn và bảo vệ răng. Khi miệng khô, răng dễ sâu hơn, hàm giả có thể khó chịu, và việc nói, nhai, nuốt cũng khó hơn." },
+      { h: "Nguyên nhân thường gặp", list: [
+        "Thuốc, như một số thuốc huyết áp, dị ứng, trầm cảm, giảm đau và thuốc trị tiểu nhiều lần",
+        "Bệnh như tiểu đường và hội chứng Sjögren",
+        "Xạ trị vùng đầu hoặc cổ",
+        "Uống không đủ nước",
+        "Thở bằng miệng khi ngủ"
+      ] },
+      { h: "Những cách giúp đỡ khô miệng", list: [
+        "Uống từng ngụm nước thường xuyên trong ngày",
+        "Nhai kẹo cao su hoặc ngậm kẹo không đường để tiết nước bọt",
+        "Dùng máy tạo độ ẩm trong phòng ngủ ban đêm",
+        "Chọn nước súc miệng không có cồn",
+        "Hạn chế cà phê, rượu bia và thuốc lá",
+        "Dùng kem đánh răng có fluoride, và hỏi chúng tôi xem quý vị có cần thêm fluoride không"
+      ] },
+      { note: "Đừng tự ý ngưng hoặc đổi thuốc. Hãy hỏi bác sĩ hoặc dược sĩ xem có loại thuốc khác ít gây khô miệng hơn không." },
+      { h: "Khi nào nên đến gặp chúng tôi", p: "Hãy cho chúng tôi biết nếu miệng quý vị khô gần như suốt ngày, hoặc thấy răng mới bị sâu, có chỗ đau dưới hàm giả, hay bị khó nuốt. Chúng tôi sẽ tìm nguyên nhân và gợi ý sản phẩm phù hợp." }
+    ]
+  },
+  "tips/implants-guide": {
+    lead: "Quá trình ra sao, mất bao lâu, và nên hỏi gì khi đi khám.",
+    sections: [
+      { h: "Implant nha khoa là gì?", p: "Implant là một trụ nhỏ, thường làm bằng titan, thay cho chân của chiếc răng đã mất. Sau khi lành trong xương hàm, implant có thể giữ một mão răng, một cầu răng hoặc cả một hàm giả." },
+      { h: "Ai làm được implant?", p: "Nhiều người lớn làm được, kể cả người lớn tuổi. Quan trọng nhất là nướu khoẻ, đủ xương để giữ implant, và sức khoẻ chung cho phép vết thương lành. Hút thuốc và tiểu đường chưa kiểm soát tốt có thể làm lành chậm. Nếu không đủ xương, ghép xương có thể giúp." },
+      { h: "Mất bao lâu?", steps: [
+        ["Lên kế hoạch", "Khám, chụp X-quang và trao đổi về sức khoẻ, thuốc đang dùng."],
+        ["Đặt implant", "Implant được đặt trong một thủ thuật ngắn, có gây tê."],
+        ["Chờ lành", "Thường vài tháng. Xương mọc bám quanh implant và giữ chắc implant."],
+        ["Gắn răng", "Mão răng, cầu răng hoặc hàm giả được gắn lên."]
+      ] },
+      { h: "Câu hỏi nên hỏi khi đi khám", list: [
+        "Tôi có phù hợp để làm implant không?",
+        "Tôi có cần ghép xương hay điều trị gì trước không?",
+        "Cần bao nhiêu lần hẹn, trong bao lâu?",
+        "Chi phí bao nhiêu, bảo hiểm có trả không?",
+        "Tôi còn lựa chọn nào khác, như cầu răng hoặc hàm giả?",
+        "Chăm sóc implant tại nhà thế nào?"
+      ] },
+      { h: "Chăm sóc implant", p: "Chải răng và làm sạch kẽ răng mỗi ngày như với răng thật, và đi khám định kỳ. Implant không bị sâu, nhưng nướu quanh implant vẫn có thể bị viêm nhiễm." }
+    ]
+  },
+  "privacy": {
+    lead: "Website này thu thập và sử dụng thông tin của quý vị như thế nào.",
+    sections: [
+      { h: "Thông tin chúng tôi thu thập", list: [
+        "Những gì quý vị điền vào form, như tên, ngày sinh, số điện thoại, email, thông tin bảo hiểm và sức khoẻ",
+        "Giờ hẹn quý vị chọn khi đặt lịch online",
+        "Thông tin kỹ thuật cơ bản mà mọi website đều nhận, như loại trình duyệt và địa chỉ IP"
+      ] },
+      { h: "Chúng tôi dùng thông tin để", list: [
+        "Đặt và xác nhận lịch hẹn",
+        "Chuẩn bị cho buổi khám và kiểm tra bảo hiểm",
+        "Liên lạc với quý vị về việc chăm sóc răng",
+        "Giữ website hoạt động ổn định và an toàn"
+      ] },
+      { h: "Thông tin sức khoẻ", p: "Thông tin về sức khoẻ và việc điều trị của quý vị được luật HIPAA bảo vệ. Thông báo về Quyền riêng tư giải thích cách chúng tôi sử dụng, chia sẻ thông tin đó và các quyền của quý vị." },
+      { more: "privacy-practices" },
+      { h: "Chúng tôi chia sẻ với ai", p: "Chúng tôi không bán thông tin của quý vị. Chúng tôi chỉ chia sẻ với các công ty giúp phòng khám vận hành, như phần mềm hồ sơ nha khoa và dịch vụ email, tài liệu bảo mật, theo hợp đồng bắt buộc họ bảo vệ thông tin, hoặc khi luật pháp yêu cầu." },
+      { h: "Cookie và cài đặt", p: "Chúng tôi không dùng cookie để quảng cáo. Các lựa chọn của quý vị trên website, như ngôn ngữ, cỡ chữ và cài đặt hỗ trợ dễ đọc, chỉ được lưu trong trình duyệt của chính quý vị." },
+      { h: "Bảo mật", p: "Form được gửi qua kết nối bảo mật, có mã hoá. Chỉ nhân viên phòng khám mới xem được thông tin quý vị gửi." },
+      { h: "Trẻ em", p: "Website này không dành cho trẻ em dưới 13 tuổi. Cha mẹ hoặc người giám hộ nên điền form giúp trẻ." },
+      { h: "Câu hỏi", p: "Gọi cho chúng tôi theo số {info:CLINIC_PHONE} hoặc email {info:CLINIC_EMAIL}." },
+      { h: "Thay đổi chính sách", p: "Nếu thay đổi chính sách này, chúng tôi sẽ đăng bản mới trên trang này cùng ngày hiệu lực mới." }
+    ]
+  },
+  "privacy-practices": {
+    lead: "Thông báo này mô tả cách thông tin y tế của quý vị có thể được sử dụng và tiết lộ, và cách quý vị có thể tiếp cận thông tin này. Xin vui lòng đọc kỹ.",
+    sections: [
+      { h: "Quyền của quý vị", p: "Đối với thông tin sức khoẻ của mình, quý vị có quyền:", list: [
+        "Nhận bản sao hồ sơ nha khoa dạng giấy hoặc điện tử",
+        "Yêu cầu chúng tôi sửa hồ sơ nếu quý vị thấy sai hoặc thiếu",
+        "Yêu cầu chúng tôi liên lạc theo cách nhất định, ví dụ qua điện thoại di động hoặc gửi đến địa chỉ khác",
+        "Yêu cầu chúng tôi hạn chế việc sử dụng hoặc chia sẻ. Nếu quý vị tự trả toàn bộ chi phí một dịch vụ, quý vị có thể yêu cầu chúng tôi không chia sẻ thông tin đó với công ty bảo hiểm",
+        "Nhận danh sách những nơi chúng tôi đã chia sẻ thông tin của quý vị",
+        "Nhận bản giấy của thông báo này bất cứ lúc nào",
+        "Chọn người đại diện cho quý vị, như người giám hộ hợp pháp",
+        "Khiếu nại nếu quý vị cho rằng quyền của mình bị vi phạm"
+      ] },
+      { h: "Lựa chọn của quý vị", p: ["Quý vị có thể cho chúng tôi biết có nên chia sẻ thông tin với gia đình, bạn bè đang chăm sóc quý vị, hoặc trong tình huống cứu trợ thiên tai hay không. Nếu quý vị không thể trả lời, ví dụ khi bất tỉnh, chúng tôi có thể chia sẻ nếu tin rằng điều đó có lợi nhất cho quý vị.", "Chúng tôi không bao giờ dùng hoặc chia sẻ thông tin của quý vị để quảng cáo, và không bao giờ bán thông tin, trừ khi quý vị đồng ý bằng văn bản."] },
+      { h: "Cách chúng tôi sử dụng và chia sẻ thông tin", list: [
+        "Để điều trị cho quý vị, ví dụ chia sẻ với bác sĩ chuyên khoa cùng điều trị",
+        "Để vận hành phòng khám, ví dụ cải thiện việc chăm sóc và liên lạc khi cần",
+        "Để tính phí điều trị và nhận thanh toán từ bảo hiểm",
+        "Vì sức khoẻ và an toàn cộng đồng, như phòng bệnh hoặc báo cáo nghi ngờ bị ngược đãi",
+        "Khi luật pháp yêu cầu, kể cả để đáp ứng kiện tụng, thủ tục pháp lý và cơ quan thực thi pháp luật",
+        "Cho bảo hiểm tai nạn lao động, cơ quan giám sát y tế và các yêu cầu khác của chính phủ"
+      ] },
+      { h: "Nhắc lịch hẹn", p: "Chúng tôi có thể gọi điện, nhắn tin hoặc gửi email để nhắc lịch hẹn hoặc chia sẻ thông tin về việc chăm sóc quý vị." },
+      { h: "Trách nhiệm của chúng tôi", list: [
+        "Luật pháp yêu cầu chúng tôi giữ kín và bảo mật thông tin sức khoẻ của quý vị",
+        "Chúng tôi sẽ báo ngay cho quý vị nếu xảy ra sự cố có thể làm lộ thông tin của quý vị",
+        "Chúng tôi phải tuân thủ các nghĩa vụ và quy định về quyền riêng tư trong thông báo này, và đưa quý vị một bản sao",
+        "Chúng tôi sẽ không sử dụng hoặc chia sẻ thông tin theo cách khác trừ khi quý vị đồng ý bằng văn bản. Quý vị có thể đổi ý bất cứ lúc nào bằng cách báo cho chúng tôi bằng văn bản"
+      ] },
+      { h: "Thay đổi thông báo này", p: "Chúng tôi có thể thay đổi nội dung thông báo này, và thay đổi sẽ áp dụng cho mọi thông tin chúng tôi có về quý vị. Bản mới sẽ có khi quý vị yêu cầu, tại phòng khám và trên website này." },
+      { h: "Câu hỏi và khiếu nại", p: ["Liên hệ Người phụ trách Quyền riêng tư của chúng tôi, {ph:PRIVACY_CONTACT}, qua số {info:CLINIC_PHONE} hoặc email {info:CLINIC_EMAIL}.", "Quý vị cũng có thể khiếu nại với Văn phòng Dân quyền (Office for Civil Rights) thuộc Bộ Y tế và Dịch vụ Nhân sinh Hoa Kỳ bằng cách gửi thư đến 200 Independence Avenue, S.W., Washington, D.C. 20201, gọi số 1-877-696-6775, hoặc vào trang www.hhs.gov/ocr/privacy/hipaa/complaints/.", "Chúng tôi sẽ không có bất kỳ hành động bất lợi nào đối với quý vị vì đã khiếu nại."] }
+    ]
+  },
+  "accessibility": {
+    lead: "Chúng tôi muốn mọi người đều dùng được website và đến phòng khám dễ dàng.",
+    sections: [
+      { h: "Website của chúng tôi", p: "Chúng tôi hướng đến chuẩn WCAG 2.1 mức AA (Hướng dẫn về khả năng truy cập nội dung web). Website này có:", list: [
+        "Chữ to, dễ đọc và màu tương phản rõ",
+        "Nút chỉnh cỡ chữ (A, A+, A++) ở đầu mọi trang",
+        "Nút hỗ trợ dễ đọc (nút tròn ở góc dưới bên trái) để tăng tương phản, làm nổi liên kết, giãn chữ, dừng chuyển động và hơn thế nữa",
+        "Dùng được hoàn toàn bằng bàn phím và trình đọc màn hình",
+        "Có tiếng Anh, tiếng Việt và tiếng Tây Ban Nha"
+      ] },
+      { h: "Phòng khám", list: [
+        "Đậu xe miễn phí ngay trước phòng khám",
+        "Lối vào có dốc cho xe lăn và khung tập đi",
+        "Khi đặt lịch, hãy cho chúng tôi biết nếu quý vị cần thêm thời gian hoặc cần giúp đỡ, chúng tôi sẽ chuẩn bị sẵn"
+      ] },
+      { h: "Cần giúp đỡ hoặc gặp lỗi?", p: "Nếu phần nào trên website khó dùng, xin gọi {info:CLINIC_PHONE} hoặc email {info:CLINIC_EMAIL}. Chúng tôi sẽ giúp quý vị qua điện thoại và sửa lỗi sớm." }
+    ]
+  },
+  "nondiscrimination": {
+    lead: "Excelcare Dental tuân thủ các luật dân quyền liên bang hiện hành và không phân biệt đối xử dựa trên chủng tộc, màu da, nguồn gốc quốc gia, tuổi tác, khuyết tật hoặc giới tính.",
+    sections: [
+      { p: "Excelcare Dental không loại trừ hay đối xử khác biệt với bất kỳ ai vì chủng tộc, màu da, nguồn gốc quốc gia, tuổi tác, khuyết tật hoặc giới tính." },
+      { h: "Hỗ trợ miễn phí", list: [
+        "Phương tiện và dịch vụ hỗ trợ miễn phí cho người khuyết tật, như thông dịch viên ngôn ngữ ký hiệu đủ trình độ và tài liệu ở định dạng khác (chữ in lớn, định dạng điện tử dễ tiếp cận)",
+        "Dịch vụ ngôn ngữ miễn phí cho người có ngôn ngữ chính không phải tiếng Anh, như thông dịch viên đủ trình độ và tài liệu viết bằng ngôn ngữ khác"
+      ], p: "Nếu cần các dịch vụ này, xin gọi {info:CLINIC_PHONE}." },
+      { h: "Nếu quý vị cho rằng chúng tôi không cung cấp các dịch vụ này hoặc đã phân biệt đối xử", p: "Quý vị có thể gửi khiếu nại đến Người phụ trách Dân quyền của chúng tôi, {ph:PRIVACY_CONTACT}, trực tiếp, qua thư, qua điện thoại số {info:CLINIC_PHONE} hoặc email {info:CLINIC_EMAIL}. Nếu cần giúp viết khiếu nại, người phụ trách sẽ hỗ trợ quý vị." },
+      { h: "Khiếu nại với chính phủ Hoa Kỳ", p: "Quý vị cũng có thể khiếu nại về dân quyền với Văn phòng Dân quyền thuộc Bộ Y tế và Dịch vụ Nhân sinh Hoa Kỳ, trực tuyến tại ocrportal.hhs.gov/ocr/portal/lobby.jsf, qua thư đến 200 Independence Avenue SW, Room 509F, HHH Building, Washington, DC 20201, hoặc qua điện thoại số 1-800-368-1019 (TDD: 1-800-537-7697)." },
+      { h: "Hỗ trợ ngôn ngữ", taglines: [
+        ["es", "ATENCIÓN: si habla español, tiene a su disposición servicios gratuitos de asistencia lingüística. Llame al {info:CLINIC_PHONE}."],
+        ["vi", "CHÚ Ý: Nếu bạn nói Tiếng Việt, có các dịch vụ hỗ trợ ngôn ngữ miễn phí dành cho bạn. Gọi số {info:CLINIC_PHONE}."]
+      ] }
+    ]
+  }
+};
+
+// Español para las páginas de contenido. Misma estructura que 35-docs-en.js. Trato de "usted";
+// sin "Dr./Dra." hasta confirmar INPUT_INFO_ABOUT_DOCTOR_SPANISH_TITLE_HERE.
+DOCS.es = {
+  "services/checkups": {
+    lead: "Las visitas regulares mantienen sanos sus dientes y encías, y nos ayudan a encontrar problemas pequeños antes de que causen dolor o cuesten más.",
+    sections: [
+      { h: "Qué incluye una revisión", list: [
+        "Revisamos sus dientes, encías, lengua y el interior de las mejillas",
+        "Una prueba de detección de cáncer oral",
+        "Radiografías cuando las necesite, con una dosis baja",
+        "Revisamos sus dentaduras, parciales o puentes, si los usa",
+        "Tiempo para preguntar sobre cualquier molestia"
+      ] },
+      { h: "Su limpieza", steps: [
+        ["Limpieza suave", "Quitamos la placa y el sarro (depósitos duros) que el cepillado en casa no puede quitar."],
+        ["Pulido", "Pulimos sus dientes para que se sientan lisos y limpios."],
+        ["Consejos para la casa", "Le enseñamos formas fáciles de cepillarse y limpiar entre los dientes, aunque tenga las manos rígidas o adoloridas."]
+      ] },
+      { h: "¿Cada cuánto debo venir?", p: "La mayoría de las personas viene cada 6 meses. Si tiene enfermedad de las encías, boca seca o muchos empastes, quizás le sugiramos venir más seguido. Le diremos qué es lo mejor para usted." },
+      { faq: [
+        ["¿La limpieza duele?", "La mayoría siente poca o ninguna molestia. Avísenos si algo le duele, y vamos más despacio o adormecemos la zona."],
+        ["¿Toman radiografías en cada visita?", "No. Solo tomamos radiografías cuando ayudan a revisar su salud, y antes le explicamos por qué."]
+      ] }
+    ]
+  },
+  "services/fillings-crowns": {
+    lead: "Un empaste repara una caries. Una corona cubre y protege un diente débil, agrietado o con un empaste grande.",
+    sections: [
+      { h: "Empastes", p: "Quitamos la caries y rellenamos el espacio con un material del color del diente. La mayoría de los empastes se hacen en una sola visita. Primero adormecemos la zona para que no sienta molestias." },
+      { h: "Coronas", p: "Una corona es una funda que cubre todo el diente. Hace que un diente roto o débil vuelva a ser fuerte y se vea natural. Normalmente se necesitan dos visitas: una para preparar el diente y colocar una corona temporal, y otra para colocar la corona final." },
+      { h: "Señales de que puede necesitar un empaste o una corona", list: [
+        "Un diente le duele al comer algo dulce, caliente o frío",
+        "Un diente se siente áspero, despostillado o agrietado",
+        "La comida se atora una y otra vez en el mismo lugar",
+        "Un empaste viejo se siente flojo o se cayó"
+      ] },
+      { h: "Cómo cuidar empastes y coronas", list: [
+        "Cepíllese dos veces al día con pasta de dientes con flúor",
+        "Limpie entre los dientes una vez al día",
+        "No mastique hielo ni alimentos muy duros",
+        "Venga a sus revisiones para que revisemos los bordes"
+      ] },
+      { faq: [
+        ["¿Cuánto dura una corona?", "Con buen cuidado, muchas coronas duran 10 años o más."],
+        ["¿Mi seguro ayuda a pagar?", "Muchos planes ayudan a pagar empastes y coronas. Revisamos sus beneficios y le explicamos el costo antes de empezar."]
+      ] }
+    ]
+  },
+  "services/dentures": {
+    lead: "Las dentaduras completas reemplazan todos los dientes de la mandíbula superior o inferior. Las parciales llenan los espacios cuando todavía tiene algunos dientes naturales.",
+    sections: [
+      { h: "Lo que ofrecemos", list: [
+        "Dentaduras completas",
+        "Dentaduras parciales",
+        "Reparación de dentaduras agrietadas o rotas",
+        "Rebases, para que una dentadura floja ajuste mejor",
+        "Ajustes cuando una zona le lastima"
+      ] },
+      { h: "Cómo se hace una dentadura nueva", steps: [
+        ["Examen y plan", "Revisamos su boca y hablamos del tipo de dentadura que va con sus necesidades y su presupuesto."],
+        ["Impresiones", "Tomamos moldes de su boca para que la dentadura tenga su forma."],
+        ["Prueba", "Usted se prueba un modelo de la dentadura para revisar el ajuste, la mordida y cómo se ve antes de terminarla."],
+        ["Entrega y seguimiento", "Le colocamos la dentadura nueva y le citamos otra vez para corregir cualquier zona que lastime."]
+      ] },
+      { h: "Cómo acostumbrarse", p: "Es normal que una dentadura nueva se sienta extraña al principio. Empiece con comida blanda en trozos pequeños y mastique con los dos lados a la vez. Hablar puede sentirse diferente unos días; leer en voz alta ayuda. Si algo le lastima, llámenos. Por favor no intente ajustar la dentadura por su cuenta." },
+      { h: "Cuándo llamarnos", list: [
+        "La dentadura se siente floja o suena al hablar",
+        "Una zona adolorida no sana en unos días",
+        "La dentadura está agrietada, despostillada o le falta un diente"
+      ] },
+      { more: "tips/denture-care" }
+    ]
+  },
+  "services/implants": {
+    lead: "Un implante dental es un pequeño poste que se coloca en el hueso de la mandíbula. Funciona como la raíz de un diente y sostiene firmemente una corona, un puente o una dentadura.",
+    sections: [
+      { h: "Por qué muchas personas eligen implantes", list: [
+        "Se sienten y funcionan casi como dientes naturales",
+        "No se mueven al comer o hablar",
+        "Pueden sostener una dentadura para que no se mueva",
+        "Ayudan a mantener sano el hueso donde falta un diente"
+      ] },
+      { h: "Cómo funciona", steps: [
+        ["Examen y radiografías", "Revisamos sus encías y el hueso, y hablamos de su salud y sus medicinas."],
+        ["Colocación del implante", "El implante se coloca en el hueso. La zona se adormece para que no sienta molestias."],
+        ["Cicatrización", "El hueso crece alrededor del implante. Esto suele tardar unos meses."],
+        ["Su diente nuevo", "Se coloca una corona, un puente o una dentadura sobre el implante."]
+      ] },
+      { h: "¿Un implante es para mí?", p: "Muchas personas pueden recibir implantes a cualquier edad. Lo más importante es tener encías sanas y suficiente hueso. Fumar y algunas enfermedades, como la diabetes mal controlada, pueden hacer más lenta la cicatrización. Le explicamos todas sus opciones, incluidos puentes y dentaduras, para que decida lo mejor para usted." },
+      { faq: [
+        ["¿Soy demasiado mayor para un implante?", "La edad por sí sola no suele ser un problema. Importan más su salud general y su hueso."],
+        ["¿El seguro cubre implantes?", "Algunos planes pagan parte del costo. Revisamos sus beneficios y le explicamos el costo antes de que decida."]
+      ] },
+      { more: "tips/implants-guide" }
+    ]
+  },
+  "services/gum-care": {
+    lead: "Las encías sanas sostienen los dientes. La enfermedad de las encías es común en adultos mayores y a menudo no duele hasta que está avanzada.",
+    sections: [
+      { h: "Señales de alerta", list: [
+        "Encías que sangran al cepillarse o usar hilo dental",
+        "Encías rojas, hinchadas o sensibles",
+        "Encías que se retiran de los dientes",
+        "Mal aliento que no se quita",
+        "Dientes flojos o que se separan"
+      ] },
+      { h: "Cómo tratamos la enfermedad de las encías", steps: [
+        ["Revisión", "Medimos con cuidado el espacio entre los dientes y las encías para ver qué tan sanas están."],
+        ["Limpieza profunda", "Limpiamos debajo de la encía para quitar el sarro y los gérmenes. Se llama raspado y alisado radicular."],
+        ["Seguimiento", "Revisamos cómo sanan sus encías y planeamos limpiezas regulares para mantenerlas sanas."]
+      ] },
+      { h: "Por qué es importante", p: "Sin tratamiento, la enfermedad de las encías puede hacer que pierda dientes. También se relaciona con otros problemas de salud, como la diabetes y las enfermedades del corazón. Tratarla a tiempo es más fácil y más cómodo." },
+      { h: "Ayuda en casa", list: [
+        "Cepíllese con suavidad dos veces al día con un cepillo suave",
+        "Limpie entre los dientes con hilo dental, un cepillo pequeño o un irrigador de agua",
+        "Un cepillo eléctrico o de mango grueso ayuda si tiene las manos rígidas",
+        "No fume"
+      ] }
+    ]
+  },
+  "services/emergency": {
+    lead: "¿Dolor de muelas o un diente roto? Llámenos. Le ayudaremos lo antes posible.",
+    sections: [
+      { warn: "Llame al 911 o vaya a la sala de emergencias si tiene una hinchazón que le dificulta respirar o tragar, fiebre alta con la cara hinchada, un sangrado que no se detiene, o un golpe en la cara o la mandíbula." },
+      { h: "Llámenos de inmediato si tiene", list: [
+        "Un dolor de muelas fuerte",
+        "Un diente roto, agrietado o que se salió",
+        "Hinchazón en las encías o la cara",
+        "Un empaste o una corona que se cayó",
+        "Una dentadura rota"
+      ] },
+      { h: "Qué hacer mientras llega con nosotros", list: [
+        "Dolor de muelas: enjuáguese con agua tibia con sal. Puede tomar un analgésico que use normalmente, como dice la etiqueta. No ponga aspirina sobre la encía.",
+        "Diente que se salió: tómelo por la parte de arriba, no por la raíz. Enjuáguelo con cuidado e intente ponerlo en su lugar, o guárdelo en leche. Llámenos de inmediato: el tiempo importa.",
+        "Diente roto: enjuáguese la boca y guarde los pedazos. Ponga una compresa fría en la mejilla para la hinchazón.",
+        "Corona que se cayó: guárdela bien y tráigala con usted."
+      ] },
+      { h: "Cuando el consultorio está cerrado", p: "Llame al {info:CLINIC_PHONE}. {ph:AFTER_HOURS_EMERGENCY}" }
+    ]
+  },
+  "about": {
+    lead: "Conozca a su dentista en Excelcare Dental, en Grayslake.",
+    sections: [
+      { h: "Cómo le cuidamos", list: [
+        "Primero le escuchamos, y le explicamos cada paso antes de empezar",
+        "Vamos a su ritmo. Puede pedirnos una pausa en cualquier momento",
+        "Hablamos de los costos antes de cualquier tratamiento",
+        "Estacionamiento gratis justo enfrente, y rampa en la entrada para sillas de ruedas y andaderas"
+      ] },
+      { h: "Dirección", p: "{info:CLINIC_ADDRESS}" }
+    ]
+  },
+  "tips/denture-care": {
+    lead: "Cinco pasos fáciles para mantener sus dentaduras limpias, cómodas y en buen estado por más tiempo.",
+    sections: [
+      { h: "Su rutina diaria", steps: [
+        ["Enjuáguelas después de comer", "Quítese la dentadura y enjuáguela con agua para quitar la comida."],
+        ["Cepíllelas todos los días", "Use un cepillo suave para dentaduras y un limpiador para dentaduras. La pasta de dientes común puede rayarlas."],
+        ["Limpie su boca", "Cepille sus encías, su lengua y los dientes naturales que tenga con un cepillo suave."],
+        ["Manténgalas húmedas en la noche", "La mayoría de las dentaduras necesitan estar húmedas. Déjelas en agua o en una solución para dentaduras. Nunca use agua caliente: puede deformarlas."],
+        ["Manéjelas con cuidado", "Limpie la dentadura sobre una toalla doblada o un lavabo con agua, para que no se rompa si se le cae."]
+      ] },
+      { h: "Deje descansar sus encías", p: "Quítese la dentadura en la noche, a menos que le indiquemos otra cosa. Así sus encías descansan y se mantienen sanas." },
+      { h: "Qué evitar", list: [
+        "Cloro o productos blanqueadores",
+        "Agua muy caliente o hirviendo",
+        "Doblar o arreglar la dentadura por su cuenta",
+        "Pegamentos de tienda para repararla"
+      ] },
+      { h: "Visítenos con regularidad", p: "Aunque no tenga dientes naturales, las visitas regulares son importantes. Revisamos el ajuste de la dentadura, buscamos zonas que lastiman y hacemos una prueba de detección de cáncer oral. La boca cambia con el tiempo, y la dentadura puede necesitar un rebase para seguir ajustando bien." }
+    ]
+  },
+  "tips/dry-mouth": {
+    lead: "Muchas medicinas causan boca seca. Así puede proteger sus dientes.",
+    sections: [
+      { h: "Por qué es importante", p: "La saliva limpia los restos de comida y ayuda a proteger los dientes. Con la boca seca, las caries aparecen más rápido, la dentadura puede molestar, y cuesta más hablar, masticar y tragar." },
+      { h: "Causas comunes", list: [
+        "Medicinas, como algunas para la presión, las alergias, la depresión, el dolor y la vejiga",
+        "Enfermedades como la diabetes y el síndrome de Sjögren",
+        "Radioterapia en la cabeza o el cuello",
+        "No tomar suficiente agua",
+        "Respirar por la boca al dormir"
+      ] },
+      { h: "Qué ayuda", list: [
+        "Tome sorbos de agua con frecuencia durante el día",
+        "Mastique chicle o chupe dulces sin azúcar para producir saliva",
+        "Use un humidificador en su cuarto por la noche",
+        "Elija un enjuague bucal sin alcohol",
+        "Limite el café, el alcohol y el tabaco",
+        "Use pasta de dientes con flúor, y pregúntenos si le conviene flúor adicional"
+      ] },
+      { note: "No deje ni cambie una medicina por su cuenta. Pregunte a su médico o farmacéutico si hay otra opción que cause menos boca seca." },
+      { h: "Cuándo visitarnos", p: "Díganos si siente la boca seca casi todo el tiempo, o si nota caries nuevas, zonas adoloridas bajo la dentadura o dificultad para tragar. Podemos buscar la causa y sugerirle productos que ayuden." }
+    ]
+  },
+  "tips/implants-guide": {
+    lead: "Qué esperar, cuánto tarda y qué preguntar en su visita.",
+    sections: [
+      { h: "¿Qué es un implante dental?", p: "Un implante es un pequeño poste, normalmente de titanio, que reemplaza la raíz de un diente que falta. Cuando sana en el hueso, puede sostener una corona, un puente o una dentadura completa." },
+      { h: "¿Quién puede recibir implantes?", p: "Muchos adultos, incluidas las personas mayores. Lo más importante es tener encías sanas, suficiente hueso para sostener el implante y una salud general que permita sanar. Fumar y la diabetes mal controlada pueden hacer más lenta la cicatrización. Si no hay suficiente hueso, un injerto óseo puede ayudar." },
+      { h: "¿Cuánto tarda?", steps: [
+        ["Planificación", "Un examen, radiografías y una conversación sobre su salud y sus medicinas."],
+        ["Colocación", "El implante se coloca en un procedimiento corto, con anestesia local."],
+        ["Cicatrización", "Normalmente unos meses. El hueso crece alrededor del implante y lo sostiene con firmeza."],
+        ["El diente final", "Se coloca su corona, puente o dentadura."]
+      ] },
+      { h: "Preguntas para su visita", list: [
+        "¿Un implante es una buena opción para mí?",
+        "¿Necesito un injerto óseo u otro tratamiento antes?",
+        "¿Cuántas visitas necesito y en cuánto tiempo?",
+        "¿Cuánto cuesta y me ayuda mi seguro?",
+        "¿Qué otras opciones tengo, como un puente o una dentadura?",
+        "¿Cómo cuido el implante en casa?"
+      ] },
+      { h: "Cómo cuidar un implante", p: "Cepíllese y limpie entre los dientes todos los días, igual que con los dientes naturales, y venga a sus revisiones. Los implantes no tienen caries, pero las encías alrededor se pueden infectar." }
+    ]
+  },
+  "privacy": {
+    lead: "Cómo este sitio web recopila y usa su información.",
+    sections: [
+      { h: "Qué recopilamos", list: [
+        "Lo que escribe en nuestros formularios, como su nombre, fecha de nacimiento, teléfono, correo electrónico, seguro y datos de salud",
+        "La hora de cita que elige al reservar en línea",
+        "Información técnica básica que recibe cualquier sitio web, como el tipo de navegador y la dirección IP"
+      ] },
+      { h: "Cómo la usamos", list: [
+        "Para reservar y confirmar su cita",
+        "Para preparar su visita y revisar su seguro",
+        "Para comunicarnos con usted sobre su atención",
+        "Para que este sitio web funcione bien y sea seguro"
+      ] },
+      { h: "Su información de salud", p: "La información sobre su salud y su atención está protegida por la ley HIPAA. Nuestro Aviso de Prácticas de Privacidad explica cómo la usamos y compartimos, y cuáles son sus derechos." },
+      { more: "privacy-practices" },
+      { h: "Con quién la compartimos", p: "No vendemos su información. Solo la compartimos con empresas que nos ayudan a operar el consultorio, como nuestro sistema de expedientes dentales y nuestro servicio seguro de correo y documentos, bajo contratos que les exigen protegerla, o cuando la ley lo exige." },
+      { h: "Cookies y preferencias", p: "No usamos cookies para publicidad. Sus preferencias en este sitio, como el idioma, el tamaño de letra y la accesibilidad, se guardan solo en su propio navegador." },
+      { h: "Seguridad", p: "Los formularios se envían por una conexión segura y cifrada. Solo el equipo de nuestro consultorio puede ver lo que usted envía." },
+      { h: "Niños", p: "Este sitio no está dirigido a menores de 13 años. Un padre, madre o tutor debe llenar los formularios de un niño." },
+      { h: "Preguntas", p: "Llámenos al {info:CLINIC_PHONE} o escriba a {info:CLINIC_EMAIL}." },
+      { h: "Cambios a esta política", p: "Si cambiamos esta política, publicaremos la nueva versión en esta página con una nueva fecha de vigencia." }
+    ]
+  },
+  "privacy-practices": {
+    lead: "Este aviso describe cómo se puede usar y divulgar su información médica y cómo puede usted obtener acceso a esta información. Por favor léalo con atención.",
+    sections: [
+      { h: "Sus derechos", p: "Con respecto a su información de salud, usted tiene derecho a:", list: [
+        "Obtener una copia de su expediente dental en papel o electrónico",
+        "Pedirnos que corrijamos su expediente si cree que está mal o incompleto",
+        "Pedirnos que nos comuniquemos con usted de cierta forma, por ejemplo a su celular o a otra dirección",
+        "Pedirnos que limitemos lo que usamos o compartimos. Si paga un servicio completo de su bolsillo, puede pedirnos que no compartamos esa información con su seguro",
+        "Obtener una lista de con quién hemos compartido su información",
+        "Obtener una copia en papel de este aviso en cualquier momento",
+        "Elegir a alguien que actúe por usted, como un tutor legal",
+        "Presentar una queja si cree que se violaron sus derechos"
+      ] },
+      { h: "Sus opciones", p: ["Puede decirnos si compartimos información con familiares y amigos que participan en su atención, o en una situación de ayuda en caso de desastre. Si no puede decírnoslo, por ejemplo si está inconsciente, podemos compartirla si creemos que es lo mejor para usted.", "Nunca usamos ni compartimos su información para mercadeo, ni la vendemos, sin su permiso por escrito."] },
+      { h: "Cómo usamos y compartimos su información", list: [
+        "Para tratarle, por ejemplo compartiendo con un especialista que también le atiende",
+        "Para operar el consultorio, por ejemplo para mejorar su atención y comunicarnos con usted cuando sea necesario",
+        "Para cobrar por su atención y recibir el pago de su seguro",
+        "Para la salud y la seguridad públicas, como prevenir enfermedades o reportar sospechas de abuso",
+        "Cuando la ley lo exige, incluso para responder a demandas, procesos legales y autoridades policiales",
+        "Para compensación laboral, agencias de supervisión de la salud y otras solicitudes del gobierno"
+      ] },
+      { h: "Recordatorios de citas", p: "Podemos llamarle, enviarle mensajes de texto o correos electrónicos para recordarle sus citas o darle información sobre su atención." },
+      { h: "Nuestras responsabilidades", list: [
+        "La ley nos exige mantener su información de salud privada y segura",
+        "Le avisaremos pronto si ocurre una violación de seguridad que pudo poner en riesgo su información",
+        "Debemos cumplir los deberes y las prácticas de privacidad de este aviso y darle una copia",
+        "No usaremos ni compartiremos su información de otras formas a menos que usted nos lo autorice por escrito. Puede cambiar de opinión en cualquier momento avisándonos por escrito"
+      ] },
+      { h: "Cambios a este aviso", p: "Podemos cambiar los términos de este aviso, y los cambios se aplicarán a toda la información que tenemos sobre usted. El nuevo aviso estará disponible si lo pide, en nuestro consultorio y en este sitio web." },
+      { h: "Preguntas y quejas", p: ["Comuníquese con la persona responsable de privacidad, {ph:PRIVACY_CONTACT}, al {info:CLINIC_PHONE} o a {info:CLINIC_EMAIL}.", "También puede presentar una queja ante la Oficina de Derechos Civiles del Departamento de Salud y Servicios Humanos de EE. UU. enviando una carta a 200 Independence Avenue, S.W., Washington, D.C. 20201, llamando al 1-877-696-6775 o visitando www.hhs.gov/ocr/privacy/hipaa/complaints/.", "No tomaremos ninguna medida en su contra por presentar una queja."] }
+    ]
+  },
+  "accessibility": {
+    lead: "Queremos que todas las personas puedan usar nuestro sitio web y visitar nuestro consultorio.",
+    sections: [
+      { h: "Nuestro sitio web", p: "Buscamos cumplir las Pautas de Accesibilidad para el Contenido Web (WCAG) 2.1, nivel AA. Este sitio tiene:", list: [
+        "Letra grande y fácil de leer, con buen contraste de color",
+        "Botones de tamaño de letra (A, A+, A++) arriba en cada página",
+        "Un menú de accesibilidad (el botón redondo abajo a la izquierda) para aumentar el contraste, resaltar enlaces, dar más espacio, pausar animaciones y más",
+        "Uso completo con teclado y con lectores de pantalla",
+        "Páginas en English, Tiếng Việt y Español"
+      ] },
+      { h: "Nuestro consultorio", list: [
+        "Estacionamiento gratis justo enfrente del consultorio",
+        "Rampa en la entrada para sillas de ruedas y andaderas",
+        "Avísenos al hacer su cita si necesita más tiempo o ayuda, y lo tendremos listo"
+      ] },
+      { h: "¿Necesita ayuda o encontró un problema?", p: "Si alguna parte de este sitio es difícil de usar, llame al {info:CLINIC_PHONE} o escriba a {info:CLINIC_EMAIL}. Le ayudaremos por teléfono y trabajaremos para corregir el problema." }
+    ]
+  },
+  "nondiscrimination": {
+    lead: "Excelcare Dental cumple con las leyes federales de derechos civiles aplicables y no discrimina por motivos de raza, color, nacionalidad, edad, discapacidad o sexo.",
+    sections: [
+      { p: "Excelcare Dental no excluye a las personas ni las trata de forma diferente debido a su raza, color, nacionalidad, edad, discapacidad o sexo." },
+      { h: "Ayuda gratuita que ofrecemos", list: [
+        "Ayudas y servicios gratuitos para personas con discapacidades, como intérpretes de lenguaje de señas calificados e información escrita en otros formatos (letra grande, formatos electrónicos accesibles)",
+        "Servicios de idiomas gratuitos para personas cuyo idioma principal no es el inglés, como intérpretes calificados e información escrita en otros idiomas"
+      ], p: "Si necesita estos servicios, llame al {info:CLINIC_PHONE}." },
+      { h: "Si cree que no le dimos estos servicios o que le discriminamos", p: "Puede presentar una queja ante la persona coordinadora de derechos civiles, {ph:PRIVACY_CONTACT}, en persona, por correo postal, por teléfono al {info:CLINIC_PHONE} o por correo electrónico a {info:CLINIC_EMAIL}. Si necesita ayuda para presentar la queja, esa persona puede ayudarle." },
+      { h: "Quejas ante el gobierno de EE. UU.", p: "También puede presentar una queja de derechos civiles ante la Oficina de Derechos Civiles del Departamento de Salud y Servicios Humanos de EE. UU., en línea en ocrportal.hhs.gov/ocr/portal/lobby.jsf, por correo a 200 Independence Avenue SW, Room 509F, HHH Building, Washington, DC 20201, o por teléfono al 1-800-368-1019 (TDD: 1-800-537-7697)." },
+      { h: "Ayuda con el idioma", taglines: [
+        ["es", "ATENCIÓN: si habla español, tiene a su disposición servicios gratuitos de asistencia lingüística. Llame al {info:CLINIC_PHONE}."],
+        ["vi", "CHÚ Ý: Nếu bạn nói Tiếng Việt, có các dịch vụ hỗ trợ ngôn ngữ miễn phí dành cho bạn. Gọi số {info:CLINIC_PHONE}."]
+      ] }
+    ]
+  }
+};
 
 // ---------- Helpers ----------
 const $ = (s, r = document) => r.querySelector(s);
@@ -2979,6 +4043,7 @@ const state = {
   device: "desktop",
   view: "site",
   page: "home",
+  doc: null,
   pub: { hours: clone(SAMPLE_HOURS), at: null },
   draft: clone(SAMPLE_HOURS),
   dates: [
@@ -3187,6 +4252,110 @@ function renderPhTable() {
     body.appendChild(tr);
   });
   $("#phCount").textContent = names.length;
+}
+
+// ---------- Content pages: services, about the doctor, health tips, privacy & legal ----------
+// One template (#page-doc) renders any page in DOC_META, in the current language (English as fallback).
+const docText = (id) => (DOCS[state.lang] && DOCS[state.lang][id]) || DOCS.en[id];
+const docTitle = (id) => t(DOC_META[id].titleKey);
+const docLink = (id, inner, cls = "") => '<a href="#' + id + '" data-route="doc" data-doc="' + id + '"' + (cls ? ' class="' + cls + '"' : "") + ">" + inner + "</a>";
+const DOC_PROTO = {
+  service: "Prototype: nội dung bản nháp, cần nha sĩ xem lại trước khi đăng (đặc biệt các dịch vụ phòng khám thực sự làm).",
+  about: "Prototype: tiểu sử, học vấn, kinh nghiệm còn chờ thông tin thật (các ô INPUT_INFO_ABOUT_…).",
+  tip: "Prototype: bài viết bản nháp theo hướng dẫn chung của ADA, cần nha sĩ xem lại trước khi đăng.",
+  legal: "Prototype: bản nháp dựa trên mẫu của Bộ Y tế Hoa Kỳ (HHS). Cần luật sư hoặc chuyên viên HIPAA duyệt trước khi đăng."
+};
+
+// All words of a page, for the reading time on health tips (counted on the English text so every language shows the same)
+function docWords(node) {
+  if (typeof node === "string") return node.replace(/\{[^}]*\}/g, " ").split(/\s+/).filter(Boolean).length;
+  if (Array.isArray(node)) return node.reduce((n, x) => n + docWords(x), 0);
+  if (node && typeof node === "object") return Object.values(node).reduce((n, x) => n + docWords(x), 0);
+  return 0;
+}
+const readMinutes = (id) => Math.max(2, Math.round(docWords(DOCS.en[id]) / 150));
+
+let docFaqSeq = 0;
+function docSectionHtml(s) {
+  if (s.warn) return '<div class="doc-warn" role="note"><svg class="ic" aria-hidden="true"><use href="#i-info"/></svg><p>' + renderStr(s.warn) + "</p></div>";
+  if (s.note) return '<div class="doc-note" role="note"><svg class="ic" aria-hidden="true"><use href="#i-info"/></svg><p>' + renderStr(s.note) + "</p></div>";
+  if (s.more) return docLink(s.more, '<svg class="ic" aria-hidden="true"><use href="#i-doc"/></svg><span><small>' + esc(t(DOC_META[s.more].kind === "tip" ? "doc_read_tip" : "doc_read_more")) + "</small><strong>" + esc(docTitle(s.more)) + '</strong></span><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg>', "doc-more");
+  let h = s.h ? "<h2>" + renderStr(s.h) + "</h2>" : "";
+  [].concat(s.p || []).forEach((p) => { h += "<p>" + renderStr(p) + "</p>"; });
+  if (s.list) h += '<ul class="doc-list">' + s.list.map((x) => '<li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>' + renderStr(x) + "</span></li>").join("") + "</ul>";
+  if (s.steps) h += '<ol class="doc-steps">' + s.steps.map(([a, b], n) => '<li><span class="doc-steps__num" aria-hidden="true">' + (n + 1) + "</span><div><h3>" + renderStr(a) + "</h3><p>" + renderStr(b) + "</p></div></li>").join("") + "</ol>";
+  if (s.faq) h += '<div class="faq">' + s.faq.map(([q, a]) => {
+    const n = ++docFaqSeq;
+    return '<div class="faq__item"><h3><button type="button" class="faq__q" id="doc-q' + n + '" aria-expanded="false" aria-controls="doc-a' + n + '"><span>' + renderStr(q) + '</span><span class="faq__icon" aria-hidden="true"></span></button></h3>' +
+      '<div class="faq__a collapse" id="doc-a' + n + '" role="region" aria-labelledby="doc-q' + n + '" aria-hidden="true"><div class="collapse__inner"><p>' + renderStr(a) + "</p></div></div></div>";
+  }).join("") + "</div>";
+  if (s.taglines) h += '<ul class="doc-taglines">' + s.taglines.map(([lang, text]) => '<li lang="' + lang + '">' + renderStr(text) + "</li>").join("") + "</ul>";
+  return '<section class="doc-sec">' + h + "</section>";
+}
+
+// Pages listed in the side panel: the other pages of the same kind
+function docRelated(id) {
+  const kind = DOC_META[id].kind;
+  if (kind === "about") return { title: t("doc_related_about"), items: [["route", "new", t("nav_new")], ["doc", "services/checkups", t("svc1_t")], ["scroll", "insurance", t("nav_insurance")], ["scroll", "visit", t("nav_contact")]] };
+  const same = Object.keys(DOC_META).filter((k) => k !== id && DOC_META[k].kind === kind).map((k) => ["doc", k, docTitle(k)]);
+  if (kind === "tip") same.push(["scroll", "articles", t("doc_all_tips")]);
+  return { title: t({ service: "doc_related_service", tip: "doc_related_tip", legal: "f_legal" }[kind]), items: same };
+}
+
+function renderDoc() {
+  const id = state.doc, meta = DOC_META[id];
+  if (!meta) return;
+  const d = docText(id);
+  const crumbParent = { service: ["services", "nav_services"], tip: ["articles", "nav_articles"], legal: [null, "f_legal"], about: [null, null] }[meta.kind];
+  const chev = '<svg class="ic"><use href="#i-chev"/></svg>';
+  let crumbs = '<a href="#" data-route="home" data-scroll="top">' + esc(t("nav_home")) + "</a>" + chev;
+  if (crumbParent[1]) crumbs += (crumbParent[0] ? '<a href="#" data-route="home" data-scroll="' + crumbParent[0] + '">' + esc(t(crumbParent[1])) + "</a>" : "<span>" + esc(t(crumbParent[1])) + "</span>") + chev;
+  $("#docCrumbs").innerHTML = crumbs + '<span aria-current="page">' + esc(docTitle(id)) + "</span>";
+  $("#docEyebrow").textContent = t({ service: "nav_services", tip: meta.chipKey, legal: "f_legal", about: "doctor_eyebrow" }[meta.kind]);
+  $("#docTitle").textContent = docTitle(id);
+  $("#docLead").innerHTML = renderStr(d.lead || "");
+  const metaEl = $("#docMeta");
+  metaEl.hidden = !(meta.kind === "tip" || meta.kind === "legal");
+  metaEl.innerHTML = meta.kind === "tip" ? esc(t("read_n", { n: readMinutes(id) })) : meta.kind === "legal" ? renderStr(t("doc_effective")) : "";
+  $("#docAbout").hidden = meta.kind !== "about";
+
+  let body = '<div class="proto-callout proto-callout--soft"><span>' + esc(DOC_PROTO[meta.kind]) + "</span></div>";
+  body += d.sections.map(docSectionHtml).join("");
+  if (meta.kind === "tip") body += '<p class="doc-disclaimer">' + esc(t("doc_tip_disclaimer")) + "</p>";
+  $("#docBody").innerHTML = body;
+
+  const rel = docRelated(id);
+  $("#docRelatedTitle").textContent = rel.title;
+  $("#docRelatedList").innerHTML = rel.items.map(([type, target, label]) => {
+    const inner = "<span>" + esc(label) + '</span><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg>';
+    if (type === "doc") return "<li>" + docLink(target, inner) + "</li>";
+    if (type === "route") return '<li><a href="#" data-route="' + target + '">' + inner + "</a></li>";
+    return '<li><a href="#" data-route="home" data-scroll="' + target + '">' + inner + "</a></li>";
+  }).join("");
+  renderPlaceholders($("#page-doc"));
+}
+
+// Reading time on the home page article cards
+function renderReadTimes() {
+  $$("[data-readtime]").forEach((el) => { el.textContent = t("read_n", { n: readMinutes(el.dataset.readtime) }); });
+}
+
+// ---------- Addresses: every page has one (#schedule, #services/dentures …), so Back/Forward and shared links work ----------
+function pageHash(page, doc) { return page === "doc" ? doc : page === "schedule" ? "schedule" : page === "new" ? "new-patients" : ""; }
+function syncHash(page, doc) {
+  const h = pageHash(page, doc);
+  if (decodeURIComponent(location.hash.slice(1)) === h) return;
+  try { history.pushState(null, "", h ? "#" + h : location.pathname + location.search); } catch (e) { /* file:// in some browsers: navigation still works */ }
+}
+// Returns true when the address named a website page
+function routeFromHash(fromPop) {
+  const h = decodeURIComponent(location.hash.slice(1));
+  const opts = { pop: !!fromPop };
+  if (DOC_META[h]) { goPage("doc", null, h, opts); return true; }
+  if (h === "schedule") { goPage("schedule", null, null, opts); return true; }
+  if (h === "new-patients") { goPage("new", null, null, opts); return true; }
+  if (!h && fromPop) { goPage("home", null, null, opts); return true; }
+  return false;
 }
 
 // ---------- Opening hours logic (published hours + special dates) ----------
@@ -3443,6 +4612,8 @@ function renderSite() {
   renderBooker();
   renderMonthSelect();
   renderStepText();
+  renderReadTimes();
+  if (state.page === "doc") renderDoc();
   ["#sch-lang", "#np-lang"].forEach((s) => { const el = $(s); if (!el.dataset.touched) el.value = state.lang; });
   if (!$("#schOk").hidden && state.lastBooking) $("#schOkBody").textContent = bookedText(state.lastBooking);
 }
@@ -3506,11 +4677,15 @@ async function scrollToSection(id) {
 }
 
 let pageToken = 0;
-async function goPage(page, scrollId) {
+// page: "home" | "schedule" | "new" | "doc" (doc = key in DOC_META). opts.pop: called from Back/Forward, so do not add history.
+async function goPage(page, scrollId, doc, opts = {}) {
   closeMenu();
   toggleDropdown(false);
+  if (page === "doc" && !DOC_META[doc]) { page = "home"; doc = null; }
+  if (page !== "doc") doc = null;
+  if (!opts.pop) syncHash(page, doc);
   const token = ++pageToken;
-  if (state.page !== page) {
+  if (state.page !== page || state.doc !== doc) {
     const old = $("#page-" + state.page);
     if (booted) {
       old.classList.add("is-leaving");
@@ -3519,11 +4694,13 @@ async function goPage(page, scrollId) {
       old.classList.remove("is-leaving");
     }
     state.page = page;
+    state.doc = doc;
+    if (page === "doc") renderDoc();
     $$("[data-page]").forEach((p) => { p.hidden = p.dataset.page !== page; });
     const el = $("#page-" + page);
     el.classList.remove("is-entering"); void el.offsetWidth; el.classList.add("is-entering");
     $$(".nav__link[data-route]").forEach((a) => a.removeAttribute("aria-current"));
-    const cur = $('.nav__link[data-route="' + page + '"]:not([data-scroll])');
+    const cur = page === "doc" ? $('.nav__link[data-doc="' + doc + '"]') : $('.nav__link[data-route="' + page + '"]:not([data-scroll])');
     if (cur) cur.setAttribute("aria-current", "page");
     scrollTopNow();
     $("#main").focus({ preventScroll: true });
@@ -4295,7 +5472,7 @@ function onClick(e) {
   if (d.slot && el.classList.contains("slot")) return pickSlot(d.slot);
   if (d.closeMenu !== undefined) return closeMenu();
   if (d.skip !== undefined) return $("#main").focus();
-  if (d.route) return goPage(d.route, d.scroll);
+  if (d.route) return goPage(d.route, d.scroll, d.doc);
   if (d.soon !== undefined) return toast(PROTO_MSG.soon);
   if (d.call !== undefined) return toast(PROTO_MSG.call());
   if (d.maps !== undefined) return toast(PROTO_MSG.maps());
@@ -4426,6 +5603,12 @@ function init() {
   $("#schForm").addEventListener("submit", onSchSubmit);
   $("#npForm").addEventListener("submit", onNpSubmit);
   $("#stDateForm").addEventListener("submit", onStDateSubmit);
+  // Back/Forward between website pages (the prototype's own views keep their state)
+  window.addEventListener("popstate", () => {
+    const h = decodeURIComponent(location.hash.slice(1));
+    if (state.view !== "site" && (DOC_META[h] || ["", "schedule", "new-patients"].includes(h))) setView("site");
+    routeFromHash(true);
+  });
   window.addEventListener("scroll", onSiteScroll, { passive: true });
   $("#screen").addEventListener("scroll", onSiteScroll, { passive: true });
   window.addEventListener("resize", () => { updateProtoH(); updateBreakpoint(); onSiteScroll(); });
@@ -4455,6 +5638,7 @@ function openFromHash() {
     "how-it-works": () => setView("how"), placeholders: () => setView("ph")
   };
   if (actions[h]) actions[h]();
+  else routeFromHash(false);
 }
 init();
 

@@ -69,6 +69,50 @@
 .facts dd { margin: 0; min-width: 0; }
 .device[data-w="narrow"] .facts > div { grid-template-columns: minmax(0, 1fr); gap: .25rem; }
 
+/* ---------- Content pages (services, about, health tips, legal) ---------- */
+.doc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 21rem); gap: 3rem; align-items: start; padding-block: 3rem 4.5rem; }
+.device[data-w="narrow"] .doc, .device[data-w="medium"] .doc { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
+.doc__body { min-width: 0; max-width: 46rem; display: grid; gap: 2.25rem; }
+.doc__sections { display: grid; gap: 2.25rem; }
+.doc__meta { color: var(--ink-soft); font-size: 1rem; margin-top: .6rem !important; }
+#docEyebrow { margin-top: 1.25rem !important; }
+.doc-sec { display: grid; gap: .8rem; }
+.doc-sec > h2 { font-size: 1.6rem !important; margin: 0 !important; }
+.doc-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; }
+.doc-list li { display: flex; gap: .65rem; align-items: flex-start; }
+.doc-list .ic { color: var(--ok); flex: none; margin-top: .25em; }
+.doc-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: .9rem; }
+.doc-steps li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1rem; align-items: start; background: var(--sky); border-radius: 18px; padding: 1.1rem 1.25rem; }
+.doc-steps__num { width: 2.6rem; height: 2.6rem; border-radius: 50%; background: var(--blue); color: var(--on-dark); display: grid; place-items: center; font-family: var(--font-display); font-weight: 800; font-size: 1.2rem; }
+.doc-steps h3 { font-size: 1.2rem !important; margin-bottom: .2rem !important; }
+.doc-steps p { color: var(--ink-soft); }
+.doc-warn, .doc-note { display: flex; gap: .75rem; align-items: flex-start; border-radius: 16px; padding: 1.1rem 1.25rem; font-weight: 500; }
+.doc-warn { border: 2px solid var(--closed); background: #fdf1ef; }
+.doc-warn .ic { color: var(--closed); flex: none; margin-top: .2em; }
+.doc-note { border: 2px solid var(--sun-line); background: var(--sun); }
+.doc-note .ic { color: var(--ink); flex: none; margin-top: .2em; }
+.doc-more { display: flex; align-items: center; gap: 1rem; border: 2px solid var(--line); border-radius: 18px; padding: 1rem 1.25rem; text-decoration: none !important; color: var(--ink) !important; background: var(--enamel); }
+.doc-more:hover { border-color: var(--blue); }
+.doc-more > .ic:first-child { width: 2rem; height: 2rem; color: var(--blue); flex: none; }
+.doc-more > .ic:last-child { margin-left: auto; color: var(--blue); flex: none; }
+.doc-more small { display: block; color: var(--ink-soft); font-size: .95rem; }
+.doc-more strong { font-family: var(--font-display); font-size: 1.15rem; }
+.doc-taglines { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; }
+.doc-taglines li { border-left: 4px solid var(--sky-2); padding: .3rem 0 .3rem .9rem; }
+.doc-disclaimer { color: var(--ink-soft); font-size: 1rem; border-top: 1px solid var(--line); padding-top: 1.25rem !important; }
+.doc__aside { display: grid; gap: 1.5rem; min-width: 0; }
+.doc__aside .btn { justify-content: center; }
+.doc-related h2 { font-size: 1.3rem !important; margin: 0 0 .6rem !important; }
+.doc-related ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.doc-related a { display: flex; justify-content: space-between; align-items: center; gap: .75rem; padding: .85rem .25rem; border-bottom: 1px solid var(--line); text-decoration: none !important; color: var(--ink) !important; font-weight: 600; }
+.doc-related a:hover { color: var(--blue) !important; }
+.doc-related a .ic { color: var(--blue); flex: none; }
+.doc-about { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); gap: 2rem; align-items: start; }
+.device[data-w="narrow"] .doc-about { grid-template-columns: minmax(0, 1fr); }
+.device[data-w="narrow"] .doc-about .photo { max-width: 16rem; }
+.doc-about__text { display: grid; gap: 1rem; }
+.doc .faq { display: grid; gap: .75rem; }
+
 /* Real photo inside a .photo frame (doctor portrait) */
 .photo--real { padding: 0; border: 0; overflow: hidden; background: var(--sky-2); display: block; }
 .photo--real img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; }

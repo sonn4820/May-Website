@@ -25,6 +25,9 @@ Khi có thông tin thật, thay token tương ứng. Bản production sẽ bị 
 | `INPUT_INFO_ABOUT_ACCEPTED_INSURANCE_HERE` | Danh sách bảo hiểm phòng khám nhận (Mây sẽ gửi sau) | Mục Bảo hiểm & thanh toán |
 | `INPUT_INFO_ABOUT_OPENDENTAL_API_KEYS_HERE` | Developer Key (đăng ký với OpenDental) và Customer Key (phòng khám dán vào Setup > Advanced Setup > API trong OpenDental). Xem server/README.md | Cấu hình server (đặt lịch online) |
 | `INPUT_INFO_ABOUT_OPENDENTAL_PROV_AND_OP_HERE` | Số ProvNum của bác sĩ và OpNum của ghế (operatory) nhận lịch hẹn đặt online, xem trong OpenDental | Cấu hình server (đặt lịch online) |
+| `INPUT_INFO_ABOUT_AFTER_HOURS_EMERGENCY_HERE` | Khi phòng khám đóng cửa, bệnh nhân cấp cứu gọi đâu (lời nhắn tổng đài, số trực, hay hướng dẫn đến phòng cấp cứu) | Trang Cấp cứu nha khoa |
+| `INPUT_INFO_ABOUT_PRIVACY_CONTACT_HERE` | Tên và chức danh người phụ trách quyền riêng tư (HIPAA) và dân quyền (Section 1557) của phòng khám | Trang Notice of Privacy Practices, Nondiscrimination |
+| `INPUT_INFO_ABOUT_LEGAL_EFFECTIVE_DATE_HERE` | Ngày bắt đầu áp dụng các trang chính sách (sau khi luật sư duyệt) | Các trang Privacy & legal |
 | `INPUT_INFO_ABOUT_SOCIAL_MEDIA_LINKS_HERE` | Link Facebook, Instagram (nếu có) | Footer |
 | `INPUT_INFO_ABOUT_STAFF_GOOGLE_EMAIL_HERE` | Danh sách email Google Workspace của nhân viên được vào Staff Portal | Staff Portal |
 | `INPUT_INFO_ABOUT_GOOGLE_SHEET_LINK_HERE` | Google Sheet “Clinic Operations” (mình sẽ tạo mẫu sẵn các tab) | Staff Portal, cấu hình server |

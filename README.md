@@ -11,12 +11,23 @@ Nút **Thu gọn** ở góc trên bên trái ẩn thanh công cụ prototype (ch
 
 Link mở thẳng một màn hình: `#vi`, `#es`, `#phone`, `#schedule`, `#new-patients`, `#staff`, `#staff-app`, `#staff-submissions`, `#how-it-works`, `#placeholders`.
 
+Mọi trang của website đều có địa chỉ riêng, nút Back/Forward của trình duyệt hoạt động:
+
+| Nhóm | Địa chỉ |
+|---|---|
+| Dịch vụ (6) | `#services/checkups`, `#services/fillings-crowns`, `#services/dentures`, `#services/implants`, `#services/gum-care`, `#services/emergency` |
+| Bác sĩ | `#about` |
+| Kiến thức nha khoa (3) | `#tips/denture-care`, `#tips/dry-mouth`, `#tips/implants-guide` |
+| Chính sách (4) | `#privacy`, `#privacy-practices`, `#accessibility`, `#nondiscrimination` |
+
+Nội dung các trang này nằm trong `prototype/src/35-docs-en.js`, `36-docs-vi.js`, `37-docs-es.js` (danh sách trang ở `34-docs-meta.js`). Các link ra ngoài (gọi điện, Google Maps, Google Reviews, mạng xã hội) vẫn chỉ hiện thông báo, sẽ gắn sau.
+
 Dữ liệu trong prototype chỉ nằm trong trang (hoặc trong OpenDental giả lập khi chạy `proto:serve`), không gửi đi đâu. Đừng nhập thông tin bệnh nhân thật.
 
 ## Sửa và kiểm tra
 
 - Mã nguồn nằm ở `prototype/src/` (CSS, HTML, 3 file dịch, JS). `npm run proto:build` ghép tất cả thành `prototype/index.html` và sinh lại `PLACEHOLDERS.md`.
-- `npm install` một lần, sau đó `npm run proto:test` chạy 103 bài kiểm tra chức năng bằng jsdom (đổi ngôn ngữ, Staff Portal, form, tờ lịch đặt hẹn, Google Sheet giả lập, FAQ…).
+- `npm install` một lần, sau đó `npm run proto:test` chạy 122 bài kiểm tra chức năng bằng jsdom (đổi ngôn ngữ, Staff Portal, form, tờ lịch đặt hẹn, 14 trang nội dung, nút Back, Google Sheet giả lập, FAQ…).
 - `npm run api:test` chạy 16 bài kiểm tra cho API đặt lịch với OpenDental giả lập. Cần Node 24 trở lên (chạy thẳng TypeScript).
 - `npm run proto:motion` mở Chrome/Edge chạy ngầm và đo xem animation có chạy dần đều thật không. Script đo các thao tác: cuộn khi bấm menu, hiện dần khi cuộn tới, dropdown, chuyển trang, FAQ.
 

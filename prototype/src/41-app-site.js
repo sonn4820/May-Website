@@ -252,6 +252,8 @@ function renderSite() {
   renderBooker();
   renderMonthSelect();
   renderStepText();
+  renderReadTimes();
+  if (state.page === "doc") renderDoc();
   ["#sch-lang", "#np-lang"].forEach((s) => { const el = $(s); if (!el.dataset.touched) el.value = state.lang; });
   if (!$("#schOk").hidden && state.lastBooking) $("#schOkBody").textContent = bookedText(state.lastBooking);
 }
@@ -315,11 +317,15 @@ async function scrollToSection(id) {
 }
 
 let pageToken = 0;
-async function goPage(page, scrollId) {
+// page: "home" | "schedule" | "new" | "doc" (doc = key in DOC_META). opts.pop: called from Back/Forward, so do not add history.
+async function goPage(page, scrollId, doc, opts = {}) {
   closeMenu();
   toggleDropdown(false);
+  if (page === "doc" && !DOC_META[doc]) { page = "home"; doc = null; }
+  if (page !== "doc") doc = null;
+  if (!opts.pop) syncHash(page, doc);
   const token = ++pageToken;
-  if (state.page !== page) {
+  if (state.page !== page || state.doc !== doc) {
     const old = $("#page-" + state.page);
     if (booted) {
       old.classList.add("is-leaving");
@@ -328,11 +334,13 @@ async function goPage(page, scrollId) {
       old.classList.remove("is-leaving");
     }
     state.page = page;
+    state.doc = doc;
+    if (page === "doc") renderDoc();
     $$("[data-page]").forEach((p) => { p.hidden = p.dataset.page !== page; });
     const el = $("#page-" + page);
     el.classList.remove("is-entering"); void el.offsetWidth; el.classList.add("is-entering");
     $$(".nav__link[data-route]").forEach((a) => a.removeAttribute("aria-current"));
-    const cur = $('.nav__link[data-route="' + page + '"]:not([data-scroll])');
+    const cur = page === "doc" ? $('.nav__link[data-doc="' + doc + '"]') : $('.nav__link[data-route="' + page + '"]:not([data-scroll])');
     if (cur) cur.setAttribute("aria-current", "page");
     scrollTopNow();
     $("#main").focus({ preventScroll: true });

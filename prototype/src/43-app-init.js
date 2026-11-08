@@ -33,7 +33,7 @@ function onClick(e) {
   if (d.slot && el.classList.contains("slot")) return pickSlot(d.slot);
   if (d.closeMenu !== undefined) return closeMenu();
   if (d.skip !== undefined) return $("#main").focus();
-  if (d.route) return goPage(d.route, d.scroll);
+  if (d.route) return goPage(d.route, d.scroll, d.doc);
   if (d.soon !== undefined) return toast(PROTO_MSG.soon);
   if (d.call !== undefined) return toast(PROTO_MSG.call());
   if (d.maps !== undefined) return toast(PROTO_MSG.maps());
@@ -164,6 +164,12 @@ function init() {
   $("#schForm").addEventListener("submit", onSchSubmit);
   $("#npForm").addEventListener("submit", onNpSubmit);
   $("#stDateForm").addEventListener("submit", onStDateSubmit);
+  // Back/Forward between website pages (the prototype's own views keep their state)
+  window.addEventListener("popstate", () => {
+    const h = decodeURIComponent(location.hash.slice(1));
+    if (state.view !== "site" && (DOC_META[h] || ["", "schedule", "new-patients"].includes(h))) setView("site");
+    routeFromHash(true);
+  });
   window.addEventListener("scroll", onSiteScroll, { passive: true });
   $("#screen").addEventListener("scroll", onSiteScroll, { passive: true });
   window.addEventListener("resize", () => { updateProtoH(); updateBreakpoint(); onSiteScroll(); });
@@ -193,5 +199,6 @@ function openFromHash() {
     "how-it-works": () => setView("how"), placeholders: () => setView("ph")
   };
   if (actions[h]) actions[h]();
+  else routeFromHash(false);
 }
 init();

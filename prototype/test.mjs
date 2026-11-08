@@ -5,13 +5,13 @@ import { readFileSync } from "node:fs";
 
 const html = readFileSync(new URL("./index.html", import.meta.url), "utf8").replace(/<link[^>]+fonts\.g[^>]+>/g, "");
 
-function boot() {
+function boot(url = "http://localhost/") {
   const errors = [];
   const vc = new VirtualConsole();
   vc.on("jsdomError", (e) => { if (!/Could not parse CSS|Not implemented: navigation/.test(e.message)) errors.push(e.message); });
   vc.on("error", (m) => errors.push(String(m)));
   const dom = new JSDOM(html, {
-    runScripts: "dangerously", pretendToBeVisual: true, url: "http://localhost/", virtualConsole: vc,
+    runScripts: "dangerously", pretendToBeVisual: true, url, virtualConsole: vc,
     beforeParse(w) {
       w.matchMedia = () => ({ matches: false, addEventListener() {}, removeEventListener() {} });
       w.scrollTo = () => {};
@@ -129,9 +129,9 @@ click($("#stNoticePublish"));
 
 // Smooth scroll to a section, notice closing, FAQ
 click($("#tab-site"));
-click($('.nav__link[data-scroll="doctor"]'));
+click($('.nav__link[data-scroll="visit"]'));
 await sleep(80);
-ok("nav link scrolls to section and marks arrival", $("#doctor").classList.contains("is-arrived") && d.activeElement === $("#doctor"));
+ok("nav link scrolls to section and marks arrival", $("#visit").classList.contains("is-arrived") && d.activeElement === $("#visit"));
 click($("#noticeClose"));
 ok("notice folds away (closing state)", $("#siteNotice").classList.contains("is-closing"));
 await sleep(550);
@@ -219,6 +219,44 @@ ok("Google Doc created", $("#stSheetGrid").textContent.includes("✓ New patient
 click($('[data-sheet="hours"]'));
 ok("Hours sheet shows published data", $("#stSheetGrid").textContent.includes("Saturday"));
 
+// Content pages: every internal link opens a real page
+click($("#tab-site"));
+const DOC_IDS = Object.keys(w.eval("DOC_META"));
+ok("14 content pages, text in all 3 languages", DOC_IDS.length === 14 && ["en", "vi", "es"].every((l) => DOC_IDS.every((id) => w.eval("DOCS")[l][id] && w.eval("DOCS")[l][id].sections.length > 0)));
+ok("no 'coming soon' links left on the website", $$("#site [data-soon]").length === 0);
+ok("every page link points at an existing page", $$("#site [data-doc]").every((a) => DOC_IDS.includes(a.dataset.doc) && a.getAttribute("href") === "#" + a.dataset.doc), $$("#site [data-doc]").map((a) => a.dataset.doc).filter((x) => !DOC_IDS.includes(x)).join(","));
+ok("every page is linked from somewhere on the site", DOC_IDS.every((id) => $$('#site [data-doc="' + id + '"]').length > 0), DOC_IDS.filter((id) => !$$('#site [data-doc="' + id + '"]').length).join(","));
+const openDoc = async (sel) => { click($(sel)); await sleep(350); };
+await openDoc('#services .card__link[data-doc="services/dentures"]');
+ok("service card opens its page", !$("#page-doc").hidden && $("#page-home").hidden && text("#docTitle") === "Dentures & Partials" && w.location.hash === "#services/dentures", text("#docTitle") + " " + w.location.hash);
+ok("service page has steps, list, breadcrumb and related services", $$("#docBody .doc-steps li").length === 4 && $$("#docBody .doc-list li").length >= 5 && text("#docCrumbs").includes("Services") && $$("#docRelatedList a").length === 5);
+ok("aside offers schedule and call", !!$('#page-doc .doc__aside [data-route="schedule"]') && !!$("#page-doc .doc__aside [data-call]") && text("#page-doc [data-status] .status-text").length > 5);
+await openDoc('#docBody .doc-more');
+ok("link inside a page opens the article", text("#docTitle") === "Caring for your dentures: a simple daily routine" && /\d+ minute read/.test(text("#docMeta")) && !!$("#docBody .doc-disclaimer"));
+w.history.back();
+await sleep(400);
+ok("browser Back returns to the previous page", text("#docTitle") === "Dentures & Partials" && w.location.hash === "#services/dentures", text("#docTitle"));
+await openDoc('#servicesMenu [data-doc="services/emergency"]');
+ok("services menu opens a service page with the 911 warning", text("#docTitle") === "Emergency Care" && !!$("#docBody .doc-warn") && text("#docBody").includes("INPUT_INFO_ABOUT_AFTER_HOURS_EMERGENCY_HERE"));
+await openDoc('#servicesMenu [data-doc="services/checkups"]');
+const docFaq = $("#docBody .faq__q");
+click(docFaq);
+ok("FAQ on a content page opens", docFaq.getAttribute("aria-expanded") === "true" && $("#" + docFaq.getAttribute("aria-controls")).classList.contains("is-open"));
+await openDoc('.nav__link[data-doc="about"]');
+ok("About the Doctor page with photo and facts", !$("#docAbout").hidden && $("#docAbout img").src.startsWith("data:image/jpeg") && text("#docTitle") === "Dr. Van H Nguyen, DMD" && $('.nav__link[data-doc="about"]').getAttribute("aria-current") === "page");
+await openDoc('.footer [data-doc="privacy-practices"]');
+ok("Notice of Privacy Practices opens from the footer", text("#docTitle") === "Notice of Privacy Practices" && text("#docLead").startsWith("This notice describes how medical information") && text("#docMeta").includes("INPUT_INFO_ABOUT_LEGAL_EFFECTIVE_DATE_HERE") && $("#docAbout").hidden);
+await openDoc('.footer [data-doc="nondiscrimination"]');
+ok("Nondiscrimination notice has Spanish and Vietnamese taglines", $$('#docBody .doc-taglines li[lang="es"], #docBody .doc-taglines li[lang="vi"]').length === 2);
+click($('[data-lang="vi"]'));
+ok("content page follows the language", text("#docTitle") === "Thông báo không phân biệt đối xử" || text("#docLead").startsWith("Excelcare Dental tuân thủ"), text("#docLead"));
+click($('[data-lang="es"]'));
+ok("Spanish content page", text("#docLead").startsWith("Excelcare Dental cumple"), text("#docLead"));
+click($('[data-lang="en"]'));
+await openDoc('#docCrumbs [data-route="home"]');
+ok("breadcrumb Home returns to the home page", !$("#page-home").hidden && $("#page-doc").hidden && w.location.hash === "");
+ok("article cards show reading time", $$("[data-readtime]").every((el) => /^\d+ minute read$/.test(el.textContent)), $$("[data-readtime]").map((e) => e.textContent).join("|"));
+
 // Placeholders, menu, dropdown, text size, device
 click($("#tab-ph"));
 ok("placeholder table rows", $$("#phBody tr").length === Number(text("#phCount")));
@@ -281,6 +319,12 @@ ok("label mode", text(".doctor__bio .ph") === "Short bio");
 ok("no script errors during the run", errors.length === 0, errors.join(" | "));
 await sleep(50);
 dom.window.close();
+
+// A shared link opens that page straight away
+const deep = boot("http://localhost/#tips/dry-mouth");
+await sleep(50);
+ok("shared link opens the page directly", !deep.d.querySelector("#page-doc").hidden && deep.d.querySelector("#docTitle").textContent === "Dry mouth: why it happens and what helps" && deep.errors.length === 0, deep.errors.join(" | "));
+deep.dom.window.close();
 
 const failed = results.filter((r) => !r.pass);
 results.forEach((r) => console.log((r.pass ? "PASS " : "FAIL ") + r.name + (r.pass || !r.extra ? "" : "  -> " + r.extra)));
