@@ -44,7 +44,6 @@
           <div class="panel__head">
             <h2 data-i18n="st_hours_t"></h2>
             <p class="panel__desc" data-i18n="st_hours_d"></p>
-            <span class="sample-tag"><svg class="ic"><use href="#i-info"/></svg><span data-i18n="st_sample"></span></span>
           </div>
           <div class="table-scroll">
             <table class="htable">
@@ -74,7 +73,7 @@
             </div>
             <div class="full collapse" id="stSdTimes"><div class="collapse__inner">
               <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem">
-                <div class="f"><label for="st-sd-from" data-i18n="st_col_from"></label><input type="time" id="st-sd-from" value="08:30" step="900"></div>
+                <div class="f"><label for="st-sd-from" data-i18n="st_col_from"></label><input type="time" id="st-sd-from" value="09:00" step="900"></div>
                 <div class="f"><label for="st-sd-to" data-i18n="st_col_to"></label><input type="time" id="st-sd-to" value="12:00" step="900"></div>
               </div>
             </div></div>
@@ -114,7 +113,7 @@
         </section>
 
         <section class="panel" data-st-panel="subs" role="tabpanel" aria-labelledby="st-tab-subs" hidden>
-          <div class="panel__head"><h2 data-i18n="st_subs_t"></h2><p class="panel__desc" data-i18n="st_subs_d"></p></div>
+          <div class="panel__head"><h2 data-i18n="st_subs_t"></h2><p class="panel__desc" data-i18n="st_subs_d"></p><p class="panel__desc od-note"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg><span data-i18n="st_subs_od"></span></p></div>
           <div class="sheet">
             <div class="sheet__bar">
               <span class="sheet__name"><svg class="ic"><use href="#i-grid"/></svg>Clinic Operations · Google Sheet</span>
@@ -126,8 +125,7 @@
             <div class="sheet__scroll"><table class="sheet__grid" id="stSheetGrid"></table></div>
             <div class="sheet__empty" id="stSheetEmpty" hidden><svg class="ic"><use href="#i-grid"/></svg><p data-i18n="st_empty"></p><p data-i18n="st_empty_hint"></p></div>
             <div class="sheet__tabs" role="tablist" aria-label="Google Sheet tabs">
-              <button type="button" role="tab" aria-selected="true" data-sheet="appt">Appointment requests (<span id="stCountAppt">0</span>)</button>
-              <button type="button" role="tab" aria-selected="false" data-sheet="np">New patients (<span id="stCountNp">0</span>)</button>
+              <button type="button" role="tab" aria-selected="true" data-sheet="np">New patients (<span id="stCountNp">0</span>)</button>
               <button type="button" role="tab" aria-selected="false" data-sheet="hours">Hours</button>
               <button type="button" role="tab" aria-selected="false" data-sheet="dates">Special dates</button>
               <button type="button" role="tab" aria-selected="false" data-sheet="notice">Website notice</button>

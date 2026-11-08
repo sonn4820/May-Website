@@ -1,30 +1,26 @@
 // Every piece of real clinic information still missing. In the real project this list lives in
 // one config file, and the production build fails while any INPUT_INFO_ABOUT_..._HERE remains.
 const PLACEHOLDERS = {
-  CLINIC_NAME:                 { label: "Clinic name", need: "Tên chính thức của phòng khám", where: "Header, footer, tiêu đề trang" },
   LOGO:                        { label: "Logo", need: "Logo (SVG hoặc PNG nền trong suốt)", where: "Header, footer, biểu tượng tab trình duyệt" },
-  CLINIC_TIMEZONE:             { label: "Time zone", need: "Múi giờ của phòng khám, ví dụ America/Chicago. Dùng để tính “Đang mở cửa”", where: "Chỉ trong file cấu hình", configOnly: true },
   GOOGLE_MAPS_LINK:            { label: "Map link", need: "Link Google Maps của phòng khám", where: "Nút Chỉ đường, bản đồ" },
-  PARKING_AND_WHEELCHAIR_ACCESS: { label: "Parking & access", need: "Thông tin bãi đỗ xe, lối xe lăn, thang máy", where: "Mục Giờ mở cửa & địa chỉ" },
   HERO_PHOTO:                  { label: "Main photo", need: "Ảnh lớn đầu trang (bác sĩ với bệnh nhân, hoặc phòng khám)", where: "Đầu trang chủ" },
-  DOCTOR_PHOTO:                { label: "Doctor photo", need: "Ảnh chân dung bác sĩ", where: "Mục Gặp bác sĩ" },
-  DOCTOR_DEGREE:               { label: "Degree", need: "Học vị: DDS hay DMD", where: "Mục Gặp bác sĩ" },
   DOCTOR_BIO:                  { label: "Short bio", need: "Tiểu sử ngắn 3–5 câu (cần bản EN, VI, ES)", where: "Mục Gặp bác sĩ" },
   DOCTOR_EDUCATION:            { label: "Education", need: "Trường đã học, năm tốt nghiệp", where: "Mục Gặp bác sĩ" },
   DOCTOR_YEARS_OF_EXPERIENCE:  { label: "Experience", need: "Số năm kinh nghiệm", where: "Mục Gặp bác sĩ" },
   LANGUAGES_SPOKEN:            { label: "Languages spoken", need: "Các ngôn ngữ bác sĩ và nhân viên nói được", where: "Mục Gặp bác sĩ" },
-  DOCTOR_NAME_WITH_VIETNAMESE_DIACRITICS: { label: "Name in Vietnamese", need: "Tên bác sĩ viết đủ dấu tiếng Việt (hiện tạm dùng “Van Hong Nguyen”)", where: "Bản tiếng Việt", configOnly: true },
+  DOCTOR_NAME_WITH_VIETNAMESE_DIACRITICS: { label: "Name in Vietnamese", need: "Tên bác sĩ viết đủ dấu tiếng Việt, nếu muốn (hiện dùng “Van H Nguyen” như bản tiếng Anh)", where: "Bản tiếng Việt", configOnly: true },
   DOCTOR_SPANISH_TITLE:        { label: "Dr. or Dra.", need: "Danh xưng trong tiếng Tây Ban Nha: “Dr.” hay “Dra.” (tiếng Tây Ban Nha phân biệt giới tính)", where: "Bản tiếng Tây Ban Nha", configOnly: true },
   PATIENT_REVIEW_1:            { label: "Patient review 1", need: "Đánh giá thật của bệnh nhân kèm tên hiển thị, có sự đồng ý của họ", where: "Mục Đánh giá" },
   PATIENT_REVIEW_2:            { label: "Patient review 2", need: "Đánh giá thật thứ 2", where: "Mục Đánh giá" },
   PATIENT_REVIEW_3:            { label: "Patient review 3", need: "Đánh giá thật thứ 3", where: "Mục Đánh giá" },
-  BEFORE_AFTER_CASE_1:         { label: "Before/after photos 1", need: "Cặp ảnh trước/sau điều trị (răng giả), có đồng ý bằng văn bản của bệnh nhân", where: "Mục Nụ cười bệnh nhân" },
-  BEFORE_AFTER_CASE_2:         { label: "Before/after photos 2", need: "Cặp ảnh trước/sau (mão răng)", where: "Mục Nụ cười bệnh nhân" },
-  BEFORE_AFTER_CASE_3:         { label: "Before/after photos 3", need: "Cặp ảnh trước/sau (implant)", where: "Mục Nụ cười bệnh nhân" },
+  BEFORE_AFTER_CASE_1:         { label: "Before/after photos 1", need: "Cặp ảnh trước/sau điều trị (răng giả), có đồng ý bằng văn bản của bệnh nhân", where: "Mục Nụ cười bệnh nhân (đang tạm ẩn)" },
+  BEFORE_AFTER_CASE_2:         { label: "Before/after photos 2", need: "Cặp ảnh trước/sau (mão răng)", where: "Mục Nụ cười bệnh nhân (đang tạm ẩn)" },
+  BEFORE_AFTER_CASE_3:         { label: "Before/after photos 3", need: "Cặp ảnh trước/sau (implant)", where: "Mục Nụ cười bệnh nhân (đang tạm ẩn)" },
   PROFESSIONAL_MEMBERSHIPS:    { label: "Memberships", need: "Hiệp hội nghề nghiệp, ví dụ ADA hoặc hội nha khoa của bang", where: "Mục Gặp bác sĩ" },
   GOOGLE_REVIEWS_LINK:        { label: "Reviews link", need: "Link trang đánh giá Google của phòng khám", where: "Nút “Read more reviews”, “Leave a review”" },
-  ACCEPTED_INSURANCE:          { label: "Insurance list", need: "Danh sách bảo hiểm phòng khám nhận (kể cả Medicare Advantage / Medicaid nếu có)", where: "Mục Bảo hiểm & thanh toán" },
-  PAYMENT_OPTIONS:             { label: "Payment options", need: "Hình thức thanh toán, trả góp, gói thành viên", where: "Mục Bảo hiểm & thanh toán" },
+  ACCEPTED_INSURANCE:          { label: "Insurance list", need: "Danh sách bảo hiểm phòng khám nhận (Mây sẽ gửi sau)", where: "Mục Bảo hiểm & thanh toán" },
+  OPENDENTAL_API_KEYS:         { label: "OpenDental API keys", need: "Developer Key (đăng ký với OpenDental) và Customer Key (phòng khám dán vào Setup > Advanced Setup > API trong OpenDental). Xem server/README.md", where: "Cấu hình server (đặt lịch online)", configOnly: true },
+  OPENDENTAL_PROV_AND_OP:      { label: "ProvNum / OpNum", need: "Số ProvNum của bác sĩ và OpNum của ghế (operatory) nhận lịch hẹn đặt online, xem trong OpenDental", where: "Cấu hình server (đặt lịch online)", configOnly: true },
   SOCIAL_MEDIA_LINKS:          { label: "Social links", need: "Link Facebook, Instagram (nếu có)", where: "Footer" },
   STAFF_GOOGLE_EMAIL:          { label: "Staff email", need: "Danh sách email Google Workspace của nhân viên được vào Staff Portal", where: "Staff Portal" },
   GOOGLE_SHEET_LINK:           { label: "Google Sheet", need: "Google Sheet “Clinic Operations” (mình sẽ tạo mẫu sẵn các tab)", where: "Staff Portal, cấu hình server", configOnly: true },
@@ -33,6 +29,7 @@ const PLACEHOLDERS = {
 };
 // Real clinic information already confirmed. Markup shows it with data-info="NAME".
 const CLINIC_INFO = {
+  CLINIC_NAME:    "Excelcare Dental",
   CLINIC_PHONE:   "847-548-2222",
   CLINIC_ADDRESS: "1227 N Illinois 83 Ste E, Grayslake, IL 60030",
   CLINIC_EMAIL:   "business@excelcaredental.com"

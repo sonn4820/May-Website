@@ -19,10 +19,41 @@
         <form id="schForm" novalidate>
           <h2 data-i18n="sch_form_title"></h2>
           <p class="form-intro" data-i18n="sch_form_intro"></p>
-          <div class="field" data-field="name">
-            <label for="sch-name" data-i18n="f_name"></label>
-            <input type="text" id="sch-name" name="name" autocomplete="name">
+          <div class="proto-callout proto-callout--soft"><span id="schSourceNote"></span></div>
+
+          <div class="field booker" data-field="slot">
+            <div class="step-label" data-err-anchor><span class="step-dot" aria-hidden="true">1</span><span data-i18n="sch_step_day"></span></div>
+            <div class="cal">
+              <div class="cal__head">
+                <button type="button" class="cal__nav" id="calPrev"><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg><span class="sr-only" data-i18n="cal_prev"></span></button>
+                <h3 class="cal__month" id="calMonth" aria-live="polite"></h3>
+                <button type="button" class="cal__nav" id="calNext"><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg><span class="sr-only" data-i18n="cal_next"></span></button>
+              </div>
+              <div class="cal__grid" id="calGrid" role="group" aria-labelledby="calMonth"></div>
+              <div class="cal__legend"><span class="cal__legend-item"><span class="cal__key cal__key--open" aria-hidden="true"></span><span data-i18n="cal_key_open"></span></span><span class="cal__legend-item"><span class="cal__key" aria-hidden="true"></span><span data-i18n="cal_key_none"></span></span></div>
+            </div>
+            <div class="slots">
+              <div class="step-label"><span class="step-dot" aria-hidden="true">2</span><span id="slotsTitle"></span></div>
+              <div id="slotsGrid" role="group" aria-labelledby="slotsTitle"></div>
+              <p class="hint slots__help"><span data-i18n="slots_help"></span> <a href="#" data-call><span data-info="CLINIC_PHONE"></span></a></p>
+            </div>
+            <div class="picked" id="schPicked" hidden aria-live="polite"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span><span data-i18n="picked_label"></span> <strong id="schPickedText"></strong></span></div>
           </div>
+
+          <div class="step-label"><span class="step-dot" aria-hidden="true">3</span><span data-i18n="sch_step_you"></span></div>
+          <div class="name-row">
+            <div class="field" data-field="first"><label for="sch-first" data-i18n="f_first"></label><input type="text" id="sch-first" name="first" autocomplete="given-name" maxlength="60"></div>
+            <div class="field" data-field="last"><label for="sch-last" data-i18n="f_last"></label><input type="text" id="sch-last" name="last" autocomplete="family-name" maxlength="60"></div>
+          </div>
+          <fieldset class="field" data-field="sch-dob">
+            <legend data-i18n="f_dob"></legend>
+            <p class="hint" data-i18n="f_dob_hint"></p>
+            <div class="dob">
+              <label for="sch-dob-m"><span data-i18n="f_month"></span><select id="sch-dob-m" name="dobm" autocomplete="bday-month"></select></label>
+              <label for="sch-dob-d"><span data-i18n="f_day"></span><input type="text" inputmode="numeric" id="sch-dob-d" name="dobd" maxlength="2" autocomplete="bday-day"></label>
+              <label for="sch-dob-y"><span data-i18n="f_year"></span><input type="text" inputmode="numeric" id="sch-dob-y" name="doby" maxlength="4" autocomplete="bday-year"></label>
+            </div>
+          </fieldset>
           <div class="field" data-field="phone">
             <label for="sch-phone" data-i18n="f_phone"></label>
             <p class="hint" id="sch-phone-hint" data-i18n="f_phone_hint"></p>
@@ -39,19 +70,6 @@
               <label class="choice"><input type="radio" name="newpt" id="sch-newpt-no" value="no"><span data-i18n="no"></span></label>
             </div>
           </fieldset>
-          <fieldset class="field">
-            <legend><span data-i18n="f_days"></span> <span class="opt" data-i18n="optional"></span></legend>
-            <p class="hint" data-i18n="f_days_hint"></p>
-            <div class="choices" id="schDays"></div>
-          </fieldset>
-          <fieldset class="field">
-            <legend data-i18n="f_time"></legend>
-            <div class="choices">
-              <label class="choice"><input type="radio" name="tod" id="sch-tod-m" value="morning"><span data-i18n="t_morning"></span></label>
-              <label class="choice"><input type="radio" name="tod" id="sch-tod-a" value="afternoon"><span data-i18n="t_afternoon"></span></label>
-              <label class="choice"><input type="radio" name="tod" id="sch-tod-any" value="any" checked><span data-i18n="t_any"></span></label>
-            </div>
-          </fieldset>
           <div class="field">
             <label for="sch-reason"><span data-i18n="f_reason"></span> <span class="opt" data-i18n="optional"></span></label>
             <p class="hint" id="sch-reason-hint" data-i18n="f_reason_hint"></p>
@@ -61,6 +79,8 @@
             <label for="sch-lang" data-i18n="f_lang"></label>
             <select id="sch-lang" name="lang"><option value="en">English</option><option value="vi">Tiếng Việt</option><option value="es">Español</option></select>
           </div>
+          <!-- Honeypot: hidden from people; bots that fill it are turned away by the server -->
+          <div class="hp" aria-hidden="true"><label for="sch-website">Website</label><input type="text" id="sch-website" name="website" tabindex="-1" autocomplete="off"></div>
           <div class="form-actions"><button type="submit" class="btn btn--cta btn--lg"><svg class="ic"><use href="#i-cal"/></svg><span data-i18n="sch_submit"></span></button></div>
           <p class="privacy-note"><svg class="ic"><use href="#i-lock"/></svg><span data-i18n="privacy"></span></p>
         </form>
@@ -68,7 +88,7 @@
           <span class="success__icon"><svg class="ic"><use href="#i-check"/></svg></span>
           <h2 data-i18n="sch_ok_title"></h2>
           <p id="schOkBody"></p>
-          <div class="proto-callout"><span>Prototype: yêu cầu này vừa được thêm thành 1 dòng mới trong Google Sheet “Appointment requests”.</span><button type="button" data-goto-subs="appt">Xem trong Staff Portal</button></div>
+          <div class="proto-callout"><span>Prototype: lịch hẹn được tạo thẳng trong OpenDental qua API (bệnh nhân + lịch hẹn, ghi chú lý do và ngôn ngữ gọi lại). Website không lưu bản sao. Giờ này không còn hiện là giờ trống nữa.</span></div>
           <div><button type="button" class="btn btn--ghost" id="schAgain" data-i18n="sch_again"></button></div>
         </div>
       </div>
@@ -173,7 +193,7 @@
     <div class="wrap footer__grid">
       <div class="footer__brand">
         <div class="footer__logo"><span class="brand__logo"><svg class="ic"><use href="#i-tooth"/></svg></span><span class="ph" data-ph="LOGO"></span></div>
-        <p class="brand__name"><span class="ph" data-ph="CLINIC_NAME"></span></p>
+        <p class="brand__name" data-info="CLINIC_NAME"></p>
         <p data-i18n="doctor_name"></p>
         <p><span data-info="CLINIC_ADDRESS"></span></p>
         <p><span data-info="CLINIC_PHONE"></span></p>
@@ -185,7 +205,7 @@
       <nav data-i18n-attr="aria-label:f_legal"><h2 data-i18n="f_legal"></h2><ul><li><a href="#" data-soon data-i18n="f_privacy"></a></li><li><a href="#" data-soon data-i18n="f_npp"></a></li><li><a href="#" data-soon data-i18n="f_access"></a></li><li><a href="#" data-soon data-i18n="f_nondisc"></a></li></ul></nav>
     </div>
     <div class="wrap footer__bottom">
-      <p>© 2026 <span class="ph" data-ph="CLINIC_NAME"></span></p>
+      <p>© 2026 <span data-info="CLINIC_NAME"></span></p>
       <div class="seg lang" role="group" data-i18n-attr="aria-label:lang_label">
         <button type="button" data-lang="en" lang="en" aria-pressed="true">English</button>
         <button type="button" data-lang="vi" lang="vi" aria-pressed="false">Tiếng Việt</button>

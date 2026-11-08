@@ -94,6 +94,18 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .proto-hint { margin: 8px auto 0; max-width: 1400px; color: var(--chrome-muted); font-size: 13px; }
 .proto-hint strong { color: var(--chrome-fg); font-weight: 600; }
 .proto-bar :focus-visible { outline-color: var(--chrome-accent); }
+/* Collapse button (top-left): hides the tabs, tools and hint so the site shows almost as it will live */
+.proto-toggle {
+  flex: none; display: inline-flex; align-items: center; gap: 6px;
+  border: 1px solid var(--chrome-line); background: var(--chrome-bg-2); color: var(--chrome-fg);
+  padding: 6px 11px 6px 8px; border-radius: 8px; cursor: pointer; font-size: 13px; line-height: 1.2;
+  transition: border-color .3s ease, background-color .3s ease;
+}
+.proto-toggle:hover { border-color: var(--chrome-accent); }
+.proto-toggle .ic { transform: rotate(180deg); transition: transform .3s var(--ease); }
+.proto-bar.is-collapsed { padding-block: 6px; }
+.proto-bar.is-collapsed .proto-toggle .ic { transform: none; }
+.proto-bar.is-collapsed :is(.proto-tabs, .proto-tools, .proto-hint) { display: none; }
 
 /* ---------- Stage and device frame ---------- */
 .stage { padding: 0 0 48px; }

@@ -20,7 +20,7 @@ const LOCALE = { en: "en-US", vi: "vi-VN", es: "es-US" };
 const DAY_KEYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 const WEEK_ORDER = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 
-// ---------- Demo data (sample hours; staff set the real ones in the Staff Portal) ----------
+// ---------- Clinic hours (from the clinic, Nov 2026; staff change them in the Staff Portal) ----------
 function nthWeekday(year, month, weekday, n) { const d = new Date(year, month, 1); const shift = (weekday - d.getDay() + 7) % 7; return new Date(year, month, 1 + shift + (n - 1) * 7); }
 function upcoming(builder, today) { let d = builder(today.getFullYear()); if (isoDate(d) < isoDate(today)) d = builder(today.getFullYear() + 1); return d; }
 
@@ -31,19 +31,20 @@ const xmas = upcoming((y) => new Date(y, 11, 25), TODAY);
 const newYear = upcoming((y) => new Date(y, 0, 1), TODAY);
 
 const SAMPLE_HOURS = {
-  mon: { open: true, from: "08:30", to: "17:30" },
-  tue: { open: true, from: "08:30", to: "17:30" },
-  wed: { open: true, from: "10:00", to: "19:00" },
-  thu: { open: true, from: "08:30", to: "17:30" },
-  fri: { open: true, from: "08:00", to: "15:00" },
-  sat: { open: false, from: "09:00", to: "13:00" },
-  sun: { open: false, from: "09:00", to: "13:00" }
+  mon: { open: true, from: "10:00", to: "19:00" },
+  tue: { open: true, from: "09:00", to: "17:00" },
+  wed: { open: true, from: "09:00", to: "17:00" },
+  thu: { open: true, from: "09:00", to: "17:00" },
+  fri: { open: false, from: "09:00", to: "17:00" },
+  sat: { open: true, from: "09:00", to: "14:00" },
+  sun: { open: false, from: "09:00", to: "14:00" }
 };
 
 const state = {
   lang: LANGS.includes(store.get("lang", "en")) ? store.get("lang", "en") : "en",
   scale: [1, 1.15, 1.3].includes(store.get("scale", 1)) ? store.get("scale", 1) : 1,
   phMode: "token",
+  protoCollapsed: false,
   a11y: {},
   device: "desktop",
   view: "site",
@@ -52,17 +53,18 @@ const state = {
   draft: clone(SAMPLE_HOURS),
   dates: [
     { id: 1, date: isoDate(thanksgiving), type: "closed", note: { en: "Thanksgiving", vi: "Lễ Tạ Ơn", es: "Día de Acción de Gracias" } },
-    { id: 2, date: isoDate(xmasEve), type: "special", from: "08:30", to: "12:00", note: { en: "Christmas Eve", vi: "Đêm Giáng sinh", es: "Nochebuena" } },
+    { id: 2, date: isoDate(xmasEve), type: "special", from: "09:00", to: "12:00", note: { en: "Christmas Eve", vi: "Đêm Giáng sinh", es: "Nochebuena" } },
     { id: 3, date: isoDate(xmas), type: "closed", note: { en: "Christmas Day", vi: "Lễ Giáng sinh", es: "Navidad" } },
     { id: 4, date: isoDate(newYear), type: "closed", note: { en: "New Year's Day", vi: "Tết Dương lịch", es: "Año Nuevo" } }
   ],
   notice: null,
   noticeDraft: null,
   noticeDismissed: false,
-  subs: { appt: [], np: [] },
+  subs: { np: [] },
+  booked: [],
   signedIn: false,
   stTab: "hours",
-  sheetTab: "appt"
+  sheetTab: "np"
 };
 
 // ---------- Text and formatting ----------
@@ -81,7 +83,9 @@ const fmtDateShort = (d, lang = state.lang) => cap(new Intl.DateTimeFormat(LOCAL
 const fmtStamp = (d) => new Intl.DateTimeFormat(LOCALE[state.lang], { hour: "numeric", minute: "2-digit", second: "2-digit" }).format(d);
 
 function sampleNotice() {
-  const day = thanksgiving, next = addDays(thanksgiving, 1);
+  const day = thanksgiving;
+  let next = addDays(thanksgiving, 1);
+  for (let i = 0; i < 14 && !dayInfo(next).open; i++) next = addDays(next, 1);
   return {
     active: true,
     from: isoDate(TODAY),
@@ -135,7 +139,12 @@ function toast(msg) {
 let booted = false;
 function smoothUpdate(fn, fallbackEl) {
   if (booted && document.startViewTransition && !state.a11y.still) {
-    try { document.startViewTransition(fn); return; } catch (e) { /* fall back below */ }
+    try {
+      const vt = document.startViewTransition(fn);
+      // A transition is skipped when another starts right away; the change itself still happens
+      [vt.ready, vt.finished].forEach((p) => p && p.catch(() => {}));
+      return;
+    } catch (e) { /* fall back below */ }
   }
   fn();
   if (booted && fallbackEl) { fallbackEl.classList.remove("is-entering-soft"); void fallbackEl.offsetWidth; fallbackEl.classList.add("is-entering-soft"); }
@@ -178,6 +187,20 @@ function setDevice(d) {
     updateBreakpoint();
   }, $("#device"));
   requestAnimationFrame(() => { updateBreakpoint(); refreshReveal(); });
+}
+
+// Top-left "Thu gọn / Mở rộng" button: collapses the prototype bar to one slim row
+function setProtoCollapsed(c) {
+  smoothUpdate(() => {
+    state.protoCollapsed = c;
+    store.set("protoCollapsed", c);
+    $("#protoBar").classList.toggle("is-collapsed", c);
+    const btn = $("#protoToggle");
+    btn.setAttribute("aria-expanded", String(!c));
+    btn.title = c ? "Mở rộng thanh công cụ prototype" : "Thu gọn thanh công cụ prototype";
+    btn.querySelector(".proto-toggle__text").textContent = c ? "Mở rộng" : "Thu gọn";
+    updateProtoH();
+  }, $("#protoBar"));
 }
 
 function setPhMode(m) {

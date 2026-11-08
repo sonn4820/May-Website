@@ -186,11 +186,8 @@ function publishNotice() {
 
 // ---------- Google Sheet mock (column names stay in English: they are the real Sheet headers) ----------
 const stampCell = (d) => isoDate(d) + " " + pad(d.getHours()) + ":" + pad(d.getMinutes());
+// Online appointments are not here: they go straight into OpenDental (server/booking).
 const SHEETS = {
-  appt: {
-    cols: ["Received", "Name", "Phone", "Email", "New patient", "Days", "Time of day", "Reason", "Language", "Status"],
-    rows: () => state.subs.appt.map((r) => ({ src: r, cells: [stampCell(r.received), r.name, r.phone, r.email, r.newpt, r.days.map((k) => weekdayShort(k, "en")).join(", "), r.tod, r.reason, r.lang.toUpperCase(), { status: r }] }))
-  },
   np: {
     cols: ["Received", "Name", "Date of birth", "Language", "Phone", "Email", "Mailing address", "Insurance", "Member ID", "Medicines", "Allergies", "Notes", "Status", "Google Doc"],
     rows: () => state.subs.np.map((r) => ({ src: r, cells: [stampCell(r.received), r.name, r.dob, r.lang.toUpperCase(), r.phone, r.email, r.address, r.insurance, r.member, r.meds, r.allergies, r.notes, { status: r }, { doc: r }] }))
@@ -216,7 +213,7 @@ function renderSheet(animate) {
   $$("[data-sheet]").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.sheet === state.sheetTab)));
   const grid = $("#stSheetGrid");
   grid.innerHTML = "";
-  $("#stSheetEmpty").hidden = !((state.sheetTab === "appt" || state.sheetTab === "np") && rows.length === 0);
+  $("#stSheetEmpty").hidden = !(state.sheetTab === "np" && rows.length === 0);
   const thead = document.createElement("thead");
   const letters = document.createElement("tr");
   letters.appendChild(document.createElement("th"));
@@ -255,7 +252,6 @@ function renderSheet(animate) {
 }
 
 function updateSubsCount() {
-  $("#stSubsCount").textContent = state.subs.appt.length + state.subs.np.length;
-  $("#stCountAppt").textContent = state.subs.appt.length;
+  $("#stSubsCount").textContent = state.subs.np.length;
   $("#stCountNp").textContent = state.subs.np.length;
 }

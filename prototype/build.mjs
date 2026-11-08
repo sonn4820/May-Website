@@ -13,7 +13,14 @@ const pick = (ext) => files.filter((f) => f.endsWith(ext) && !f.startsWith("01-"
 const css = pick(".css").map(read).join("\n");
 const js = pick(".js").map(read).join("\n");
 const head = read("01-head.html").replace("/*__CSS__*/", () => css);
-const body = pick(".html").map(read).join("\n").replace("/*__JS__*/", () => js);
+// Images in src/assets are inlined as data: URIs so index.html stays a single file
+const MIME = { ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".webp": "image/webp", ".svg": "image/svg+xml" };
+const inlineAssets = (html) => html.replace(/src="assets\/([\w.-]+)"/g, (m, f) => {
+  const type = MIME[f.slice(f.lastIndexOf(".")).toLowerCase()];
+  if (!type) throw new Error("Unknown asset type: " + f);
+  return 'src="data:' + type + ";base64," + readFileSync(join(src, "assets", f)).toString("base64") + '"';
+});
+const body = inlineAssets(pick(".html").map(read).join("\n")).replace("/*__JS__*/", () => js);
 
 const out = head + body;
 writeFileSync(join(here, "index.html"), out, "utf8");

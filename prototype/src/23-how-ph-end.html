@@ -14,7 +14,7 @@
         <div class="arrow"><svg class="ic"><use href="#i-arrow"/></svg></div>
         <div class="node"><p class="node__title"><svg class="ic"><use href="#i-server"/></svg>API nội bộ (/api)</p><p class="node__sub">Kiểm tra dữ liệu form. Giữ bản sao dự phòng khi Google lỗi. Khoá truy cập Google chỉ nằm ở server.</p></div>
         <div class="arrow"><svg class="ic"><use href="#i-arrow"/></svg></div>
-        <div class="node node--google"><p class="node__title"><svg class="ic"><use href="#i-grid"/></svg>Google Workspace</p><p class="node__sub">Google Sheet “Clinic Operations” có các tab Hours, Special dates, Website notice, Appointment requests, New patients. Google Docs lưu bản tóm tắt mỗi bệnh nhân mới. Excel tải thẳng từ Sheet.</p></div>
+        <div class="node node--google"><p class="node__title"><svg class="ic"><use href="#i-grid"/></svg>Google Workspace</p><p class="node__sub">Google Sheet “Clinic Operations” có các tab Hours, Special dates, Website notice, New patients. Lịch hẹn thì nằm trong OpenDental. Google Docs lưu bản tóm tắt mỗi bệnh nhân mới. Excel tải thẳng từ Sheet.</p></div>
       </div>
       <p class="lane__label">Nhân viên cập nhật</p>
       <div class="lane">
@@ -28,7 +28,7 @@
       </div>
       <p class="lane__label">Để sau: cắm vào qua adapter khi bạn chọn dịch vụ</p>
       <div class="lane" style="grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem">
-        <div class="node node--later"><p class="node__title"><svg class="ic"><use href="#i-cal"/></svg>Đặt lịch online bên thứ 3</p><p class="node__sub">Thêm một adapter, không phải sửa các trang.</p></div>
+        <div class="node node--later"><p class="node__title"><svg class="ic"><use href="#i-cal"/></svg>Khoá API OpenDental</p><p class="node__sub">Code đặt lịch đã xong (server/booking). Còn chờ Developer Key, Customer Key, ProvNum và OpNum.</p></div>
         <div class="node node--later"><p class="node__title"><svg class="ic"><use href="#i-mega"/></svg>Email / SMS nhắc lịch</p><p class="node__sub">Gửi xác nhận và nhắc lịch cho bệnh nhân.</p></div>
         <div class="node node--later"><p class="node__title"><svg class="ic"><use href="#i-globe"/></svg>Dịch tự động</p><p class="node__sub">Gợi ý bản dịch VI/ES cho thông báo. Nhân viên vẫn sửa lại được.</p></div>
       </div>
@@ -41,14 +41,15 @@
       <div class="decision"><span class="ic-circle"><svg class="ic"><use href="#i-lock"/></svg></span><h3>Đăng nhập bằng Google</h3><p>Staff Portal chỉ mở cho các email Google Workspace được phép. Khi nhân viên nghỉ việc, chỉ cần khoá tài khoản Google của họ.</p></div>
       <div class="decision"><span class="ic-circle"><svg class="ic"><use href="#i-globe"/></svg></span><h3>3 ngôn ngữ, tiếng Anh mặc định</h3><p>EN ở “/”, VI ở “/vi/”, ES ở “/es/”. Chữ giao diện nằm trong 3 file dịch. Câu nào thiếu bản dịch thì hiện tiếng Anh, và lệnh build sẽ báo.</p></div>
       <div class="decision"><span class="ic-circle"><svg class="ic"><use href="#i-info"/></svg></span><h3>Placeholder có kiểm soát</h3><p>Mọi thông tin còn thiếu nằm trong 1 file cấu hình. Lệnh kiểm tra liệt kê các token còn sót, và chặn bản production nếu vẫn còn INPUT_INFO_ABOUT_.</p></div>
-      <div class="decision"><span class="ic-circle"><svg class="ic"><use href="#i-cal"/></svg></span><h3>Dịch vụ bên ngoài để sau</h3><p>Đặt lịch online, email/SMS sẽ cắm vào qua adapter khi bạn chọn xong dịch vụ, không phải sửa các trang.</p></div>
+      <div class="decision"><span class="ic-circle"><svg class="ic"><use href="#i-cal"/></svg></span><h3>Đặt lịch thẳng vào OpenDental</h3><p>Trang Đặt lịch giữ giao diện tờ lịch tháng. API riêng (/api/booking) hỏi OpenDental giờ trống, tìm hoặc tạo hồ sơ bệnh nhân, rồi tạo lịch hẹn 60 phút. Không dùng Google Calendar, website không lưu bản sao lịch hẹn.</p></div>
     </div>
 
     <div class="changes" style="margin-top:0"><h3>Trước khi nhận dữ liệu bệnh nhân thật</h3><p>Form bệnh nhân mới chứa thông tin sức khoẻ, nên chịu quy định HIPAA. Phòng khám cần dùng Google Workspace bản trả phí và ký BAA (Business Associate Agreement) với Google. Không dùng Gmail cá nhân cho dữ liệu bệnh nhân.</p></div>
 
-    <h2>Ba luồng chính</h2>
+    <h2>Bốn luồng chính</h2>
     <div class="flows">
       <div class="flowcard"><h3>Nhân viên đổi giờ</h3><ol><li>Mở Staff Portal, vào Opening hours.</li><li>Sửa giờ rồi bấm Publish.</li><li>API ghi vào tab Hours.</li><li>Website hiện giờ mới sau khoảng 1 phút.</li></ol></div>
+      <div class="flowcard"><h3>Bệnh nhân đặt lịch</h3><ol><li>Trang Đặt lịch hỏi API giờ trống (lấy từ lịch bác sĩ trong OpenDental).</li><li>Bệnh nhân chọn ngày, giờ, điền tên, ngày sinh, số điện thoại.</li><li>API hỏi lại OpenDental giờ đó còn trống không.</li><li>Tìm hồ sơ theo họ + tên + ngày sinh, không có thì tạo mới.</li><li>Tạo lịch hẹn trong OpenDental, kèm ghi chú lý do và ngôn ngữ.</li></ol></div>
       <div class="flowcard"><h3>Bệnh nhân gửi form</h3><ol><li>Bệnh nhân điền form bằng ngôn ngữ của mình.</li><li>API kiểm tra dữ liệu.</li><li>Thêm 1 dòng vào tab New patients.</li><li>Tạo Google Doc tóm tắt (tuỳ chọn).</li><li>Nhân viên xem, đổi trạng thái, tải Excel.</li></ol></div>
       <div class="flowcard"><h3>Khi Google gặp sự cố</h3><ol><li>Website dùng bản sao gần nhất của giờ và thông báo.</li><li>Form báo lỗi dễ hiểu, hiện số điện thoại và giữ nguyên nội dung đã nhập.</li><li>Hệ thống báo cho người quản trị.</li></ol></div>
     </div>
@@ -67,10 +68,11 @@
     <div class="tocheck">
       <h2>Nội dung mẫu cần bạn xác nhận</h2>
       <ul>
-        <li>Giờ làm việc và các ngày lễ trong bản demo là giờ mẫu. Nhân viên sẽ nhập giờ thật qua Staff Portal.</li>
+        <li>Giờ làm việc đã theo phòng khám (T2 10–7, T3–T5 9–5, T7 9–2, T6 và CN nghỉ). Các ngày lễ trong mục “Thay đổi sắp tới” vẫn là ví dụ, nhân viên tự sửa trong Staff Portal.</li>
+        <li>Giờ trống trên trang Đặt lịch lấy từ OpenDental giả lập (mỗi lượt khám 60 phút, cho đặt trước 8 tuần). Mở file trực tiếp thì dùng dữ liệu giả ngay trong trang.</li>
         <li>Danh sách 6 dịch vụ và phần mô tả ngắn của từng dịch vụ.</li>
         <li>3 bài viết mẫu ở mục Health tips.</li>
-        <li>Câu giới thiệu ở đầu trang và 4 bước của lần khám đầu tiên.</li>
+        <li>Câu giới thiệu ở đầu trang.</li>
         <li>Bản tiếng Tây Ban Nha tạm tránh dùng danh xưng Dr./Dra. cho đến khi có token DOCTOR_SPANISH_TITLE.</li>
       </ul>
     </div>

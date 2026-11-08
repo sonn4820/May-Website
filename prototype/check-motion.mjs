@@ -56,8 +56,8 @@ ok("lands right under the sticky header", Math.abs(gap) <= 3, "offset " + gap);
 ok("arrival underline on the heading", await js("document.getElementById('doctor').classList.contains('is-arrived')"));
 
 // Content fades and slides in when scrolled to
-await js("window.scrollTo(0, document.getElementById('gallery').offsetTop - 200); true");
-const reveal = await sample("getComputedStyle(document.querySelector('#gallery .ba')).opacity", 12, 80);
+await js("window.scrollTo(0, document.getElementById('articles').offsetTop - 200); true");
+const reveal = await sample("getComputedStyle(document.querySelector('#articles .article')).opacity", 12, 80);
 ok("cards fade in gradually", reveal.some((v) => v > 0.05 && v < 0.95), reveal.join(" "));
 
 // Services dropdown glides open

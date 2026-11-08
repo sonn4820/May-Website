@@ -78,7 +78,8 @@ function renderHours() {
 }
 
 function renderChanges() {
-  const list = upcomingDates().slice(0, 4);
+  // A closure on a day the office is closed anyway is not a change, so patients do not see it here
+  const list = upcomingDates().filter((d) => d.type !== "closed" || state.pub.hours[DAY_KEYS[fromIso(d.date).getDay()]].open).slice(0, 4);
   $("#changesBox").hidden = list.length === 0;
   const ul = $("#changesList");
   ul.innerHTML = "";
@@ -105,29 +106,142 @@ function renderNotice() {
   if (show) $("#noticeText").textContent = noticeText(state.notice);
 }
 
-function renderDayChips() {
-  const box = $("#schDays");
-  const checked = new Set($$("input", box).filter((i) => i.checked).map((i) => i.value));
+// ---------- Booking calendar ----------
+// Open times come from the booking API (server/booking → OpenDental) when the page is served over http
+// (npm run proto:serve runs it against a mock OpenDental). Opened as a file, the page falls back to
+// demo openings: every open hour is a 60-minute visit, and a fixed pseudo-random 40% are already taken.
+const BOOK_DAYS = 56;
+const SLOT_MIN = 60;
+const booker = { month: null, day: null, slot: null };
+// mode: "demo" (in-page data) | "loading" | "api" (from /api/booking) | "down" (API answered that OpenDental is unreachable)
+const bookApi = { mode: "demo", days: {}, from: null, to: null };
+const monthKey = (d) => d.getFullYear() * 12 + d.getMonth();
+function hashStr(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+function bookRange() {
+  if (bookApi.mode === "api") return { first: fromIso(bookApi.from), last: fromIso(bookApi.to) };
+  const d0 = new Date(); d0.setHours(0, 0, 0, 0); return { first: addDays(d0, 1), last: addDays(d0, BOOK_DAYS) };
+}
+async function loadAvailability() {
+  if (!/^https?:$/.test(location.protocol) || typeof fetch !== "function") return;
+  if (bookApi.mode !== "api") bookApi.mode = "loading";
+  renderBooker();
+  try {
+    const r = await fetch("api/booking/availability", { headers: { accept: "application/json" }, cache: "no-store" });
+    if (r.status === 503) { bookApi.mode = "down"; }
+    else if (!r.ok) throw new Error(String(r.status));
+    else { const a = await r.json(); Object.assign(bookApi, { mode: "api", days: a.days, from: a.from, to: a.to }); }
+  } catch (e) { if (bookApi.mode !== "api") bookApi.mode = "demo"; } // no API here (static file host): demo data
+  renderBooker();
+}
+function daySlots(d) {
+  const iso0 = isoDate(d);
+  if (bookApi.mode === "api") return (bookApi.days[iso0] || []).filter((s) => !state.booked.includes(iso0 + " " + s));
+  if (bookApi.mode !== "demo") return [];
+  const info = dayInfo(d);
+  if (!info.open) return [];
+  const iso = isoDate(d), all = [];
+  for (let m = toMin(info.from); m + SLOT_MIN <= toMin(info.to); m += SLOT_MIN) all.push(pad(Math.floor(m / 60)) + ":" + pad(m % 60));
+  const notBooked = all.filter((s) => !state.booked.includes(iso + " " + s));
+  const free = notBooked.filter((s) => hashStr(iso + s) % 10 >= 4);
+  return free.length ? free : notBooked.slice(-1);
+}
+function firstOpenDay() {
+  const { first, last } = bookRange();
+  for (let d = first; d <= last; d = addDays(d, 1)) if (daySlots(d).length) return d;
+  return null;
+}
+const whenText = (iso, s, lang = state.lang) => t("when", { d: fmtDateLong(fromIso(iso), lang), t: fmtTime(s, lang) });
+
+function renderBooker() {
+  const { first, last } = bookRange();
+  const dayOk = booker.day && fromIso(booker.day) >= first && fromIso(booker.day) <= last && daySlots(fromIso(booker.day)).length;
+  if (!dayOk) { const d = firstOpenDay(); booker.day = d ? isoDate(d) : null; booker.slot = null; booker.month = null; }
+  if (booker.slot && !daySlots(fromIso(booker.day)).includes(booker.slot)) booker.slot = null;
+  if (booker.month === null) booker.month = booker.day ? monthKey(fromIso(booker.day)) : monthKey(first);
+  booker.month = Math.min(Math.max(booker.month, monthKey(first)), monthKey(last));
+  const y = Math.floor(booker.month / 12), m = booker.month % 12;
+  $("#calMonth").textContent = cap(new Intl.DateTimeFormat(LOCALE[state.lang], { month: "long", year: "numeric" }).format(new Date(y, m, 1)));
+  $("#calPrev").disabled = booker.month <= monthKey(first);
+  $("#calNext").disabled = booker.month >= monthKey(last);
+  const grid = $("#calGrid");
+  grid.innerHTML = "";
+  DAY_KEYS.forEach((k) => { const h = document.createElement("span"); h.className = "cal__wd"; h.setAttribute("aria-hidden", "true"); h.textContent = weekdayShort(k); grid.appendChild(h); });
+  for (let i = new Date(y, m, 1).getDay(); i > 0; i--) { const s = document.createElement("span"); s.className = "cal__blank"; grid.appendChild(s); }
+  const today = isoDate(new Date());
+  for (let n = 1, len = new Date(y, m + 1, 0).getDate(); n <= len; n++) {
+    const d = new Date(y, m, n), iso = isoDate(d);
+    const count = d >= first && d <= last ? daySlots(d).length : 0;
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "cal__day"; b.textContent = n; b.dataset.date = iso; b.disabled = !count;
+    b.classList.toggle("has-slots", !!count);
+    b.classList.toggle("is-today", iso === today);
+    b.setAttribute("aria-pressed", String(iso === booker.day));
+    b.setAttribute("aria-label", cap(fmtDateLong(d)) + ": " + (count ? t(count === 1 ? "cal_one_time" : "cal_n_times", { n: count }) : t("cal_no_times")));
+    grid.appendChild(b);
+  }
+  $("#schCard").setAttribute("aria-busy", String(bookApi.mode === "loading"));
+  $("#schSourceNote").textContent = bookApi.mode === "demo"
+    ? "Prototype: giờ trống là dữ liệu giả trong trang, tính theo giờ mở cửa và ngày nghỉ trong Staff Portal. Mở bằng npm run proto:serve để chạy qua API đặt lịch."
+    : "Prototype: giờ trống đang lấy từ API đặt lịch (/api/booking), chạy với OpenDental giả lập. Khi có khoá API OpenDental thật, chỉ cần đổi cấu hình, giao diện giữ nguyên.";
+  renderSlots();
+}
+function renderSlots() {
+  const box = $("#slotsGrid");
   box.innerHTML = "";
-  WEEK_ORDER.filter((k) => state.pub.hours[k].open).forEach((k) => {
-    const label = document.createElement("label");
-    label.className = "choice";
-    const input = document.createElement("input");
-    input.type = "checkbox"; input.name = "days"; input.value = k; input.id = "sch-day-" + k; input.checked = checked.has(k);
-    const span = document.createElement("span");
-    span.textContent = weekdayName(k);
-    label.append(input, span);
-    box.appendChild(label);
+  if (!booker.day) { $("#slotsTitle").textContent = t({ loading: "slots_loading", down: "slots_down" }[bookApi.mode] || "slots_none"); renderPicked(); return; }
+  const d = fromIso(booker.day), list = daySlots(d);
+  $("#slotsTitle").textContent = t("slots_title", { d: fmtDateLong(d) });
+  [["t_morning", 0, 720], ["t_afternoon", 720, 1020], ["t_evening", 1020, 1440]].forEach(([key, lo, hi]) => {
+    const part = list.filter((s) => toMin(s) >= lo && toMin(s) < hi);
+    if (!part.length) return;
+    const g = document.createElement("div");
+    g.className = "slots__group";
+    const h = document.createElement("div");
+    h.className = "slots__label"; h.textContent = t(key);
+    const row = document.createElement("div");
+    row.className = "slots__row";
+    part.forEach((s) => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "slot"; b.dataset.slot = s; b.textContent = fmtTime(s);
+      b.setAttribute("aria-pressed", String(s === booker.slot));
+      row.appendChild(b);
+    });
+    g.append(h, row);
+    box.appendChild(g);
   });
+  renderPicked();
+}
+function renderPicked() {
+  $("#schPicked").hidden = !booker.slot;
+  if (booker.slot) $("#schPickedText").textContent = whenText(booker.day, booker.slot);
+}
+function pickDay(iso) {
+  booker.day = iso; booker.slot = null;
+  $$("#calGrid .cal__day").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.date === iso)));
+  animateHeight($("#schCard"), renderSlots);
+}
+function pickSlot(s) {
+  booker.slot = s;
+  $$("#slotsGrid .slot").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.slot === s)));
+  clearFieldError($('[data-field="slot"]'));
+  renderPicked();
+}
+function stepMonth(dir) {
+  booker.month += dir;
+  renderBooker();
+  const btn = dir < 0 ? $("#calPrev") : $("#calNext");
+  if (btn.disabled) (dir < 0 ? $("#calNext") : $("#calPrev")).focus();
 }
 
 function renderMonthSelect() {
-  const sel = $("#np-dob-m");
-  const v = sel.value;
-  sel.innerHTML = "";
-  sel.appendChild(new Option(t("f_choose"), ""));
-  for (let m = 0; m < 12; m++) sel.appendChild(new Option(cap(new Intl.DateTimeFormat(LOCALE[state.lang], { month: "long" }).format(new Date(2000, m, 1))), String(m + 1)));
-  sel.value = v;
+  ["#np-dob-m", "#sch-dob-m"].forEach((s) => {
+    const sel = $(s);
+    const v = sel.value;
+    sel.innerHTML = "";
+    sel.appendChild(new Option(t("f_choose"), ""));
+    for (let m = 0; m < 12; m++) sel.appendChild(new Option(cap(new Intl.DateTimeFormat(LOCALE[state.lang], { month: "long" }).format(new Date(2000, m, 1))), String(m + 1)));
+    sel.value = v;
+  });
 }
 
 function renderSite() {
@@ -135,11 +249,11 @@ function renderSite() {
   renderStatus();
   renderHours();
   renderChanges();
-  renderDayChips();
+  renderBooker();
   renderMonthSelect();
   renderStepText();
   ["#sch-lang", "#np-lang"].forEach((s) => { const el = $(s); if (!el.dataset.touched) el.value = state.lang; });
-  if (!$("#schOk").hidden && state.lastSchPhone) $("#schOkBody").textContent = t("sch_ok_body", { phone: state.lastSchPhone });
+  if (!$("#schOk").hidden && state.lastBooking) $("#schOkBody").textContent = bookedText(state.lastBooking);
 }
 
 // ---------- Navigation, menu, dropdown ----------
@@ -324,7 +438,7 @@ function onSiteScroll() {
 let revealObserver = null;
 function setupReveal() {
   document.documentElement.classList.add("js");
-  $$(".cards, .steps, .cols3, .np-grid, .faq").forEach((grid) => {
+  $$(".cards, .cols3, .np-grid, .faq").forEach((grid) => {
     $$(":scope > .reveal", grid).forEach((el, i) => el.style.setProperty("--d", Math.min(i * 110, 440) + "ms"));
   });
   $$(".dropdown a").forEach((a, i) => a.style.setProperty("--i", i));
@@ -365,7 +479,8 @@ function setFieldError(field, key) {
   s.dataset.i18n = key;
   s.textContent = t(key);
   p.appendChild(s);
-  const anchor = Array.from(field.children).find((c) => c.matches("input, select, textarea, .choices, .dob, .choice") || $("input, select, textarea", c));
+  const marked = $(":scope > [data-err-anchor]", field);
+  const anchor = marked ? marked.nextElementSibling : Array.from(field.children).find((c) => c.matches("input, select, textarea, .choices, .dob, .choice") || $("input, select, textarea", c));
   field.insertBefore(p, anchor || null);
   $$("input, select, textarea", field).forEach((ctl) => {
     ctl.setAttribute("aria-invalid", "true");
@@ -397,31 +512,82 @@ function check(list) {
 }
 
 // ---------- Schedule form ----------
+// A real calendar date between 1900 and today (Feb 30 is refused)
+function dobIso(m, d, y) {
+  m = Number(m); d = Number(d); y = Number(y);
+  const x = new Date(y, m - 1, d);
+  if (!m || !d || y < 1900 || x.getFullYear() !== y || x.getMonth() !== m - 1 || x.getDate() !== d || x > new Date()) return "";
+  return y + "-" + pad(m) + "-" + pad(d);
+}
+// Server error codes per field -> where to show them in the form
+const SCH_FIELD = { date: '[data-field="slot"]', time: '[data-field="slot"]', firstName: "#sch-first", lastName: "#sch-last", birthdate: '[data-field="sch-dob"]', phone: "#sch-phone", email: "#sch-email", newPatient: '[data-field="newpt"]' };
+
+async function withBusy(btn, work) {
+  const html = btn.innerHTML;
+  btn.disabled = true;
+  btn.setAttribute("aria-busy", "true");
+  btn.innerHTML = '<span class="spinner" aria-hidden="true"></span><span></span>';
+  btn.lastChild.textContent = t("sending");
+  try { return await work(); } finally { btn.disabled = false; btn.removeAttribute("aria-busy"); btn.innerHTML = html; applyI18n(btn); }
+}
+
 function onSchSubmit(e) {
   e.preventDefault();
-  const name = $("#sch-name").value.trim(), phone = $("#sch-phone").value.trim(), email = $("#sch-email").value.trim();
-  const newpt = ($('input[name="newpt"]:checked', e.target) || {}).value;
+  const f = e.target;
+  const first = $("#sch-first").value.trim(), last = $("#sch-last").value.trim();
+  const phone = $("#sch-phone").value.trim(), email = $("#sch-email").value.trim();
+  const birthdate = dobIso($("#sch-dob-m").value, $("#sch-dob-d").value, $("#sch-dob-y").value);
+  const newpt = ($('input[name="newpt"]:checked', f) || {}).value;
+  const slotField = $('[data-field="slot"]');
   const bad = check([
-    [name.length >= 2, $("#sch-name"), "err_name"],
+    [!!booker.slot, slotField, "err_slot"],
+    [first.length >= 1, $("#sch-first"), "err_first"],
+    [last.length >= 1, $("#sch-last"), "err_last"],
+    [!!birthdate, $('[data-field="sch-dob"]'), "err_dob"],
     [digits(phone).length >= 10, $("#sch-phone"), "err_phone"],
-    [!email || validEmail(email), $("#sch-email"), "err_email"],
-    [!!newpt, $('[data-field="newpt"]'), "err_choose"]
+    [!!newpt, $('[data-field="newpt"]'), "err_choose"],
+    [!email || validEmail(email), $("#sch-email"), "err_email"]
   ]);
-  if (bad) { bad.focus(); return; }
-  const row = {
-    received: new Date(), name, phone, email, newpt,
-    days: $$('input[name="days"]:checked').map((i) => i.value),
-    tod: $('input[name="tod"]:checked').value,
-    reason: $("#sch-reason").value.trim(), lang: $("#sch-lang").value, status: "new", isNew: true
+  const focusSlot = () => ($("#slotsGrid .slot") || $("#calGrid .has-slots") || $("#calNext")).focus();
+  if (bad) { if (bad === slotField) focusSlot(); else bad.focus(); return; }
+  const payload = {
+    date: booker.day, time: booker.slot, firstName: first, lastName: last, birthdate, phone, email,
+    newPatient: newpt === "yes", reason: $("#sch-reason").value.trim(), lang: $("#sch-lang").value, website: $("#sch-website").value
   };
-  withSending($('button[type="submit"]', e.target), () => {
-    state.subs.appt.push(row);
-    state.lastSchPhone = phone;
-    $("#schOkBody").textContent = t("sch_ok_body", { phone });
-    swapCard($("#schCard"), e.target, $("#schOk"));
-    updateSubsCount();
+  const done = () => {
+    state.booked.push(payload.date + " " + payload.time);
+    state.lastBooking = { day: payload.date, slot: payload.time, phone };
+    $("#schOkBody").textContent = bookedText(state.lastBooking);
+    swapCard($("#schCard"), f, $("#schOk"));
+  };
+  const btn = $('button[type="submit"]', f);
+  if (bookApi.mode !== "api") return withSending(btn, done);
+
+  withBusy(btn, async () => {
+    let res, body = {};
+    try {
+      res = await fetch("api/booking", { method: "POST", headers: { "content-type": "application/json", accept: "application/json" }, body: JSON.stringify(payload) });
+      body = await res.json().catch(() => ({}));
+    } catch (err) { res = { status: 0 }; }
+    if (res.status === 201) { done(); loadAvailability(); return; }
+    if (res.status === 400 && body.fields) {
+      let firstBad = null;
+      Object.entries(body.fields).forEach(([k, code]) => {
+        const el = $(SCH_FIELD[k] || '[data-field="slot"]');
+        const field = el.classList.contains("field") ? el : fieldOf(el);
+        setFieldError(field, I18N.en[code] ? code : "err_book_down");
+        if (!firstBad) firstBad = field;
+      });
+      if (firstBad === slotField) focusSlot(); else if (firstBad) ($("input, select, textarea", firstBad) || firstBad).focus();
+      return;
+    }
+    // Taken by someone else a moment ago, or OpenDental unreachable: say so above the calendar
+    setFieldError(slotField, res.status === 409 ? "err_slot_taken" : "err_book_down");
+    if (res.status === 409) { booker.slot = null; await loadAvailability(); }
+    focusSlot();
   });
 }
+const bookedText = (b) => t("sch_ok_body", { when: whenText(b.day, b.slot), phone: b.phone });
 // Swap form <-> thank-you message inside a card: the card height glides, then we bring it into view
 function swapCard(card, hide, show) {
   animateHeight(card, () => { hide.hidden = true; show.hidden = false; });
@@ -434,8 +600,11 @@ function resetSch() {
   $$(".field", f).forEach(clearFieldError);
   delete $("#sch-lang").dataset.touched;
   $("#sch-lang").value = state.lang;
+  booker.day = booker.slot = booker.month = null;
+  renderBooker();
   swapCard($("#schCard"), $("#schOk"), f);
-  $("#sch-name").focus({ preventScroll: true });
+  const first = $("#calGrid .cal__day[aria-pressed=true]") || $("#calGrid .has-slots");
+  if (first) first.focus({ preventScroll: true });
 }
 
 // ---------- New patient form (3 steps) ----------

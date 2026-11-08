@@ -1,13 +1,14 @@
 <div class="proto-bar" id="protoBar">
   <div class="proto-bar__inner">
+    <button type="button" class="proto-toggle" id="protoToggle" aria-expanded="true" aria-controls="protoTabs protoTools protoHint" title="Thu gọn thanh công cụ prototype"><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg><span class="proto-toggle__text">Thu gọn</span></button>
     <div class="proto-brand"><span class="proto-dot" aria-hidden="true"></span>Prototype · Website nha khoa</div>
-    <div class="proto-tabs" role="tablist" aria-label="Chế độ xem">
+    <div class="proto-tabs" id="protoTabs" role="tablist" aria-label="Chế độ xem">
       <button type="button" role="tab" id="tab-site" aria-selected="true" aria-controls="view-site" data-view="site"><svg class="ic"><use href="#i-browser"/></svg>Website</button>
       <button type="button" role="tab" id="tab-staff" aria-selected="false" aria-controls="view-staff" data-view="staff"><svg class="ic"><use href="#i-users"/></svg>Staff Portal</button>
       <button type="button" role="tab" id="tab-how" aria-selected="false" aria-controls="view-how" data-view="how"><svg class="ic"><use href="#i-server"/></svg>Cách hoạt động</button>
       <button type="button" role="tab" id="tab-ph" aria-selected="false" aria-controls="view-ph" data-view="ph">Placeholders <span class="proto-count" id="phCount">0</span></button>
     </div>
-    <div class="proto-tools">
+    <div class="proto-tools" id="protoTools">
       <div class="proto-seg" role="group" aria-label="Thiết bị" id="deviceSeg">
         <button type="button" data-device="desktop" aria-pressed="true">Desktop</button>
         <button type="button" data-device="phone" aria-pressed="false">Điện thoại</button>
@@ -24,7 +25,7 @@
       </div>
     </div>
   </div>
-  <p class="proto-hint"><strong>Bản demo:</strong> dữ liệu chỉ nằm trong trang này, không gửi đi đâu, nên đừng nhập thông tin bệnh nhân thật. Thử đổi giờ trong <strong>Staff Portal</strong> rồi quay lại <strong>Website</strong>.</p>
+  <p class="proto-hint" id="protoHint"><strong>Bản demo:</strong> dữ liệu chỉ nằm trong trang này, không gửi đi đâu, nên đừng nhập thông tin bệnh nhân thật. Thử đổi giờ trong <strong>Staff Portal</strong> rồi quay lại <strong>Website</strong>.</p>
 </div>
 
 <main class="stage" id="stage">
@@ -66,7 +67,7 @@
     <div class="wrap header__inner">
       <a class="brand" href="#" data-route="home" data-scroll="top">
         <span class="brand__logo" title="INPUT_INFO_ABOUT_LOGO_HERE"><svg class="ic"><use href="#i-tooth"/></svg></span>
-        <span class="brand__text"><span class="brand__name"><span class="ph" data-ph="CLINIC_NAME"></span></span><span class="brand__doc" data-i18n="doctor_name"></span></span>
+        <span class="brand__text"><span class="brand__name" data-info="CLINIC_NAME"></span></span>
       </a>
       <div class="header__actions">
         <a class="header__phone" href="#" data-call>
@@ -197,10 +198,10 @@
 
     <section class="section section--wash" id="doctor" aria-labelledby="doctor-title">
       <div class="wrap doctor">
-        <div class="photo photo--doctor reveal reveal--left"><svg class="ic"><use href="#i-user"/></svg><span class="ph" data-ph="DOCTOR_PHOTO"></span></div>
+        <div class="photo photo--doctor photo--real reveal reveal--left"><img src="assets/doctor.jpg" width="640" height="800" alt="" data-i18n-attr="alt:doctor_photo_alt"></div>
         <div class="reveal reveal--right" style="--d:120ms">
           <p class="eyebrow" data-i18n="doctor_eyebrow"></p>
-          <h2 id="doctor-title"><span data-i18n="doctor_name"></span>, <span class="ph" data-ph="DOCTOR_DEGREE"></span></h2>
+          <h2 id="doctor-title" data-i18n="doctor_name"></h2>
           <p class="doctor__bio"><span class="ph" data-ph="DOCTOR_BIO"></span></p>
           <dl class="facts">
             <div><dt data-i18n="fact_edu"></dt><dd><span class="ph" data-ph="DOCTOR_EDUCATION"></span></dd></div>
@@ -213,23 +214,7 @@
       </div>
     </section>
 
-    <section class="section" id="first-visit" aria-labelledby="fv-title">
-      <div class="wrap">
-        <div class="section__head reveal">
-          <p class="eyebrow" data-i18n="fv_eyebrow"></p>
-          <h2 id="fv-title" data-i18n="fv_title"></h2>
-        </div>
-        <ol class="steps">
-          <li class="step reveal"><span class="step__num">1</span><h3 data-i18n="fv1_t"></h3><p data-i18n="fv1_d"></p></li>
-          <li class="step reveal"><span class="step__num">2</span><h3 data-i18n="fv2_t"></h3><p data-i18n="fv2_d"></p></li>
-          <li class="step reveal"><span class="step__num">3</span><h3 data-i18n="fv3_t"></h3><p data-i18n="fv3_d"></p></li>
-          <li class="step reveal"><span class="step__num">4</span><h3 data-i18n="fv4_t"></h3><p data-i18n="fv4_d"></p></li>
-        </ol>
-        <div class="center-actions reveal"><a class="btn btn--primary btn--lg" href="#" data-route="new"><svg class="ic"><use href="#i-doc"/></svg><span data-i18n="fv_cta"></span></a></div>
-      </div>
-    </section>
-
-    <section class="section section--wash" id="reviews" aria-labelledby="reviews-title">
+    <section class="section" id="reviews" aria-labelledby="reviews-title">
       <div class="wrap">
         <div class="section__head reveal">
           <p class="eyebrow" data-i18n="reviews_eyebrow"></p>
@@ -247,7 +232,8 @@
       </div>
     </section>
 
-    <section class="section" id="gallery" aria-labelledby="gallery-title">
+    <!-- Smile gallery: hidden for now at the clinic's request (feedback Nov 2026). Remove `hidden` to show it again. -->
+    <section class="section" id="gallery" aria-labelledby="gallery-title" hidden>
       <div class="wrap">
         <div class="section__head reveal">
           <p class="eyebrow" data-i18n="gal_eyebrow"></p>
@@ -270,7 +256,14 @@
         </div>
         <div class="cols3">
           <div class="infobox reveal"><h3 data-i18n="ins1_t"></h3><p><span class="ph" data-ph="ACCEPTED_INSURANCE"></span></p></div>
-          <div class="infobox reveal"><h3 data-i18n="ins2_t"></h3><p><span class="ph" data-ph="PAYMENT_OPTIONS"></span></p></div>
+          <div class="infobox reveal">
+            <h3 data-i18n="ins2_t"></h3>
+            <ul class="paylist">
+              <li><span class="paylist__label"><svg class="ic" aria-hidden="true"><use href="#i-cash"/></svg><span data-i18n="pay_cash"></span></span></li>
+              <li><span class="paylist__label"><svg class="ic" aria-hidden="true"><use href="#i-card"/></svg><span data-i18n="pay_cards"></span></span><span class="paymarks"><span class="paymark"><img src="assets/pay-visa.svg" alt="Visa" width="1000" height="325"></span><span class="paymark"><img src="assets/pay-mastercard.svg" alt="Mastercard" width="1000" height="618"></span><span class="paymark"><img src="assets/pay-amex.svg" alt="American Express" width="1000" height="998"></span></span></li>
+              <li><span class="paylist__label"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg><span data-i18n="pay_plans"></span></span><span class="paymarks"><span class="paymark paymark--wide"><img src="assets/pay-cherry.svg" alt="Cherry" width="437" height="122"></span><span class="paymark paymark--wide"><img src="assets/pay-carecredit.png" alt="CareCredit" width="760" height="196"></span></span></li>
+            </ul>
+          </div>
           <div class="infobox reveal"><h3 data-i18n="ins3_t"></h3><p data-i18n="ins3_d"></p></div>
         </div>
       </div>
@@ -302,7 +295,7 @@
           <div class="map" aria-hidden="true"><span class="map__pin"><svg class="ic"><use href="#i-pin"/></svg></span><span class="map__label"><span class="ph" data-ph="GOOGLE_MAPS_LINK"></span></span></div>
           <p class="visit__addr"><span data-info="CLINIC_ADDRESS"></span></p>
           <a class="btn btn--primary" href="#" data-maps><svg class="ic"><use href="#i-pin"/></svg><span data-i18n="get_directions"></span></a>
-          <div class="visit__access"><h3 data-i18n="access_title"></h3><p><span class="ph" data-ph="PARKING_AND_WHEELCHAIR_ACCESS"></span></p></div>
+          <div class="visit__access"><h3 data-i18n="access_title"></h3><ul class="access-list"><li><svg class="ic" aria-hidden="true"><use href="#i-car"/></svg><span data-i18n="access_parking"></span></li><li><svg class="ic" aria-hidden="true"><use href="#i-wheelchair"/></svg><span data-i18n="access_ramp"></span></li></ul></div>
         </div>
       </div>
     </section>

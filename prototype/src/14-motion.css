@@ -91,7 +91,7 @@
 .collapse__inner { overflow: hidden; min-height: 0; }
 
 /* Cards lift a little on hover */
-.card, .article, .quote, .ba, .np-card, .infobox, .step { transition: transform .4s var(--out-quart), box-shadow .4s ease, border-color var(--t) ease; }
+.card, .article, .quote, .ba, .np-card, .infobox { transition: transform .4s var(--out-quart), box-shadow .4s ease, border-color var(--t) ease; }
 @media (hover: hover) {
   .card:hover, .article:hover, .quote:hover, .ba:hover, .np-card:hover, .infobox:hover { transform: translateY(calc(-5px * var(--move))); box-shadow: var(--shadow); border-color: var(--sky-2); }
 }
@@ -108,7 +108,8 @@
 /* Forms */
 .site input, .site select, .site textarea, .app input, .app select, .app textarea { transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease; }
 .site input:focus, .site select:focus, .site textarea:focus { box-shadow: 0 0 0 4px var(--sky-2); }
-.choice { transition: border-color .2s ease, background-color .2s ease, transform .2s var(--out-quart); }
+.choice, .cal__day, .slot, .cal__nav { transition: border-color .2s ease, background-color .2s ease, color .2s ease, transform .2s var(--out-quart); }
+.cal__day.has-slots:active, .slot:active { transform: scale(.96); }
 .choice:active { transform: scale(.98); }
 .error-msg { animation: err-in .35s var(--out-quart); }
 @keyframes err-in { from { opacity: 0; transform: translateY(calc(-6px * var(--move))); } to { opacity: 1; transform: none; } }

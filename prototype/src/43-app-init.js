@@ -29,6 +29,8 @@ function onClick(e) {
   if (d.lang) return setLang(d.lang);
   if (d.scale) return setScale(Number(d.scale));
   if (d.a11y) return stepA11y(d.a11y);
+  if (d.date && el.classList.contains("cal__day")) return pickDay(d.date);
+  if (d.slot && el.classList.contains("slot")) return pickSlot(d.slot);
   if (d.closeMenu !== undefined) return closeMenu();
   if (d.skip !== undefined) return $("#main").focus();
   if (d.route) return goPage(d.route, d.scroll);
@@ -69,12 +71,15 @@ function onClick(e) {
   }
   switch (el.id) {
     case "menuBtn": return $("#mobileMenu").classList.contains("is-open") ? closeMenu() : openMenu();
+    case "protoToggle": return setProtoCollapsed(!state.protoCollapsed);
     case "a11yBtn": return a11yIsOpen() ? closeA11y() : openA11y();
     case "a11yClose": return closeA11y();
     case "a11yReset": return resetA11y();
     case "servicesToggle": return toggleDropdown();
     case "noticeClose": return closeNotice();
     case "schAgain": return resetSch();
+    case "calPrev": return stepMonth(-1);
+    case "calNext": return stepMonth(1);
     case "npAgain": return resetNp();
     case "npNext": { const bad = validateNpStep(npStep); if (bad) bad.focus(); else showNpStep(npStep + 1, true); return; }
     case "npBack": return showNpStep(Math.max(1, npStep - 1), true);
@@ -135,6 +140,7 @@ function init() {
   state.sdType = "closed";
   state.confirmDelete = null;
   setMotion(store.get("motion", "full") === "system" ? "system" : "full");
+  setProtoCollapsed(store.get("protoCollapsed", false) === true);
   state.a11y = loadA11y();
   buildA11y();
   applyA11y();
@@ -144,6 +150,7 @@ function init() {
   $$("[data-lang]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === state.lang)));
   applyI18n();
   renderSite();
+  loadAvailability();
   showNpStep(1);
   setupReveal();
   renderPhTable();

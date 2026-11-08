@@ -69,12 +69,9 @@
 .facts dd { margin: 0; min-width: 0; }
 .device[data-w="narrow"] .facts > div { grid-template-columns: minmax(0, 1fr); gap: .25rem; }
 
-.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; }
-.device[data-w="medium"] .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.device[data-w="narrow"] .steps { grid-template-columns: minmax(0, 1fr); }
-.step { background: var(--sky); border-radius: 20px; padding: 1.5rem; display: grid; gap: .75rem; align-content: start; }
-.step__num { width: 2.9rem; height: 2.9rem; border-radius: 50%; background: var(--blue); color: var(--on-dark); display: grid; place-items: center; font-family: var(--font-display); font-weight: 800; font-size: 1.375rem; }
-.step p { color: var(--ink-soft); }
+/* Real photo inside a .photo frame (doctor portrait) */
+.photo--real { padding: 0; border: 0; overflow: hidden; background: var(--sky-2); display: block; }
+.photo--real img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; }
 
 .quote { background: var(--enamel); border: 1px solid var(--line); border-radius: 20px; padding: 1.75rem; display: grid; gap: .5rem; align-content: start; }
 .quote__mark { font-family: var(--font-display); font-weight: 800; font-size: 3.5rem; line-height: .8; color: var(--smile); -webkit-text-stroke: 1.5px var(--ink); }
@@ -92,6 +89,19 @@
 .cols3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; }
 .device[data-w="narrow"] .cols3, .device[data-w="medium"] .cols3 { grid-template-columns: minmax(0, 1fr); }
 .infobox { border: 1px solid var(--line); border-radius: 20px; padding: 1.75rem; display: grid; gap: .6rem; align-content: start; min-width: 0; }
+/* Ways to pay: a short list; each brand sits in a card-shaped slot where its official logo file goes */
+.paylist { list-style: none; margin: .25rem 0 0; padding: 0; display: grid; gap: 1rem; }
+.paylist li { display: grid; gap: .5rem; }
+.paylist__label { display: flex; align-items: center; gap: .55rem; font-weight: 600; }
+.paylist__label .ic { color: var(--blue); flex: none; }
+.paymarks { display: flex; flex-wrap: wrap; gap: .5rem; padding-left: 2.05rem; }
+/* Logo tiles stay white in every theme: brand logos are made for a light background */
+.paymark { display: inline-grid; place-items: center; width: 4.6rem; height: 3rem; padding: .4rem .55rem; border: 1.5px solid var(--line); border-radius: 8px; background: #fff; }
+.paymark--wide { width: 7.4rem; }
+.paymark img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.access-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; }
+.access-list li { display: flex; gap: .65rem; align-items: flex-start; }
+.access-list .ic { color: var(--blue); flex: none; margin-top: .2em; }
 
 .article { background: var(--enamel); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
 .article__img { aspect-ratio: 16 / 8; max-width: 100%; display: grid; place-items: center; color: var(--blue); background: linear-gradient(135deg, var(--sky-2), var(--enamel)); }
