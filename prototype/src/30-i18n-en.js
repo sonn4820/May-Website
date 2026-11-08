@@ -57,6 +57,8 @@ I18N.en = {
   quick_hours_link: "See all hours",
   quick_address: "Address",
   get_directions: "Get directions",
+  map_open: "Open in Google Maps",
+  new_tab: "(opens in a new tab)",
   quick_phone: "Phone",
   call_now: "Call now",
 

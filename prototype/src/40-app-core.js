@@ -119,6 +119,15 @@ function renderPlaceholders(root = document) {
     el.title = phToken(name);
   });
   $$("[data-info]", root).forEach((el) => { el.textContent = CLINIC_INFO[el.dataset.info]; });
+  // Google Maps links open in a new tab; screen readers hear that too
+  $$("[data-maps]", root).forEach((el) => {
+    el.href = el.dataset.maps === "place" ? CLINIC_INFO.CLINIC_MAPS_URL : directionsUrl();
+    el.target = "_blank";
+    el.rel = "noopener";
+    let hint = $(":scope > .newtab", el);
+    if (!hint) { hint = document.createElement("span"); hint.className = "sr-only newtab"; el.appendChild(hint); }
+    hint.textContent = " " + t("new_tab");
+  });
 }
 
 // ---------- Prototype chrome ----------

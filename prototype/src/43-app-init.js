@@ -2,7 +2,6 @@
 const PROTO_MSG = {
   soon: "Trang này sẽ được làm ở giai đoạn tiếp theo, sau khi bạn xác nhận nội dung.",
   call: () => "Trên website thật, nút này gọi ngay số " + CLINIC_INFO.CLINIC_PHONE + ".",
-  maps: () => "Trên website thật, nút này mở Google Maps: " + phToken("GOOGLE_MAPS_LINK") + ".",
   link: (n) => "Trên website thật, link này mở: " + phToken(n) + ".",
   sheet: () => "Prototype: hệ thống thật mở Google Sheet " + phToken("GOOGLE_SHEET_LINK") + ".",
   xlsx: "Prototype: hệ thống thật tải file .xlsx xuất thẳng từ Google Sheet, không cần code thêm.",
@@ -21,6 +20,7 @@ function onClick(e) {
   const el = e.target.closest("button, a");
   if (!el) return;
   const d = el.dataset;
+  if (d.maps !== undefined) return; // real link to Google Maps: let the browser open it
   if (el.tagName === "A") e.preventDefault();
   if (d.view) return setView(d.view);
   if (d.device) return setDevice(d.device);
@@ -36,7 +36,6 @@ function onClick(e) {
   if (d.route) return goPage(d.route, d.scroll, d.doc);
   if (d.soon !== undefined) return toast(PROTO_MSG.soon);
   if (d.call !== undefined) return toast(PROTO_MSG.call());
-  if (d.maps !== undefined) return toast(PROTO_MSG.maps());
   if (d.link) return toast(PROTO_MSG.link(d.link));
   if (d.gotoSubs) { state.signedIn = true; state.stTab = "subs"; state.sheetTab = d.gotoSubs; return setView("staff"); }
   if (d.demo) return toast(d.demo === "sheet" ? PROTO_MSG.sheet() : PROTO_MSG.xlsx);

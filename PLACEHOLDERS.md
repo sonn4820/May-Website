@@ -6,7 +6,6 @@ Khi có thông tin thật, thay token tương ứng. Bản production sẽ bị 
 | Token | Cần gì | Dùng ở đâu |
 |---|---|---|
 | `INPUT_INFO_ABOUT_LOGO_HERE` | Logo (SVG hoặc PNG nền trong suốt) | Header, footer, biểu tượng tab trình duyệt |
-| `INPUT_INFO_ABOUT_GOOGLE_MAPS_LINK_HERE` | Link Google Maps của phòng khám | Nút Chỉ đường, bản đồ |
 | `INPUT_INFO_ABOUT_HERO_PHOTO_HERE` | Ảnh lớn đầu trang (bác sĩ với bệnh nhân, hoặc phòng khám) | Đầu trang chủ |
 | `INPUT_INFO_ABOUT_DOCTOR_BIO_HERE` | Tiểu sử ngắn 3–5 câu (cần bản EN, VI, ES) | Mục Gặp bác sĩ |
 | `INPUT_INFO_ABOUT_DOCTOR_EDUCATION_HERE` | Trường đã học, năm tốt nghiệp | Mục Gặp bác sĩ |

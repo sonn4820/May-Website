@@ -140,9 +140,10 @@
 .paylist__label .ic { color: var(--blue); flex: none; }
 .paymarks { display: flex; flex-wrap: wrap; gap: .5rem; padding-left: 2.05rem; }
 /* Logo tiles stay white in every theme: brand logos are made for a light background */
-.paymark { display: inline-grid; place-items: center; width: 4.6rem; height: 3rem; padding: .4rem .55rem; border: 1.5px solid var(--line); border-radius: 8px; background: #fff; }
+.paymark { display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; width: 4.6rem; height: 3rem; padding: .4rem .55rem; border: 1.5px solid var(--line); border-radius: 8px; background: #fff; overflow: hidden; }
 .paymark--wide { width: 7.4rem; }
-.paymark img { width: 100%; height: 100%; object-fit: contain; display: block; }
+/* Logos shrink to fit the tile whatever their shape (the Amex logo is square) */
+.paymark img { display: block; width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; }
 .access-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; }
 .access-list li { display: flex; gap: .65rem; align-items: flex-start; }
 .access-list .ic { color: var(--blue); flex: none; margin-top: .2em; }
@@ -184,6 +185,10 @@
 .map__pin { position: absolute; left: 50%; top: 40%; transform: translate(-50%, -100%); color: var(--coral); }
 .map__pin .ic { width: 3.5rem; height: 3.5rem; fill: var(--enamel); stroke-width: 2.2; }
 .map__label { position: absolute; left: 1rem; right: 1rem; bottom: 1rem; text-align: center; }
+a.map { display: block; text-decoration: none !important; color: var(--ink) !important; transition: border-color var(--t) ease, box-shadow var(--t) ease; }
+a.map:hover { border-color: var(--blue); box-shadow: var(--shadow); }
+.map__btn { display: inline-flex; align-items: center; gap: .5rem; background: var(--enamel); border: 1.5px solid var(--line); border-radius: 999px; padding: .55rem 1.1rem; font-weight: 600; color: var(--blue-deep); box-shadow: var(--shadow); }
+a.map:hover .map__btn { border-color: var(--blue); }
 .visit__addr { font-size: 1.25rem; font-weight: 600; margin: 1.25rem 0 1rem !important; }
 .visit__access { margin-top: 1.75rem; display: grid; gap: .4rem; }
 .visit__access h3 { font-size: 1.25rem; }

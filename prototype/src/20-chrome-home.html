@@ -173,7 +173,7 @@
     <section class="quick" data-i18n-attr="aria-label:quick_label">
       <div class="wrap quick__grid">
         <div class="quick__item reveal" style="--d:0ms"><span class="ic-circle"><svg class="ic"><use href="#i-clock"/></svg></span><div><p class="quick__title" data-i18n="quick_hours"></p><p class="quick__value" id="quickHours"></p><a href="#" data-route="home" data-scroll="visit" data-i18n="quick_hours_link"></a></div></div>
-        <div class="quick__item reveal" style="--d:120ms"><span class="ic-circle"><svg class="ic"><use href="#i-pin"/></svg></span><div><p class="quick__title" data-i18n="quick_address"></p><p class="quick__value"><span data-info="CLINIC_ADDRESS"></span></p><a href="#" data-maps data-i18n="get_directions"></a></div></div>
+        <div class="quick__item reveal" style="--d:120ms"><span class="ic-circle"><svg class="ic"><use href="#i-pin"/></svg></span><div><p class="quick__title" data-i18n="quick_address"></p><p class="quick__value"><span data-info="CLINIC_ADDRESS"></span></p><a href="#" data-maps="directions" data-i18n="get_directions"></a></div></div>
         <div class="quick__item reveal" style="--d:240ms"><span class="ic-circle"><svg class="ic"><use href="#i-phone"/></svg></span><div><p class="quick__title" data-i18n="quick_phone"></p><p class="quick__value"><span data-info="CLINIC_PHONE"></span></p><a href="#" data-call data-i18n="call_now"></a></div></div>
       </div>
     </section>
@@ -292,9 +292,9 @@
           <div class="changes" id="changesBox" hidden><h3 data-i18n="changes_title"></h3><ul id="changesList"></ul></div>
         </div>
         <div class="reveal reveal--right" style="--d:120ms">
-          <div class="map" aria-hidden="true"><span class="map__pin"><svg class="ic"><use href="#i-pin"/></svg></span><span class="map__label"><span class="ph" data-ph="GOOGLE_MAPS_LINK"></span></span></div>
+          <a class="map" href="#" data-maps="place"><span class="map__pin" aria-hidden="true"><svg class="ic"><use href="#i-pin"/></svg></span><span class="map__label"><span class="map__btn"><svg class="ic" aria-hidden="true"><use href="#i-external"/></svg><span data-i18n="map_open"></span></span></span></a>
           <p class="visit__addr"><span data-info="CLINIC_ADDRESS"></span></p>
-          <a class="btn btn--primary" href="#" data-maps><svg class="ic"><use href="#i-pin"/></svg><span data-i18n="get_directions"></span></a>
+          <a class="btn btn--primary" href="#" data-maps="directions"><svg class="ic"><use href="#i-pin"/></svg><span data-i18n="get_directions"></span></a>
           <div class="visit__access"><h3 data-i18n="access_title"></h3><ul class="access-list"><li><svg class="ic" aria-hidden="true"><use href="#i-car"/></svg><span data-i18n="access_parking"></span></li><li><svg class="ic" aria-hidden="true"><use href="#i-wheelchair"/></svg><span data-i18n="access_ramp"></span></li></ul></div>
         </div>
       </div>

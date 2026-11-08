@@ -56,6 +56,8 @@ I18N.es = {
   quick_hours_link: "Ver todo el horario",
   quick_address: "Dirección",
   get_directions: "Cómo llegar",
+  map_open: "Abrir en Google Maps",
+  new_tab: "(se abre en una pestaña nueva)",
   quick_phone: "Teléfono",
   call_now: "Llamar ahora",
 

@@ -47,6 +47,11 @@ ok("first-visit section removed, gallery hidden", !$("#first-visit") && $("#gall
 ok("parking and ramp text", text(".access-list").includes("Free parking right in front of the office.") && text(".access-list").includes("ramp"), text(".access-list"));
 const payAlts = $$(".paylist img").map((i) => i.alt);
 ok("payment methods with logos", text(".paylist").includes("Cash") && ["Visa", "Mastercard", "American Express", "Cherry", "CareCredit"].every((s) => payAlts.includes(s)) && $$(".paylist img").every((i) => i.src.startsWith("data:image/")), payAlts.join(","));
+const mapsLinks = $$("#site [data-maps]");
+ok("Google Maps links open in a new tab", mapsLinks.length === 3 && mapsLinks.every((a) => a.target === "_blank" && a.rel === "noopener" && a.querySelector(".newtab")) &&
+  $('.map[data-maps="place"]').href === "https://share.google/fyuOVADZM7Bpl3VVZ" &&
+  $$('[data-maps="directions"]').every((a) => a.href === "https://www.google.com/maps/dir/?api=1&destination=Excelcare%20Dental%2C%201227%20N%20Illinois%2083%20Ste%20E%2C%20Grayslake%2C%20IL%2060030"),
+  mapsLinks.map((a) => a.href).join(" | "));
 const hoursRow = (day) => { const tr = $$("#hoursBody tr").find((r) => r.querySelector("th").textContent.startsWith(day)); return tr ? tr.querySelector("td").textContent : ""; };
 ok("clinic hours", /10:00\s?AM\s–\s7:00\s?PM/.test(hoursRow("Monday")) && /9:00\s?AM\s–\s5:00\s?PM/.test(hoursRow("Wednesday")) && hoursRow("Friday") === "Closed" && /9:00\s?AM\s–\s2:00\s?PM/.test(hoursRow("Saturday")) && hoursRow("Sunday") === "Closed", ["Monday", "Friday", "Saturday"].map(hoursRow).join(" | "));
 ok("placeholder count shown", Number(text("#phCount")) > 0, text("#phCount"));

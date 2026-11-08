@@ -2,7 +2,6 @@
 // one config file, and the production build fails while any INPUT_INFO_ABOUT_..._HERE remains.
 const PLACEHOLDERS = {
   LOGO:                        { label: "Logo", need: "Logo (SVG hoặc PNG nền trong suốt)", where: "Header, footer, biểu tượng tab trình duyệt" },
-  GOOGLE_MAPS_LINK:            { label: "Map link", need: "Link Google Maps của phòng khám", where: "Nút Chỉ đường, bản đồ" },
   HERO_PHOTO:                  { label: "Main photo", need: "Ảnh lớn đầu trang (bác sĩ với bệnh nhân, hoặc phòng khám)", where: "Đầu trang chủ" },
   DOCTOR_BIO:                  { label: "Short bio", need: "Tiểu sử ngắn 3–5 câu (cần bản EN, VI, ES)", where: "Mục Gặp bác sĩ" },
   DOCTOR_EDUCATION:            { label: "Education", need: "Trường đã học, năm tốt nghiệp", where: "Mục Gặp bác sĩ" },
@@ -35,6 +34,10 @@ const CLINIC_INFO = {
   CLINIC_NAME:    "Excelcare Dental",
   CLINIC_PHONE:   "847-548-2222",
   CLINIC_ADDRESS: "1227 N Illinois 83 Ste E, Grayslake, IL 60030",
-  CLINIC_EMAIL:   "business@excelcaredental.com"
+  CLINIC_EMAIL:   "business@excelcaredental.com",
+  // Google share link from the clinic (opens the Excelcare Dental business profile on Google)
+  CLINIC_MAPS_URL: "https://share.google/fyuOVADZM7Bpl3VVZ"
 };
+// "Get directions" opens Google Maps directions straight away (Maps URLs, no API key; opens the Maps app on phones)
+const directionsUrl = () => "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(CLINIC_INFO.CLINIC_NAME + ", " + CLINIC_INFO.CLINIC_ADDRESS);
 const phToken = (name) => "INPUT_INFO_ABOUT_" + name + "_HERE";

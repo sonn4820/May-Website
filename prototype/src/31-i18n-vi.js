@@ -54,6 +54,8 @@ I18N.vi = {
   quick_hours_link: "Xem tất cả giờ mở cửa",
   quick_address: "Địa chỉ",
   get_directions: "Chỉ đường",
+  map_open: "Mở trên Google Maps",
+  new_tab: "(mở trong tab mới)",
   quick_phone: "Điện thoại",
   call_now: "Gọi ngay",
 
