@@ -48,7 +48,7 @@ I18N.en = {
   hero_eyebrow: "Family dentistry · Accepting new patients",
   hero_title: "Gentle dental care, at your pace.",
   hero_lead: "Dr. Van H Nguyen and our team take the time to listen, explain each step, and keep you comfortable.",
-  hero_photo_alt: "A smiling patient having a dental checkup",
+  hero_photo_alt: "Close-up of a patient's white teeth during a dental checkup",
   hero_check1: "We explain every step before we start",
   hero_check2: "Help with insurance and payment questions",
   hero_check3: "This website is in English, Tiếng Việt and Español",
