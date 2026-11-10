@@ -84,9 +84,12 @@ I18N.es = {
   learn_more: "Más información",
 
   doctor_eyebrow: "Conozca a su dentista",
-  fact_edu: "Formación",
-  fact_exp: "Experiencia",
-  fact_lang: "Idiomas",
+  doctor_bio_1: "La Dra. Van Nguyen es una orgullosa egresada de Midwestern University College of Dentistry y está convencida de que ir al dentista no debería parecer una película de terror. Tiene manos suaves y le explica todo paso a paso mientras trabaja. Sin sorpresas: solo respuestas claras y una atención en la que puede confiar. Su meta es que cada paciente se vaya con tranquilidad, con toda la información y con confianza en su tratamiento.",
+  doctor_bio_2: "La Dra. Nguyen practica una odontología basada en la evidencia. Se compromete a seguir aprendiendo toda la vida con cursos de educación continua, para ofrecer a sus pacientes la mejor atención con las técnicas y la tecnología más recientes.",
+  doctor_bio_3: "Fuera del consultorio, a la Dra. Nguyen le encanta pasar tiempo con su familia, y juntos recorren los pasillos de Costco.",
+  doctor_fun_label: "Dato curioso:",
+  doctor_bio_4: "Su perrita se llama Eggroll porque, de cachorra, era perfectamente café y redondita, como un eggroll bien crujiente. Ya creció y su color se fue aclarando, más como un eggroll sin freír, y ahora es exactamente del mismo tono que el piso. ¡Cuidado dónde pisa!",
+  doctor_dog_alt: "Eggroll, la perrita de la Dra. Nguyen, acostada en el piso de madera",
   doctor_more: "Más sobre su dentista",
   doctor_photo_alt: "Retrato de Van H Nguyen, DMD",
 
@@ -100,7 +103,6 @@ I18N.es = {
   gal_lead: "Solo publicamos fotos de antes y después con el permiso por escrito de cada paciente.",
   before: "Antes",
   after: "Después",
-  fact_member: "Afiliaciones",
   sending: "Enviando…",
   faq_eyebrow: "Preguntas",
   faq_title: "Preguntas frecuentes",
@@ -120,7 +122,7 @@ I18N.es = {
   ins2_t: "Formas de pago",
   pay_cash: "Efectivo",
   pay_cards: "Tarjetas de crédito",
-  pay_plans: "Pagos mensuales",
+  pay_plans: "Planes de pago",
   ins3_t: "¿Tiene dudas sobre su cobertura?",
   ins3_d: "Revisamos sus beneficios antes de su visita y le explicamos los costos antes de cualquier tratamiento.",
 

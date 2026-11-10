@@ -5,7 +5,7 @@ const docTitle = (id) => t(DOC_META[id].titleKey);
 const docLink = (id, inner, cls = "") => '<a href="#' + id + '" data-route="doc" data-doc="' + id + '"' + (cls ? ' class="' + cls + '"' : "") + ">" + inner + "</a>";
 const DOC_PROTO = {
   service: "Prototype: nội dung bản nháp, cần nha sĩ xem lại trước khi đăng (đặc biệt các dịch vụ phòng khám thực sự làm).",
-  about: "Prototype: tiểu sử, học vấn, kinh nghiệm còn chờ thông tin thật (các ô INPUT_INFO_ABOUT_…).",
+  about: "Prototype: tiểu sử tiếng Anh do phòng khám cung cấp; bản tiếng Việt và tiếng Tây Ban Nha là bản dịch, cần người bản ngữ xem lại.",
   tip: "Prototype: bài viết bản nháp theo hướng dẫn chung của ADA, cần nha sĩ xem lại trước khi đăng.",
   legal: "Prototype: bản nháp dựa trên mẫu của Bộ Y tế Hoa Kỳ (HHS). Cần luật sư hoặc chuyên viên HIPAA duyệt trước khi đăng."
 };

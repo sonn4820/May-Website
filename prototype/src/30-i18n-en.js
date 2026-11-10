@@ -85,9 +85,12 @@ I18N.en = {
   learn_more: "Learn more",
 
   doctor_eyebrow: "Meet your dentist",
-  fact_edu: "Education",
-  fact_exp: "Experience",
-  fact_lang: "Languages spoken",
+  doctor_bio_1: "Dr. Van Nguyen is a proud graduate of Midwestern University College of Dentistry and a firm believer that a trip to the dentist shouldn't feel like a horror movie. She's got gentle hands and walks you through everything as she goes. No surprises, just clear answers and care you can feel good about. Her goal is for every patient to leave feeling comfortable, informed, and confident in their care.",
+  doctor_bio_2: "Dr. Nguyen practices evidence-based dentistry. She's committed to lifelong learning through continuing education to bring her patients the best care from the latest techniques and technology.",
+  doctor_bio_3: "Outside the office, Dr. Nguyen loves to spend time with her family and they wander the aisles of Costco together.",
+  doctor_fun_label: "Fun fact:",
+  doctor_bio_4: "Her dog is named Eggroll because, as a puppy, she was perfectly brown & round like a crispy eggroll. She's since grown up and faded into more of an uncooked eggroll, and now she's the exact same shade of the floor. Watch your step!",
+  doctor_dog_alt: "Eggroll, Dr. Nguyen's dog, lying on a wooden floor",
   doctor_more: "More about Dr. Nguyen",
   doctor_photo_alt: "Portrait of Dr. Van H Nguyen",
 
@@ -101,7 +104,6 @@ I18N.en = {
   gal_lead: "We share before and after photos only with each patient's written permission.",
   before: "Before",
   after: "After",
-  fact_member: "Memberships",
   sending: "Sending…",
   faq_eyebrow: "Questions",
   faq_title: "Questions we hear often",
@@ -121,7 +123,7 @@ I18N.en = {
   ins2_t: "Ways to pay",
   pay_cash: "Cash",
   pay_cards: "Credit cards",
-  pay_plans: "Monthly payment plans",
+  pay_plans: "Payment plans",
   ins3_t: "Not sure what is covered?",
   ins3_d: "We check your benefits before your visit and explain your costs before any treatment.",
 

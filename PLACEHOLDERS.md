@@ -7,10 +7,6 @@ Khi có thông tin thật, thay token tương ứng. Bản production sẽ bị 
 |---|---|---|
 | `INPUT_INFO_ABOUT_LOGO_HERE` | Logo (SVG hoặc PNG nền trong suốt) | Header, footer, biểu tượng tab trình duyệt |
 | `INPUT_INFO_ABOUT_HERO_PHOTO_HERE` | Ảnh lớn đầu trang (bác sĩ với bệnh nhân, hoặc phòng khám) | Đầu trang chủ |
-| `INPUT_INFO_ABOUT_DOCTOR_BIO_HERE` | Tiểu sử ngắn 3–5 câu (cần bản EN, VI, ES) | Mục Gặp bác sĩ |
-| `INPUT_INFO_ABOUT_DOCTOR_EDUCATION_HERE` | Trường đã học, năm tốt nghiệp | Mục Gặp bác sĩ |
-| `INPUT_INFO_ABOUT_DOCTOR_YEARS_OF_EXPERIENCE_HERE` | Số năm kinh nghiệm | Mục Gặp bác sĩ |
-| `INPUT_INFO_ABOUT_LANGUAGES_SPOKEN_HERE` | Các ngôn ngữ bác sĩ và nhân viên nói được | Mục Gặp bác sĩ |
 | `INPUT_INFO_ABOUT_DOCTOR_NAME_WITH_VIETNAMESE_DIACRITICS_HERE` | Tên bác sĩ viết đủ dấu tiếng Việt, nếu muốn (hiện dùng “Van H Nguyen” như bản tiếng Anh) | Bản tiếng Việt |
 | `INPUT_INFO_ABOUT_DOCTOR_SPANISH_TITLE_HERE` | Danh xưng trong tiếng Tây Ban Nha: “Dr.” hay “Dra.” (tiếng Tây Ban Nha phân biệt giới tính) | Bản tiếng Tây Ban Nha |
 | `INPUT_INFO_ABOUT_PATIENT_REVIEW_1_HERE` | Đánh giá thật của bệnh nhân kèm tên hiển thị, có sự đồng ý của họ | Mục Đánh giá |
@@ -19,7 +15,6 @@ Khi có thông tin thật, thay token tương ứng. Bản production sẽ bị 
 | `INPUT_INFO_ABOUT_BEFORE_AFTER_CASE_1_HERE` | Cặp ảnh trước/sau điều trị (răng giả), có đồng ý bằng văn bản của bệnh nhân | Mục Nụ cười bệnh nhân (đang tạm ẩn) |
 | `INPUT_INFO_ABOUT_BEFORE_AFTER_CASE_2_HERE` | Cặp ảnh trước/sau (mão răng) | Mục Nụ cười bệnh nhân (đang tạm ẩn) |
 | `INPUT_INFO_ABOUT_BEFORE_AFTER_CASE_3_HERE` | Cặp ảnh trước/sau (implant) | Mục Nụ cười bệnh nhân (đang tạm ẩn) |
-| `INPUT_INFO_ABOUT_PROFESSIONAL_MEMBERSHIPS_HERE` | Hiệp hội nghề nghiệp, ví dụ ADA hoặc hội nha khoa của bang | Mục Gặp bác sĩ |
 | `INPUT_INFO_ABOUT_GOOGLE_REVIEWS_LINK_HERE` | Link trang đánh giá Google của phòng khám | Nút “Read more reviews”, “Leave a review” |
 | `INPUT_INFO_ABOUT_OPENDENTAL_API_KEYS_HERE` | Developer Key (đăng ký với OpenDental) và Customer Key (phòng khám dán vào Setup > Advanced Setup > API trong OpenDental). Xem server/README.md | Cấu hình server (đặt lịch online) |
 | `INPUT_INFO_ABOUT_OPENDENTAL_PROV_AND_OP_HERE` | Số ProvNum của bác sĩ và OpNum của ghế (operatory) nhận lịch hẹn đặt online, xem trong OpenDental | Cấu hình server (đặt lịch online) |

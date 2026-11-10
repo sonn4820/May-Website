@@ -3,10 +3,6 @@
 const PLACEHOLDERS = {
   LOGO:                        { label: "Logo", need: "Logo (SVG hoặc PNG nền trong suốt)", where: "Header, footer, biểu tượng tab trình duyệt" },
   HERO_PHOTO:                  { label: "Main photo", need: "Ảnh lớn đầu trang (bác sĩ với bệnh nhân, hoặc phòng khám)", where: "Đầu trang chủ" },
-  DOCTOR_BIO:                  { label: "Short bio", need: "Tiểu sử ngắn 3–5 câu (cần bản EN, VI, ES)", where: "Mục Gặp bác sĩ" },
-  DOCTOR_EDUCATION:            { label: "Education", need: "Trường đã học, năm tốt nghiệp", where: "Mục Gặp bác sĩ" },
-  DOCTOR_YEARS_OF_EXPERIENCE:  { label: "Experience", need: "Số năm kinh nghiệm", where: "Mục Gặp bác sĩ" },
-  LANGUAGES_SPOKEN:            { label: "Languages spoken", need: "Các ngôn ngữ bác sĩ và nhân viên nói được", where: "Mục Gặp bác sĩ" },
   DOCTOR_NAME_WITH_VIETNAMESE_DIACRITICS: { label: "Name in Vietnamese", need: "Tên bác sĩ viết đủ dấu tiếng Việt, nếu muốn (hiện dùng “Van H Nguyen” như bản tiếng Anh)", where: "Bản tiếng Việt", configOnly: true },
   DOCTOR_SPANISH_TITLE:        { label: "Dr. or Dra.", need: "Danh xưng trong tiếng Tây Ban Nha: “Dr.” hay “Dra.” (tiếng Tây Ban Nha phân biệt giới tính)", where: "Bản tiếng Tây Ban Nha", configOnly: true },
   PATIENT_REVIEW_1:            { label: "Patient review 1", need: "Đánh giá thật của bệnh nhân kèm tên hiển thị, có sự đồng ý của họ", where: "Mục Đánh giá" },
@@ -15,7 +11,6 @@ const PLACEHOLDERS = {
   BEFORE_AFTER_CASE_1:         { label: "Before/after photos 1", need: "Cặp ảnh trước/sau điều trị (răng giả), có đồng ý bằng văn bản của bệnh nhân", where: "Mục Nụ cười bệnh nhân (đang tạm ẩn)" },
   BEFORE_AFTER_CASE_2:         { label: "Before/after photos 2", need: "Cặp ảnh trước/sau (mão răng)", where: "Mục Nụ cười bệnh nhân (đang tạm ẩn)" },
   BEFORE_AFTER_CASE_3:         { label: "Before/after photos 3", need: "Cặp ảnh trước/sau (implant)", where: "Mục Nụ cười bệnh nhân (đang tạm ẩn)" },
-  PROFESSIONAL_MEMBERSHIPS:    { label: "Memberships", need: "Hiệp hội nghề nghiệp, ví dụ ADA hoặc hội nha khoa của bang", where: "Mục Gặp bác sĩ" },
   GOOGLE_REVIEWS_LINK:        { label: "Reviews link", need: "Link trang đánh giá Google của phòng khám", where: "Nút “Read more reviews”, “Leave a review”" },
   OPENDENTAL_API_KEYS:         { label: "OpenDental API keys", need: "Developer Key (đăng ký với OpenDental) và Customer Key (phòng khám dán vào Setup > Advanced Setup > API trong OpenDental). Xem server/README.md", where: "Cấu hình server (đặt lịch online)", configOnly: true },
   OPENDENTAL_PROV_AND_OP:      { label: "ProvNum / OpNum", need: "Số ProvNum của bác sĩ và OpNum của ghế (operatory) nhận lịch hẹn đặt online, xem trong OpenDental", where: "Cấu hình server (đặt lịch online)", configOnly: true },

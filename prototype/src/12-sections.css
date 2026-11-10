@@ -91,12 +91,7 @@
 
 .doctor { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 3.5rem; align-items: center; }
 .device[data-w="narrow"] .doctor { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
-.doctor__bio { margin-top: .75rem; }
-.facts { display: grid; gap: .9rem; margin: 1.75rem 0 2rem; }
-.facts > div { display: grid; grid-template-columns: 13rem minmax(0, 1fr); gap: 1rem; padding-bottom: .9rem; border-bottom: 1px solid var(--line); }
-.facts dt { font-weight: 600; }
-.facts dd { margin: 0; min-width: 0; }
-.device[data-w="narrow"] .facts > div { grid-template-columns: minmax(0, 1fr); gap: .25rem; }
+.doctor .btn { margin-top: 1.5rem; }
 
 /* ---------- Content pages (services, about, health tips, legal) ---------- */
 .doc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 21rem); gap: 3rem; align-items: start; padding-block: 3rem 4.5rem; }
@@ -140,6 +135,9 @@
 .device[data-w="narrow"] .doc-about { grid-template-columns: minmax(0, 1fr); }
 .device[data-w="narrow"] .doc-about .photo { max-width: 16rem; }
 .doc-about__text { display: grid; gap: 1rem; }
+.doc-about__pet { margin: .25rem 0 0; width: 11rem; justify-self: start; }
+.doc-about__pet img { display: block; width: 100%; height: auto; border-radius: 16px; }
+.doc-about__pet figcaption { margin-top: .4rem; font-size: .95rem; color: var(--ink-soft); }
 .doc .faq { display: grid; gap: .75rem; }
 
 /* Real photo inside a .photo frame (doctor portrait) */

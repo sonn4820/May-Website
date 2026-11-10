@@ -39,7 +39,8 @@ const text = (s) => ($(s) ? $(s).textContent.trim() : "");
 
 ok("loads without script errors", errors.length === 0, errors.join(" | "));
 ok("English hero title", text("#page-home h1") === "Gentle dental care, at your pace.", text("#page-home h1"));
-ok("placeholders render as tokens", text(".doctor__bio .ph") === "INPUT_INFO_ABOUT_DOCTOR_BIO_HERE");
+ok("placeholders render as tokens", text(".quote .ph") === "INPUT_INFO_ABOUT_PATIENT_REVIEW_1_HERE");
+ok("home doctor section shows only name and More about button", !$("#doctor .ph") && !$("#doctor dl") && !!$('#doctor [data-doc="about"]'));
 ok("header shows only the clinic name", text(".header .brand__text") === "Excelcare Dental" && !$(".brand__doc"), text(".header .brand__text"));
 ok("doctor name and degree", text("#doctor-title") === "Dr. Van H Nguyen, DMD" && !$("#doctor-title .ph"), text("#doctor-title"));
 ok("doctor photo inlined", ($("#doctor .photo img") || {}).src?.startsWith("data:image/jpeg;base64,") && $("#doctor .photo img").alt === "Portrait of Dr. Van H Nguyen");
@@ -261,6 +262,7 @@ click(docFaq);
 ok("FAQ on a content page opens", docFaq.getAttribute("aria-expanded") === "true" && $("#" + docFaq.getAttribute("aria-controls")).classList.contains("is-open"));
 await openDoc('.nav__link[data-doc="about"]');
 ok("About the Doctor page with photo and facts", !$("#docAbout").hidden && $("#docAbout img").src.startsWith("data:image/jpeg") && text("#docTitle") === "Dr. Van H Nguyen, DMD" && $('.nav__link[data-doc="about"]').getAttribute("aria-current") === "page");
+ok("About page shows the doctor bio", text("#docAbout").includes("Midwestern University College of Dentistry") && text("#docAbout").includes("Fun fact: Her dog is named Eggroll") && !$("#docAbout .ph") && $(".doc-about__pet img").src.startsWith("data:image/jpeg") && $(".doc-about__pet img").alt.startsWith("Eggroll"), text("#docAbout").slice(0, 80));
 await openDoc('.footer [data-doc="privacy-practices"]');
 ok("Notice of Privacy Practices opens from the footer", text("#docTitle") === "Notice of Privacy Practices" && text("#docLead").startsWith("This notice describes how medical information") && text("#docMeta").includes("INPUT_INFO_ABOUT_LEGAL_EFFECTIVE_DATE_HERE") && $("#docAbout").hidden);
 await openDoc('.footer [data-doc="nondiscrimination"]');
@@ -332,7 +334,7 @@ ok("prototype bar expands", !$("#protoBar").classList.contains("is-collapsed") &
 click($('[data-device="phone"]'));
 ok("phone frame", $("#device").classList.contains("is-phone"));
 click($('[data-phmode="label"]'));
-ok("label mode", text(".doctor__bio .ph") === "Short bio");
+ok("label mode", text(".quote .ph") === "Patient review 1");
 ok("no script errors during the run", errors.length === 0, errors.join(" | "));
 await sleep(50);
 dom.window.close();

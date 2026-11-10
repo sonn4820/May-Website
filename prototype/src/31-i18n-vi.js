@@ -82,9 +82,12 @@ I18N.vi = {
   learn_more: "Tìm hiểu thêm",
 
   doctor_eyebrow: "Gặp gỡ nha sĩ của quý vị",
-  fact_edu: "Học vấn",
-  fact_exp: "Kinh nghiệm",
-  fact_lang: "Ngôn ngữ sử dụng",
+  doctor_bio_1: "Bác sĩ Van Nguyen tự hào là cựu sinh viên Trường Nha khoa, Đại học Midwestern (Midwestern University College of Dentistry), và luôn tin rằng đi khám răng không nên đáng sợ như xem phim kinh dị. Bác sĩ có đôi tay nhẹ nhàng và giải thích cho quý vị từng bước trong lúc làm. Không có gì bất ngờ, chỉ có câu trả lời rõ ràng và sự chăm sóc khiến quý vị yên tâm. Mục tiêu của bác sĩ là mỗi bệnh nhân ra về đều thấy thoải mái, hiểu rõ và tin tưởng vào việc điều trị của mình.",
+  doctor_bio_2: "Bác sĩ Van thực hành nha khoa dựa trên bằng chứng khoa học. Bác sĩ luôn học hỏi qua các khóa đào tạo liên tục để mang đến cho bệnh nhân sự chăm sóc tốt nhất với kỹ thuật và công nghệ mới nhất.",
+  doctor_bio_3: "Ngoài giờ làm việc, bác sĩ thích dành thời gian bên gia đình, cả nhà cùng nhau dạo quanh các dãy hàng ở Costco.",
+  doctor_fun_label: "Chuyện vui:",
+  doctor_bio_4: "Chú chó của bác sĩ tên là Eggroll (chả giò), vì lúc còn nhỏ, bé có màu nâu và tròn trịa y như một cuốn chả giò chiên giòn. Giờ bé đã lớn, màu lông nhạt dần, giống cuốn chả giò chưa chiên hơn, và bây giờ thì trùng màu y hệt sàn nhà. Nhớ nhìn kỹ dưới chân nhé!",
+  doctor_dog_alt: "Eggroll, chú chó của bác sĩ, nằm trên sàn gỗ",
   doctor_more: "Tìm hiểu thêm về bác sĩ",
   doctor_photo_alt: "Ảnh chân dung bác sĩ Van H Nguyen",
 
@@ -98,7 +101,6 @@ I18N.vi = {
   gal_lead: "Ảnh trước và sau điều trị chỉ được đăng khi bệnh nhân đồng ý bằng văn bản.",
   before: "Trước",
   after: "Sau",
-  fact_member: "Hội viên",
   sending: "Đang gửi…",
   faq_eyebrow: "Câu hỏi",
   faq_title: "Câu hỏi thường gặp",
@@ -118,7 +120,7 @@ I18N.vi = {
   ins2_t: "Hình thức thanh toán",
   pay_cash: "Tiền mặt",
   pay_cards: "Thẻ tín dụng",
-  pay_plans: "Trả góp hằng tháng",
+  pay_plans: "Trả góp",
   ins3_t: "Chưa rõ bảo hiểm chi trả những gì?",
   ins3_d: "Chúng tôi kiểm tra quyền lợi bảo hiểm trước buổi khám và giải thích chi phí trước khi điều trị.",
 
