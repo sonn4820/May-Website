@@ -117,7 +117,7 @@ I18N.vi = {
   ins_eyebrow: "Bảo hiểm & thanh toán",
   ins_title: "Chi phí rõ ràng, giải thích trước khi điều trị",
   ins1_t: "Bảo hiểm chúng tôi nhận",
-  ins1_note: "Chúng tôi nhận hầu hết các chương trình bảo hiểm lớn. Nếu không thấy chương trình của quý vị trong danh sách này, xin gọi cho chúng tôi để xác nhận. Chúng tôi sẵn lòng kiểm tra quyền lợi bảo hiểm giúp quý vị trước buổi hẹn.",
+  ins1_note: "Chúng tôi còn nhận nhiều chương trình bảo hiểm khác. Nếu không thấy chương trình của quý vị trong danh sách này, xin gọi cho chúng tôi để xác nhận. Chúng tôi sẵn lòng kiểm tra quyền lợi bảo hiểm giúp quý vị trước buổi hẹn.",
   ins2_t: "Hình thức thanh toán",
   pay_cash: "Tiền mặt",
   pay_cards: "Thẻ tín dụng",

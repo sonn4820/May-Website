@@ -51,7 +51,7 @@ const payAlts = $$(".paylist img").map((i) => i.alt);
 ok("payment methods with logos", text(".paylist").includes("Cash") && ["Visa", "Mastercard", "American Express", "Cherry", "CareCredit"].every((s) => payAlts.includes(s)) && $$(".paylist img").every((i) => i.src.startsWith("data:image/")), payAlts.join(","));
 const insAlts = $$(".insmarks img").map((i) => i.alt);
 ok("10 insurer logos with names", insAlts.join(",") === "Delta Dental,Aetna,Blue Cross Blue Shield,Cigna,GEHA,Humana,UnitedHealthcare,MetLife,United Concordia,Sun Life" && $$(".insmarks img").every((i) => i.src.startsWith("data:image/")), insAlts.join(","));
-ok("insurance note", text(".insnote").startsWith("We accept most major insurance plans.") && !$('#insurance .ph'), text(".insnote"));
+ok("insurance note", text(".insnote").startsWith("We accept many more insurance plans.") && !$('#insurance .ph'), text(".insnote"));
 const mapsLinks = $$("#site [data-maps]");
 ok("Google Maps links open in a new tab", mapsLinks.length === 3 && mapsLinks.every((a) => a.target === "_blank" && a.rel === "noopener" && a.querySelector(".newtab")) &&
   $('[data-maps="place"]').href === "https://share.google/fyuOVADZM7Bpl3VVZ" &&
