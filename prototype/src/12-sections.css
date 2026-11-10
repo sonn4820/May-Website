@@ -183,7 +183,7 @@
 /* Each logo gets its own height (--logo-h) so wide and compact logos look about the same size */
 .insmark img { display: block; width: auto; height: var(--logo-h, 2.3rem); max-width: 100%; object-fit: contain; }
 .device[data-w="narrow"] .insmark { height: 4.25rem; padding: .6rem .75rem; }
-.insnote { margin-top: .35rem; max-width: 70ch; }
+.insnote { margin-top: .35rem; }
 .access-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; }
 .access-list li { display: flex; gap: .65rem; align-items: flex-start; }
 .access-list .ic { color: var(--blue); flex: none; margin-top: .2em; }
