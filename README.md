@@ -27,7 +27,7 @@ Dữ liệu trong prototype chỉ nằm trong trang (hoặc trong OpenDental gi�
 ## Sửa và kiểm tra
 
 - Mã nguồn nằm ở `prototype/src/` (CSS, HTML, 3 file dịch, JS). `npm run proto:build` ghép tất cả thành `prototype/index.html` và sinh lại `PLACEHOLDERS.md`.
-- `npm install` một lần, sau đó `npm run proto:test` chạy 122 bài kiểm tra chức năng bằng jsdom (đổi ngôn ngữ, Staff Portal, form, tờ lịch đặt hẹn, 14 trang nội dung, nút Back, Google Sheet giả lập, FAQ…).
+- `npm install` một lần, sau đó `npm run proto:test` chạy 126 bài kiểm tra chức năng bằng jsdom (đổi ngôn ngữ, Staff Portal, form, tờ lịch đặt hẹn, 14 trang nội dung, nút Back, Google Sheet giả lập, FAQ…).
 - `npm run api:test` chạy 16 bài kiểm tra cho API đặt lịch với OpenDental giả lập. Cần Node 24 trở lên (chạy thẳng TypeScript).
 - `npm run proto:motion` mở Chrome/Edge chạy ngầm và đo xem animation có chạy dần đều thật không. Script đo các thao tác: cuộn khi bấm menu, hiện dần khi cuộn tới, dropdown, chuyển trang, FAQ.
 
@@ -61,6 +61,7 @@ Theo skill UI/UX Pro Max (các nhóm Dental Practice, Senior Care, Medical Clini
 - Màu xanh dương dịu, trắng, vàng “nụ cười”.
 - Chữ nội dung 20px, tương phản theo chuẩn WCAG AAA.
 - Nút Schedule màu cam đậm: nút vàng trên nền trắng khó thấy với mắt người lớn tuổi.
+- Ưu đãi **Online New Patient Special** ($89 khám tổng quát + chụp X-quang toàn hàm, cho bệnh nhân không có bảo hiểm) nằm ngay dưới dải giờ/địa chỉ/điện thoại ở trang chủ và đầu trang New Patients, nút dẫn tới trang Đặt lịch.
 - Có mục đánh giá, bảo hiểm & thanh toán. Mục ảnh trước/sau đang tạm ẩn (bỏ thuộc tính `hidden` ở `#gallery` để hiện lại).
 - Trang Đặt lịch là tờ lịch tháng: bệnh nhân chọn ngày còn giờ trống, chọn giờ, rồi điền họ, tên, ngày sinh, số điện thoại. Mỗi lượt khám mặc định 60 phút, cho đặt trước 8 tuần.
 - Mục thanh toán dùng logo chính thức: Visa, Mastercard, American Express (Wikimedia Commons), Cherry, CareCredit (lấy từ website của hãng). File nằm ở `prototype/src/assets/`.

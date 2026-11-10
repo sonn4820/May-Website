@@ -63,9 +63,16 @@ ok("status text filled", text("[data-status] .status-text").length > 5, text("[d
 ok("notice banner visible", !$("#siteNotice").hidden && text("#noticeText").includes("Thanksgiving"), text("#noticeText"));
 ok("notice reopens on an open day (not a closed Friday)", !/again on Friday/.test(text("#noticeText")), text("#noticeText"));
 ok("all reveal items visible without IntersectionObserver", $$(".reveal:not(.is-in)").length === 0);
+const offers = $$("#site .offer");
+ok("$89 new patient special on home and New Patients page", offers.length === 2 && $("#page-home .offer") && $("#page-new .offer") &&
+  offers.every((o) => o.querySelector(".offer__title").textContent === "Online New Patient Special" && o.querySelector(".offer__amount").textContent === "$89" &&
+    o.querySelector(".offer__what").textContent === "Comprehensive Exam & Full-Mouth Diagnostic X-rays" && o.querySelector(".offer__note").textContent === "*For patients with no insurance" &&
+    o.querySelector(".offer__cta").dataset.route === "schedule"),
+  offers.map((o) => o.textContent.replace(/\s+/g, " ").trim()).join(" | "));
 
 click($('[data-lang="vi"]'));
 ok("Vietnamese hero", text("#page-home h1") === "Chăm sóc răng nhẹ nhàng, không vội vàng.");
+ok("Vietnamese special", text("#page-home .offer__note") === "*Dành cho bệnh nhân không có bảo hiểm", text("#page-home .offer__note"));
 ok("Vietnamese notice", text("#noticeText").startsWith("Phòng khám nghỉ"), text("#noticeText"));
 ok("Vietnamese weekday names", $$("#hoursBody th")[0].textContent.startsWith("Thứ"), $$("#hoursBody th")[0].textContent);
 click($('[data-lang="es"]'));

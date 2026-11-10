@@ -46,6 +46,35 @@
 .quick__value { font-weight: 600; font-variant-numeric: tabular-nums; }
 .device[data-w="narrow"] .quick__grid { grid-template-columns: minmax(0, 1fr); }
 
+/* Online New Patient Special: home (below the quick facts) and New Patients page (above the cards).
+   DOM order is title, price, what, note, button so screen readers hear the name first; the grid puts
+   the price badge on the left. The badge text stays dark in every contrast mode (--smile stays light). */
+.offer-band { padding-block: 3rem 0; }
+.np-offer { padding-top: 3rem; }
+.offer {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: "price title cta" "price what cta" "price note cta";
+  column-gap: 2rem; row-gap: .3rem; align-items: center;
+  background: var(--smile-soft); border: 2px solid var(--sun-line); border-radius: var(--radius-lg); padding: 1.75rem 2rem;
+}
+.site .offer__title { grid-area: title; align-self: end; margin: 0; font-size: 1.75rem; color: var(--blue-deep); }
+.offer__price {
+  grid-area: price; display: flex; align-items: center; justify-content: center;
+  width: 8.5rem; height: 8.5rem; border-radius: 50%; background: var(--smile); color: #1b2733;
+  font-family: var(--font-display); font-weight: 800; font-size: 2.75rem; line-height: 1; font-variant-numeric: tabular-nums;
+}
+.offer__star { font-size: .55em; transform: translateY(-.5em); }
+.offer__what { grid-area: what; font-size: 1.25rem; font-weight: 600; }
+.offer__note { grid-area: note; align-self: start; color: var(--ink-soft); }
+.offer__cta { grid-area: cta; }
+.device[data-w="medium"] .offer { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "price title" "price what" "price note" "cta cta"; }
+.device[data-w="medium"] .offer__cta { justify-self: start; margin-top: 1rem; }
+.device[data-w="narrow"] .offer { grid-template-columns: minmax(0, 1fr); grid-template-areas: "title" "price" "what" "note" "cta"; row-gap: .6rem; padding: 1.5rem 1.35rem; }
+.device[data-w="narrow"] .site .offer__title { font-size: 1.45rem; }
+.device[data-w="narrow"] .offer__price { justify-self: start; width: auto; height: auto; border-radius: 999px; padding: .35rem 1.2rem; font-size: 2.25rem; }
+.device[data-w="narrow"] .offer__cta { width: 100%; margin-top: .4rem; }
+.device[data-w="narrow"] .offer-band, .device[data-w="narrow"] .np-offer { padding-top: 2rem; }
+
 .section { padding-block: 5rem; }
 .section--wash { background: var(--sky); }
 .device[data-w="narrow"] .section { padding-block: 3.25rem; }

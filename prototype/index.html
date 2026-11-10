@@ -366,6 +366,35 @@ body.menu-open { overflow: hidden; }
 .quick__value { font-weight: 600; font-variant-numeric: tabular-nums; }
 .device[data-w="narrow"] .quick__grid { grid-template-columns: minmax(0, 1fr); }
 
+/* Online New Patient Special: home (below the quick facts) and New Patients page (above the cards).
+   DOM order is title, price, what, note, button so screen readers hear the name first; the grid puts
+   the price badge on the left. The badge text stays dark in every contrast mode (--smile stays light). */
+.offer-band { padding-block: 3rem 0; }
+.np-offer { padding-top: 3rem; }
+.offer {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: "price title cta" "price what cta" "price note cta";
+  column-gap: 2rem; row-gap: .3rem; align-items: center;
+  background: var(--smile-soft); border: 2px solid var(--sun-line); border-radius: var(--radius-lg); padding: 1.75rem 2rem;
+}
+.site .offer__title { grid-area: title; align-self: end; margin: 0; font-size: 1.75rem; color: var(--blue-deep); }
+.offer__price {
+  grid-area: price; display: flex; align-items: center; justify-content: center;
+  width: 8.5rem; height: 8.5rem; border-radius: 50%; background: var(--smile); color: #1b2733;
+  font-family: var(--font-display); font-weight: 800; font-size: 2.75rem; line-height: 1; font-variant-numeric: tabular-nums;
+}
+.offer__star { font-size: .55em; transform: translateY(-.5em); }
+.offer__what { grid-area: what; font-size: 1.25rem; font-weight: 600; }
+.offer__note { grid-area: note; align-self: start; color: var(--ink-soft); }
+.offer__cta { grid-area: cta; }
+.device[data-w="medium"] .offer { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "price title" "price what" "price note" "cta cta"; }
+.device[data-w="medium"] .offer__cta { justify-self: start; margin-top: 1rem; }
+.device[data-w="narrow"] .offer { grid-template-columns: minmax(0, 1fr); grid-template-areas: "title" "price" "what" "note" "cta"; row-gap: .6rem; padding: 1.5rem 1.35rem; }
+.device[data-w="narrow"] .site .offer__title { font-size: 1.45rem; }
+.device[data-w="narrow"] .offer__price { justify-self: start; width: auto; height: auto; border-radius: 999px; padding: .35rem 1.2rem; font-size: 2.25rem; }
+.device[data-w="narrow"] .offer__cta { width: 100%; margin-top: .4rem; }
+.device[data-w="narrow"] .offer-band, .device[data-w="narrow"] .np-offer { padding-top: 2rem; }
+
 .section { padding-block: 5rem; }
 .section--wash { background: var(--sky); }
 .device[data-w="narrow"] .section { padding-block: 3.25rem; }
@@ -1334,6 +1363,19 @@ fieldset.field { border: 0; margin: 0 0 1.5rem; padding: 0; min-width: 0; }
       </div>
     </section>
 
+    <!-- Online New Patient Special (clinic request, Nov 2026). The same card sits on the New Patients page. -->
+    <section class="offer-band" id="special" aria-labelledby="offer-title">
+      <div class="wrap">
+        <div class="offer reveal">
+          <h2 class="offer__title" id="offer-title" data-i18n="offer_title"></h2>
+          <p class="offer__price"><span class="offer__amount">$89</span><span class="offer__star" aria-hidden="true">*</span></p>
+          <p class="offer__what" data-i18n="offer_what"></p>
+          <p class="offer__note"><span aria-hidden="true">*</span><span data-i18n="offer_note"></span></p>
+          <a class="btn btn--cta btn--lg offer__cta" href="#" data-route="schedule"><svg class="ic"><use href="#i-cal"/></svg><span data-i18n="offer_cta"></span></a>
+        </div>
+      </div>
+    </section>
+
     <section class="section" id="services" aria-labelledby="services-title">
       <div class="wrap">
         <div class="section__head reveal">
@@ -1575,6 +1617,15 @@ fieldset.field { border: 0; margin: 0 0 1.5rem; padding: 0; min-width: 0; }
         <p class="crumbs"><a href="#" data-route="home" data-scroll="top" data-i18n="nav_home"></a><svg class="ic"><use href="#i-chev"/></svg><span data-i18n="nav_new"></span></p>
         <h1 data-i18n="np_title"></h1>
         <p class="lead" data-i18n="np_lead"></p>
+      </div>
+    </div>
+    <div class="wrap np-offer">
+      <div class="offer reveal">
+        <h2 class="offer__title" data-i18n="offer_title"></h2>
+        <p class="offer__price"><span class="offer__amount">$89</span><span class="offer__star" aria-hidden="true">*</span></p>
+        <p class="offer__what" data-i18n="offer_what"></p>
+        <p class="offer__note"><span aria-hidden="true">*</span><span data-i18n="offer_note"></span></p>
+        <a class="btn btn--cta btn--lg offer__cta" href="#" data-route="schedule"><svg class="ic"><use href="#i-cal"/></svg><span data-i18n="offer_cta"></span></a>
       </div>
     </div>
     <div class="wrap np-grid">
@@ -2034,6 +2085,10 @@ I18N.en = {
   hero_check1: "We explain every step before we start",
   hero_check2: "Help with insurance and payment questions",
   hero_check3: "This website is in English, Tiếng Việt and Español",
+  offer_title: "Online New Patient Special",
+  offer_what: "Comprehensive Exam & Full-Mouth Diagnostic X-rays",
+  offer_note: "For patients with no insurance",
+  offer_cta: "Book online",
   today: "Today",
   quick_label: "Contact details",
   quick_hours: "Hours today",
@@ -2377,6 +2432,10 @@ I18N.vi = {
   hero_check1: "Giải thích rõ từng bước trước khi bắt đầu",
   hero_check2: "Hỗ trợ các câu hỏi về bảo hiểm và thanh toán",
   hero_check3: "Website có tiếng Anh, tiếng Việt và tiếng Tây Ban Nha",
+  offer_title: "Ưu đãi cho bệnh nhân mới đặt lịch online",
+  offer_what: "Khám răng tổng quát & chụp X-quang toàn hàm để chẩn đoán",
+  offer_note: "Dành cho bệnh nhân không có bảo hiểm",
+  offer_cta: "Đặt lịch online",
   today: "Hôm nay",
   quick_label: "Thông tin liên hệ",
   quick_hours: "Giờ mở cửa hôm nay",
@@ -2722,6 +2781,10 @@ I18N.es = {
   hero_check1: "Le explicamos cada paso antes de empezar",
   hero_check2: "Le ayudamos con sus preguntas sobre seguros y pagos",
   hero_check3: "Este sitio está en inglés, vietnamita y español",
+  offer_title: "Especial en línea para pacientes nuevos",
+  offer_what: "Examen completo y radiografías de toda la boca",
+  offer_note: "Para pacientes sin seguro",
+  offer_cta: "Haga su cita en línea",
   today: "Hoy",
   quick_label: "Datos de contacto",
   quick_hours: "Horario de hoy",
