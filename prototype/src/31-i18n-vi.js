@@ -45,6 +45,7 @@ I18N.vi = {
   hero_eyebrow: "Nha khoa gia đình · Đang nhận bệnh nhân mới",
   hero_title: "Chăm sóc răng nhẹ nhàng, không vội vàng.",
   hero_lead: "Bác sĩ Van H Nguyen và đội ngũ luôn dành thời gian lắng nghe, giải thích từng bước và giúp quý vị thấy thoải mái.",
+  hero_photo_alt: "Bệnh nhân mỉm cười khi đang được khám răng",
   hero_check1: "Giải thích rõ từng bước trước khi bắt đầu",
   hero_check2: "Hỗ trợ các câu hỏi về bảo hiểm và thanh toán",
   hero_check3: "Website có tiếng Anh, tiếng Việt và tiếng Tây Ban Nha",

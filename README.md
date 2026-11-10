@@ -65,6 +65,7 @@ Theo skill UI/UX Pro Max (các nhóm Dental Practice, Senior Care, Medical Clini
 - Có mục đánh giá, bảo hiểm & thanh toán. Mục ảnh trước/sau đang tạm ẩn (bỏ thuộc tính `hidden` ở `#gallery` để hiện lại).
 - Trang Đặt lịch là tờ lịch tháng: bệnh nhân chọn ngày còn giờ trống, chọn giờ, rồi điền họ, tên, ngày sinh, số điện thoại. Mỗi lượt khám mặc định 60 phút, cho đặt trước 8 tuần.
 - Mục thanh toán dùng logo chính thức: Visa, Mastercard, American Express (Wikimedia Commons), Cherry, CareCredit (lấy từ website của hãng). File nằm ở `prototype/src/assets/`.
+- Ảnh lớn đầu trang chủ là ảnh stock miễn phí của D Dental Office trên Unsplash (giấy phép Unsplash, dùng thương mại được, không bắt buộc ghi nguồn): https://unsplash.com/photos/BiknMFl7iOw
 - Animation nhẹ, tự tắt khi người dùng bật “giảm chuyển động”.
 - Nút tròn **hỗ trợ dễ đọc** ở góc dưới bên trái (giống nút UserWay trên 4lakesdental.com nhưng tự làm, không tải script bên ngoài): tăng tương phản / nền tối, làm nổi liên kết, chữ to hơn (đồng bộ với A / A+ / A++), giãn chữ, giãn dòng, dừng chuyển động, ẩn hình ảnh, phông chữ dễ đọc, con trỏ chuột lớn, giảm màu / trắng đen. Lựa chọn được lưu trên máy. Mã nguồn: `15-a11y.css`, `42-app-a11y.js`.
 

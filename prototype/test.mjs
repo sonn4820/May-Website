@@ -43,6 +43,7 @@ ok("placeholders render as tokens", text(".quote .ph") === "INPUT_INFO_ABOUT_PAT
 ok("home doctor section shows only name and More about button", !$("#doctor .ph") && !$("#doctor dl") && !!$('#doctor [data-doc="about"]'));
 ok("header shows only the clinic name", text(".header .brand__text") === "Excelcare Dental" && !$(".brand__doc"), text(".header .brand__text"));
 ok("doctor name and degree", text("#doctor-title") === "Dr. Van H Nguyen, DMD" && !$("#doctor-title .ph"), text("#doctor-title"));
+ok("hero stock photo inlined", ($("#page-home .photo--hero img") || {}).src?.startsWith("data:image/jpeg;base64,") && $("#page-home .photo--hero img").alt === "A smiling patient having a dental checkup" && !$("#page-home .hero__visual .ph"));
 ok("doctor photo inlined", ($("#doctor .photo img") || {}).src?.startsWith("data:image/jpeg;base64,") && $("#doctor .photo img").alt === "Portrait of Dr. Van H Nguyen");
 ok("first-visit section removed, gallery hidden", !$("#first-visit") && $("#gallery").hidden);
 ok("parking and ramp text", text(".access-list").includes("Free parking right in front of the office.") && text(".access-list").includes("ramp"), text(".access-list"));

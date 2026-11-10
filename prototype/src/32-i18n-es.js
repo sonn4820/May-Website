@@ -46,6 +46,7 @@ I18N.es = {
   hero_eyebrow: "Odontología familiar · Aceptamos pacientes nuevos",
   hero_title: "Atención dental amable, a su ritmo.",
   hero_lead: "La Dra. Van H Nguyen y nuestro equipo se toman el tiempo para escucharle, explicarle cada paso y hacer que su visita sea cómoda.",
+  hero_photo_alt: "Un paciente sonríe durante su revisión dental",
   hero_check1: "Le explicamos cada paso antes de empezar",
   hero_check2: "Le ayudamos con sus preguntas sobre seguros y pagos",
   hero_check3: "Este sitio está en inglés, vietnamita y español",
