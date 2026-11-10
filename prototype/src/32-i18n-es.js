@@ -1,5 +1,4 @@
-// Spanish copy uses "usted" and avoids gendered words for the patient and the doctor
-// until INPUT_INFO_ABOUT_DOCTOR_SPANISH_TITLE_HERE (Dr. or Dra.) is known.
+// Spanish copy uses "usted" and avoids gendered words for the patient. The dentist is "la Dra. Nguyen".
 I18N.es = {
   skip: "Saltar al contenido principal",
   notice_label: "Aviso del consultorio",
@@ -31,7 +30,7 @@ I18N.es = {
   a11y_sat_2: "Blanco y negro",
   a11y_reset: "Restablecer todo",
   a11y_reset_done: "Todo volvió a la normalidad.",
-  doctor_name: "Van H Nguyen, DMD",
+  doctor_name: "Dra. Van H Nguyen, DMD",
   call_us: "Llámenos",
   cta_schedule: "Haga una cita",
   menu: "Menú",
@@ -39,14 +38,14 @@ I18N.es = {
   nav_home: "Inicio",
   nav_services: "Servicios",
   nav_new: "Pacientes nuevos",
-  nav_about: "Su dentista",
+  nav_about: "Sobre la doctora",
   nav_insurance: "Seguros y pagos",
   nav_articles: "Consejos de salud",
   nav_contact: "Horario y ubicación",
 
   hero_eyebrow: "Odontología familiar · Aceptamos pacientes nuevos",
   hero_title: "Atención dental amable, a su ritmo.",
-  hero_lead: "Su dentista, Van H Nguyen, y nuestro equipo se toman el tiempo para escucharle, explicarle cada paso y hacer que su visita sea cómoda.",
+  hero_lead: "La Dra. Van H Nguyen y nuestro equipo se toman el tiempo para escucharle, explicarle cada paso y hacer que su visita sea cómoda.",
   hero_check1: "Le explicamos cada paso antes de empezar",
   hero_check2: "Le ayudamos con sus preguntas sobre seguros y pagos",
   hero_check3: "Este sitio está en inglés, vietnamita y español",
@@ -90,8 +89,8 @@ I18N.es = {
   doctor_fun_label: "Dato curioso:",
   doctor_bio_4: "Su perrita se llama Eggroll porque, de cachorra, era perfectamente café y redondita, como un eggroll bien crujiente. Ya creció y su color se fue aclarando, más como un eggroll sin freír, y ahora es exactamente del mismo tono que el piso. ¡Cuidado dónde pisa!",
   doctor_dog_alt: "Eggroll, la perrita de la Dra. Nguyen, acostada en el piso de madera",
-  doctor_more: "Más sobre su dentista",
-  doctor_photo_alt: "Retrato de Van H Nguyen, DMD",
+  doctor_more: "Más sobre la Dra. Nguyen",
+  doctor_photo_alt: "Retrato de la Dra. Van H Nguyen",
 
 
   reviews_eyebrow: "Opiniones",

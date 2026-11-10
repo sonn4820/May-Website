@@ -4,7 +4,6 @@ const PLACEHOLDERS = {
   LOGO:                        { label: "Logo", need: "Logo (SVG hoặc PNG nền trong suốt)", where: "Header, footer, biểu tượng tab trình duyệt" },
   HERO_PHOTO:                  { label: "Main photo", need: "Ảnh lớn đầu trang (bác sĩ với bệnh nhân, hoặc phòng khám)", where: "Đầu trang chủ" },
   DOCTOR_NAME_WITH_VIETNAMESE_DIACRITICS: { label: "Name in Vietnamese", need: "Tên bác sĩ viết đủ dấu tiếng Việt, nếu muốn (hiện dùng “Van H Nguyen” như bản tiếng Anh)", where: "Bản tiếng Việt", configOnly: true },
-  DOCTOR_SPANISH_TITLE:        { label: "Dr. or Dra.", need: "Danh xưng trong tiếng Tây Ban Nha: “Dr.” hay “Dra.” (tiếng Tây Ban Nha phân biệt giới tính)", where: "Bản tiếng Tây Ban Nha", configOnly: true },
   PATIENT_REVIEW_1:            { label: "Patient review 1", need: "Đánh giá thật của bệnh nhân kèm tên hiển thị, có sự đồng ý của họ", where: "Mục Đánh giá" },
   PATIENT_REVIEW_2:            { label: "Patient review 2", need: "Đánh giá thật thứ 2", where: "Mục Đánh giá" },
   PATIENT_REVIEW_3:            { label: "Patient review 3", need: "Đánh giá thật thứ 3", where: "Mục Đánh giá" },

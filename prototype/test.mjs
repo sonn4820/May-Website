@@ -83,6 +83,7 @@ click($('[data-lang="es"]'));
 ok("Spanish CTA", text(".header .btn--cta span") === "Haga una cita");
 ok("Spanish status", /Abierto|Cerrado/.test(text("[data-status] .status-text")), text("[data-status] .status-text"));
 ok("site lang attribute", $("#site").lang === "es");
+ok("Spanish uses Dra. for the doctor", text("#doctor-title") === "Dra. Van H Nguyen, DMD" && text(".hero__lead").startsWith("La Dra. Van H Nguyen") && text('#doctor [data-doc="about"]') === "Más sobre la Dra. Nguyen", text("#doctor-title"));
 click($('[data-lang="en"]'));
 
 // Staff portal: hours

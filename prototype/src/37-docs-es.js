@@ -1,5 +1,5 @@
 // Español para las páginas de contenido. Misma estructura que 35-docs-en.js. Trato de "usted";
-// sin "Dr./Dra." hasta confirmar INPUT_INFO_ABOUT_DOCTOR_SPANISH_TITLE_HERE.
+// la dentista es "la Dra. Nguyen".
 DOCS.es = {
   "services/checkups": {
     lead: "Las visitas regulares mantienen sanos sus dientes y encías, y nos ayudan a encontrar problemas pequeños antes de que causen dolor o cuesten más.",

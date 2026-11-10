@@ -135,7 +135,7 @@
 .device[data-w="narrow"] .doc-about { grid-template-columns: minmax(0, 1fr); }
 .device[data-w="narrow"] .doc-about .photo { max-width: 16rem; }
 .doc-about__text { display: grid; gap: 1rem; }
-.doc-about__pet { margin: .25rem 0 0; width: 11rem; justify-self: start; }
+.doc-about__pet { margin: .25rem 0 0; width: 11rem; justify-self: center; text-align: center; }
 .doc-about__pet img { display: block; width: 100%; height: auto; border-radius: 16px; }
 .doc-about__pet figcaption { margin-top: .4rem; font-size: .95rem; color: var(--ink-soft); }
 .doc .faq { display: grid; gap: .75rem; }

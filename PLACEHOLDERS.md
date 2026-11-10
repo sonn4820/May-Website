@@ -8,7 +8,6 @@ Khi có thông tin thật, thay token tương ứng. Bản production sẽ bị 
 | `INPUT_INFO_ABOUT_LOGO_HERE` | Logo (SVG hoặc PNG nền trong suốt) | Header, footer, biểu tượng tab trình duyệt |
 | `INPUT_INFO_ABOUT_HERO_PHOTO_HERE` | Ảnh lớn đầu trang (bác sĩ với bệnh nhân, hoặc phòng khám) | Đầu trang chủ |
 | `INPUT_INFO_ABOUT_DOCTOR_NAME_WITH_VIETNAMESE_DIACRITICS_HERE` | Tên bác sĩ viết đủ dấu tiếng Việt, nếu muốn (hiện dùng “Van H Nguyen” như bản tiếng Anh) | Bản tiếng Việt |
-| `INPUT_INFO_ABOUT_DOCTOR_SPANISH_TITLE_HERE` | Danh xưng trong tiếng Tây Ban Nha: “Dr.” hay “Dra.” (tiếng Tây Ban Nha phân biệt giới tính) | Bản tiếng Tây Ban Nha |
 | `INPUT_INFO_ABOUT_PATIENT_REVIEW_1_HERE` | Đánh giá thật của bệnh nhân kèm tên hiển thị, có sự đồng ý của họ | Mục Đánh giá |
 | `INPUT_INFO_ABOUT_PATIENT_REVIEW_2_HERE` | Đánh giá thật thứ 2 | Mục Đánh giá |
 | `INPUT_INFO_ABOUT_PATIENT_REVIEW_3_HERE` | Đánh giá thật thứ 3 | Mục Đánh giá |
