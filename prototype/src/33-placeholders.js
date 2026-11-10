@@ -17,7 +17,6 @@ const PLACEHOLDERS = {
   BEFORE_AFTER_CASE_3:         { label: "Before/after photos 3", need: "Cặp ảnh trước/sau (implant)", where: "Mục Nụ cười bệnh nhân (đang tạm ẩn)" },
   PROFESSIONAL_MEMBERSHIPS:    { label: "Memberships", need: "Hiệp hội nghề nghiệp, ví dụ ADA hoặc hội nha khoa của bang", where: "Mục Gặp bác sĩ" },
   GOOGLE_REVIEWS_LINK:        { label: "Reviews link", need: "Link trang đánh giá Google của phòng khám", where: "Nút “Read more reviews”, “Leave a review”" },
-  ACCEPTED_INSURANCE:          { label: "Insurance list", need: "Danh sách bảo hiểm phòng khám nhận (Mây sẽ gửi sau)", where: "Mục Bảo hiểm & thanh toán" },
   OPENDENTAL_API_KEYS:         { label: "OpenDental API keys", need: "Developer Key (đăng ký với OpenDental) và Customer Key (phòng khám dán vào Setup > Advanced Setup > API trong OpenDental). Xem server/README.md", where: "Cấu hình server (đặt lịch online)", configOnly: true },
   OPENDENTAL_PROV_AND_OP:      { label: "ProvNum / OpNum", need: "Số ProvNum của bác sĩ và OpNum của ghế (operatory) nhận lịch hẹn đặt online, xem trong OpenDental", where: "Cấu hình server (đặt lịch online)", configOnly: true },
   AFTER_HOURS_EMERGENCY:       { label: "After-hours help", need: "Khi phòng khám đóng cửa, bệnh nhân cấp cứu gọi đâu (lời nhắn tổng đài, số trực, hay hướng dẫn đến phòng cấp cứu)", where: "Trang Cấp cứu nha khoa" },

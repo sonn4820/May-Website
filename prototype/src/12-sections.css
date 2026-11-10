@@ -173,6 +173,18 @@
 .paymark--wide { width: 7.4rem; }
 /* Logos shrink to fit the tile whatever their shape (the Amex logo is square) */
 .paymark img { display: block; width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; }
+/* Insurance & payment: the insurer list spans the full row, the two smaller boxes share the row below */
+.insgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.insgrid > .infobox--wide { grid-column: 1 / -1; }
+.insmarks { list-style: none; margin: .4rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .75rem; }
+.device[data-w="medium"] .insmarks { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.device[data-w="narrow"] .insmarks { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; }
+/* White tiles in every theme, like the payment logos; a cap on logo height keeps tall and wide logos looking the same size */
+.insmark { display: flex; align-items: center; justify-content: center; box-sizing: border-box; height: 4.75rem; padding: .7rem 1rem; border: 1.5px solid var(--line); border-radius: 12px; background: #fff; overflow: hidden; }
+/* Each logo gets its own height (--logo-h) so wide and compact logos look about the same size */
+.insmark img { display: block; width: auto; height: var(--logo-h, 2.3rem); max-width: 100%; object-fit: contain; }
+.device[data-w="narrow"] .insmark { height: 4.25rem; padding: .6rem .75rem; }
+.insnote { margin-top: .35rem; max-width: 70ch; }
 .access-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; }
 .access-list li { display: flex; gap: .65rem; align-items: flex-start; }
 .access-list .ic { color: var(--blue); flex: none; margin-top: .2em; }

@@ -117,6 +117,7 @@ I18N.en = {
   ins_eyebrow: "Insurance & payment",
   ins_title: "Clear costs, explained before treatment",
   ins1_t: "Insurance we accept",
+  ins1_note: "We accept most major insurance plans. If you don’t see your plan listed here, please give us a call to confirm. We are happy to verify your coverage for you before your appointment.",
   ins2_t: "Ways to pay",
   pay_cash: "Cash",
   pay_cards: "Credit cards",

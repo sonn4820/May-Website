@@ -21,7 +21,6 @@ Khi có thông tin thật, thay token tương ứng. Bản production sẽ bị 
 | `INPUT_INFO_ABOUT_BEFORE_AFTER_CASE_3_HERE` | Cặp ảnh trước/sau (implant) | Mục Nụ cười bệnh nhân (đang tạm ẩn) |
 | `INPUT_INFO_ABOUT_PROFESSIONAL_MEMBERSHIPS_HERE` | Hiệp hội nghề nghiệp, ví dụ ADA hoặc hội nha khoa của bang | Mục Gặp bác sĩ |
 | `INPUT_INFO_ABOUT_GOOGLE_REVIEWS_LINK_HERE` | Link trang đánh giá Google của phòng khám | Nút “Read more reviews”, “Leave a review” |
-| `INPUT_INFO_ABOUT_ACCEPTED_INSURANCE_HERE` | Danh sách bảo hiểm phòng khám nhận (Mây sẽ gửi sau) | Mục Bảo hiểm & thanh toán |
 | `INPUT_INFO_ABOUT_OPENDENTAL_API_KEYS_HERE` | Developer Key (đăng ký với OpenDental) và Customer Key (phòng khám dán vào Setup > Advanced Setup > API trong OpenDental). Xem server/README.md | Cấu hình server (đặt lịch online) |
 | `INPUT_INFO_ABOUT_OPENDENTAL_PROV_AND_OP_HERE` | Số ProvNum của bác sĩ và OpNum của ghế (operatory) nhận lịch hẹn đặt online, xem trong OpenDental | Cấu hình server (đặt lịch online) |
 | `INPUT_INFO_ABOUT_AFTER_HOURS_EMERGENCY_HERE` | Khi phòng khám đóng cửa, bệnh nhân cấp cứu gọi đâu (lời nhắn tổng đài, số trực, hay hướng dẫn đến phòng cấp cứu) | Trang Cấp cứu nha khoa |

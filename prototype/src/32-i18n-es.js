@@ -116,6 +116,7 @@ I18N.es = {
   ins_eyebrow: "Seguros y pagos",
   ins_title: "Costos claros, explicados antes del tratamiento",
   ins1_t: "Seguros que aceptamos",
+  ins1_note: "Aceptamos la mayoría de los principales planes de seguro. Si no ve su plan en esta lista, llámenos para confirmarlo. Con gusto verificaremos su cobertura antes de su cita.",
   ins2_t: "Formas de pago",
   pay_cash: "Efectivo",
   pay_cards: "Tarjetas de crédito",
