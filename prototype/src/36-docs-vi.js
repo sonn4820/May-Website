@@ -218,13 +218,13 @@ DOCS.vi = {
     lead: "Website này thu thập và sử dụng thông tin của quý vị như thế nào.",
     sections: [
       { h: "Thông tin chúng tôi thu thập", list: [
-        "Những gì quý vị điền vào form, như tên, ngày sinh, số điện thoại, email, thông tin bảo hiểm và sức khoẻ",
+        "Thông tin quý vị điền khi đặt lịch, như tên, ngày sinh, số điện thoại, email và lý do đến khám",
         "Giờ hẹn quý vị chọn khi đặt lịch online",
         "Thông tin kỹ thuật cơ bản mà mọi website đều nhận, như loại trình duyệt và địa chỉ IP"
       ] },
       { h: "Chúng tôi dùng thông tin để", list: [
         "Đặt và xác nhận lịch hẹn",
-        "Chuẩn bị cho buổi khám và kiểm tra bảo hiểm",
+        "Chuẩn bị cho buổi khám",
         "Liên lạc với quý vị về việc chăm sóc răng",
         "Giữ website hoạt động ổn định và an toàn"
       ] },

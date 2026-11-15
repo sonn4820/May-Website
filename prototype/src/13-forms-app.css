@@ -42,24 +42,16 @@ fieldset.field { border: 0; margin: 0 0 1.5rem; padding: 0; min-width: 0; }
 .form-actions { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center; margin-top: 1.75rem; }
 .form-actions .btn--cta, .form-actions .btn--primary { margin-left: auto; }
 .device[data-w="narrow"] .form-actions .btn { width: 100%; margin-left: 0; }
-.stepper { list-style: none; margin: 0 0 2rem; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .6rem; }
-.stepper li { display: grid; gap: .4rem; font-size: 1rem; color: var(--ink-soft); }
-.stepper__bar { height: .5rem; border-radius: 999px; background: var(--line); transition: background-color .3s ease; }
-.stepper li.is-done .stepper__bar, .stepper li.is-current .stepper__bar { background: var(--blue); }
-.stepper li.is-current { color: var(--ink); font-weight: 600; }
 .success { background: var(--sky); border: 2px solid var(--ok); border-radius: 20px; padding: 2rem; display: grid; gap: .9rem; }
 .success__icon { width: 3.4rem; height: 3.4rem; border-radius: 50%; background: var(--ok); color: var(--on-dark); display: grid; place-items: center; }
 .success__icon .ic { width: 1.8rem; height: 1.8rem; stroke-width: 2.6; }
 .success h2 { font-size: 1.6rem !important; }
 .proto-callout { display: flex; flex-wrap: wrap; gap: .75rem 1rem; align-items: center; background: var(--chrome-bg); color: var(--chrome-fg); border-radius: 14px; padding: 1rem 1.25rem; font-size: 1rem; line-height: 1.45; }
 .proto-callout > span { flex: 1 1 16rem; min-width: 0; }
-.proto-callout button { border: 1px solid var(--chrome-accent); background: transparent; color: var(--chrome-accent); border-radius: 999px; padding: .5rem 1rem; font-size: .95rem; font-weight: 600; cursor: pointer; }
-.np-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; padding-block: 3rem 1rem; }
+.np-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; padding-block: 3rem; }
 .device[data-w="narrow"] .np-grid, .device[data-w="medium"] .np-grid { grid-template-columns: minmax(0, 1fr); }
 .np-card { border: 1px solid var(--line); border-radius: 20px; padding: 1.6rem; display: grid; gap: .6rem; align-content: start; }
 .np-card ul { margin: 0; padding-left: 1.2em; display: grid; gap: .35rem; }
-.np-form { padding-block: 1.5rem 4.5rem; }
-.np-form .form-card { max-width: 52rem; }
 
 /* Booking calendar: 1 pick a day, 2 pick a time, 3 who you are */
 .proto-callout--soft { margin-bottom: 1.75rem; }

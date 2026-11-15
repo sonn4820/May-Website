@@ -219,13 +219,13 @@ DOCS.es = {
     lead: "Cómo este sitio web recopila y usa su información.",
     sections: [
       { h: "Qué recopilamos", list: [
-        "Lo que escribe en nuestros formularios, como su nombre, fecha de nacimiento, teléfono, correo electrónico, seguro y datos de salud",
+        "Los datos que ingresa al reservar, como su nombre, fecha de nacimiento, teléfono, correo electrónico y motivo de la visita",
         "La hora de cita que elige al reservar en línea",
         "Información técnica básica que recibe cualquier sitio web, como el tipo de navegador y la dirección IP"
       ] },
       { h: "Cómo la usamos", list: [
         "Para reservar y confirmar su cita",
-        "Para preparar su visita y revisar su seguro",
+        "Para preparar su visita",
         "Para comunicarnos con usted sobre su atención",
         "Para que este sitio web funcione bien y sea seguro"
       ] },

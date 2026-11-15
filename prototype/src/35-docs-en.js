@@ -220,13 +220,13 @@ DOCS.en = {
     lead: "How this website collects and uses your information.",
     sections: [
       { h: "What we collect", list: [
-        "What you type into our forms, such as your name, date of birth, phone number, email, insurance and health details",
+        "What you enter when booking, such as your name, date of birth, phone number, email and reason for your visit",
         "The appointment time you choose when you book online",
         "Basic technical information every website receives, such as your browser type and IP address"
       ] },
       { h: "How we use it", list: [
         "To book and confirm your appointment",
-        "To prepare for your visit and check your insurance",
+        "To prepare for your visit",
         "To contact you about your care",
         "To keep this website working and secure"
       ] },

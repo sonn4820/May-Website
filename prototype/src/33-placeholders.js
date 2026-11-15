@@ -1,7 +1,6 @@
 // Every piece of real clinic information still missing. In the real project this list lives in
 // one config file, and the production build fails while any INPUT_INFO_ABOUT_..._HERE remains.
 const PLACEHOLDERS = {
-  LOGO:                        { label: "Logo", need: "Logo (SVG hoặc PNG nền trong suốt)", where: "Header, footer, biểu tượng tab trình duyệt" },
   DOCTOR_NAME_WITH_VIETNAMESE_DIACRITICS: { label: "Name in Vietnamese", need: "Tên bác sĩ viết đủ dấu tiếng Việt, nếu muốn (hiện dùng “Van H Nguyen” như bản tiếng Anh)", where: "Bản tiếng Việt", configOnly: true },
   PATIENT_REVIEW_1:            { label: "Patient review 1", need: "Đánh giá thật của bệnh nhân kèm tên hiển thị, có sự đồng ý của họ", where: "Mục Đánh giá" },
   PATIENT_REVIEW_2:            { label: "Patient review 2", need: "Đánh giá thật thứ 2", where: "Mục Đánh giá" },

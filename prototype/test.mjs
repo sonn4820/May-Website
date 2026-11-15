@@ -41,7 +41,12 @@ ok("loads without script errors", errors.length === 0, errors.join(" | "));
 ok("English hero title", text("#page-home h1") === "Gentle dental care, at your pace.", text("#page-home h1"));
 ok("placeholders render as tokens", text(".quote .ph") === "INPUT_INFO_ABOUT_PATIENT_REVIEW_1_HERE");
 ok("home doctor section shows only name and More about button", !$("#doctor .ph") && !$("#doctor dl") && !!$('#doctor [data-doc="about"]'));
-ok("header shows only the clinic name", text(".header .brand__text") === "Excelcare Dental" && !$(".brand__doc"), text(".header .brand__text"));
+const headerLogo = $(".header .brand img");
+const footerLogo = $(".footer__brand img");
+ok("square PNG clinic logo in header and footer", headerLogo?.src.startsWith("data:image/png;base64,") && footerLogo?.src === headerLogo.src &&
+  headerLogo.width === headerLogo.height && footerLogo.width === footerLogo.height &&
+  headerLogo.alt === "Excelcare Dental" && footerLogo.alt === headerLogo.alt && !$('.footer__brand [data-info="CLINIC_NAME"]'));
+ok("clinic favicon is inlined", $('link[rel="icon"]')?.href.startsWith("data:image/png;base64,"));
 ok("doctor name and degree", text("#doctor-title") === "Dr. Van H Nguyen, DMD" && !$("#doctor-title .ph"), text("#doctor-title"));
 ok("hero stock photo inlined", ($("#page-home .photo--hero img") || {}).src?.startsWith("data:image/jpeg;base64,") && $("#page-home .photo--hero img").alt === "Close-up of a patient's white teeth during a dental checkup" && !$("#page-home .hero__visual .ph"));
 ok("doctor photo inlined", ($("#doctor .photo img") || {}).src?.startsWith("data:image/jpeg;base64,") && $("#doctor .photo img").alt === "Portrait of Dr. Van H Nguyen");
@@ -197,43 +202,29 @@ click($('[data-lang="vi"]'));
 ok("booking confirmation follows the language", text("#schOk h2") === "Cảm ơn quý vị, lịch hẹn đã được đặt" && text("#schOkBody").startsWith("Hẹn gặp quý vị"), text("#schOkBody"));
 click($('[data-lang="en"]'));
 
-// New patient form
+// New Patients page
 click($('.nav__link[data-route="new"]'));
 await sleep(350);
+ok("New Patients page has no intake form", !$("#page-new").hidden && !$("#page-new form"));
 const q1 = $("#faq-q1");
 click(q1);
 ok("FAQ opens smoothly (collapse)", q1.getAttribute("aria-expanded") === "true" && $("#faq-a1").classList.contains("is-open"));
 click(q1);
 ok("FAQ closes", !$("#faq-a1").classList.contains("is-open"));
-click($("#npNext"));
-ok("step 1 errors", $$('#npForm .form-step[data-step="1"] .error-msg').length === 3);
-type($("#np-first"), "Ana");
-type($("#np-last"), "Tran");
-$("#np-dob-m").value = "3"; $("#np-dob-m").dispatchEvent(new w.Event("change", { bubbles: true }));
-type($("#np-dob-d"), "4");
-type($("#np-dob-y"), "1950");
-click($("#npNext"));
-ok("step 2 shown", !$('#npForm .form-step[data-step="2"]').hidden && text("#npStepText").startsWith("Step 2 of 3"));
-ok("step slides in from the right", $('#npForm .form-step[data-step="2"]').classList.contains("enter-next"));
-type($("#np-phone"), "5551234567");
-check($("#np-ins-yes"));
-ok("insurance fields revealed", $("#npInsFields").classList.contains("is-open"));
-click($("#npNext"));
-ok("insurance company required", $$('#npForm .form-step[data-step="2"] .error-msg').length === 1);
-type($("#np-insco"), "Delta Dental");
-click($("#npNext"));
-ok("step 3 shown", !$('#npForm .form-step[data-step="3"]').hidden && !$("#npSubmit").hidden);
-submit($("#npForm"));
-ok("consent required", $$('#npForm .form-step[data-step="3"] .error-msg').length === 1);
-check($("#np-consent"));
-submit($("#npForm"));
-await sleep(800);
-ok("new patient success", !$("#npOk").hidden);
+click($("#page-new .offer__cta"));
+await sleep(350);
+ok("New Patients offer opens booking", !$("#page-schedule").hidden && w.location.hash === "#schedule");
 
 // Sheet + Google Doc
-click($('[data-goto-subs="np"]'));
+click($("#tab-staff"));
+click($("#st-tab-subs"));
 ok("staff subs tab open", !$('[data-st-panel="subs"]').hidden);
-ok("sheet row added", $("#stSheetGrid").textContent.includes("Ana Tran") && $("#stSheetGrid").textContent.includes("Delta Dental"));
+ok("staff sheet shows the empty state", !$("#stSheetEmpty").hidden);
+w.eval("state.subs.np").push({
+  received: new w.Date(), name: "Ana Tran", lang: "en", insurance: "Delta Dental", status: "new", doc: ""
+});
+w.renderSheet();
+ok("staff sheet shows an existing row", $("#stSheetGrid").textContent.includes("Ana Tran") && $("#stSheetGrid").textContent.includes("Delta Dental"));
 click($("[data-mkdoc]"));
 ok("Google Doc created", $("#stSheetGrid").textContent.includes("✓ New patient – Ana Tran"));
 click($('[data-sheet="hours"]'));

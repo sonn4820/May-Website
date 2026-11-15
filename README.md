@@ -27,7 +27,7 @@ Dữ liệu trong prototype chỉ nằm trong trang (hoặc trong OpenDental gi�
 ## Sửa và kiểm tra
 
 - Mã nguồn nằm ở `prototype/src/` (CSS, HTML, 3 file dịch, JS). `npm run proto:build` ghép tất cả thành `prototype/index.html` và sinh lại `PLACEHOLDERS.md`.
-- `npm install` một lần, sau đó `npm run proto:test` chạy 126 bài kiểm tra chức năng bằng jsdom (đổi ngôn ngữ, Staff Portal, form, tờ lịch đặt hẹn, 14 trang nội dung, nút Back, Google Sheet giả lập, FAQ…).
+- `npm install` một lần, sau đó `npm run proto:test` chạy các bài kiểm tra chức năng bằng jsdom (đổi ngôn ngữ, Staff Portal, đặt hẹn, 14 trang nội dung, nút Back, Google Sheet giả lập, FAQ…).
 - `npm run api:test` chạy 16 bài kiểm tra cho API đặt lịch với OpenDental giả lập. Cần Node 24 trở lên (chạy thẳng TypeScript).
 - `npm run proto:motion` mở Chrome/Edge chạy ngầm và đo xem animation có chạy dần đều thật không. Script đo các thao tác: cuộn khi bấm menu, hiện dần khi cuộn tới, dropdown, chuyển trang, FAQ.
 

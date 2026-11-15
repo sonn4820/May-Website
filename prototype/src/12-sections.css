@@ -244,9 +244,7 @@
 .footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .15rem; }
 .footer a { color: var(--on-dark) !important; display: inline-block; padding-block: .35rem; }
 .footer__brand { display: grid; gap: .6rem; align-content: start; }
-.footer__brand .brand__name { color: var(--on-dark); }
-.footer__logo { display: flex; gap: .75rem; align-items: center; }
-.footer__logo .brand__logo { background: rgba(255, 255, 255, .08); border-color: rgba(255, 255, 255, .3); color: var(--smile); }
+.footer__brand .clinic-logo { width: 10rem; }
 .footer__bottom { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center; padding-block: 1.5rem; border-top: 1px solid rgba(255, 255, 255, .15); }
 .footer .seg button { background: transparent; color: var(--on-dark); border-color: rgba(255, 255, 255, .35); }
 .footer .seg button[aria-pressed="true"] { background: var(--on-dark); color: var(--ink); border-color: var(--on-dark); }

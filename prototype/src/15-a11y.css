@@ -144,6 +144,7 @@
 
 /* Hide images: photos disappear but keep their space, so the page does not jump */
 .site[data-a11y-img] :is(img, picture, video, .photo, .ba__pair, .article__img) { visibility: hidden !important; }
+.site[data-a11y-img] .brand__label { display: block; }
 
 /* Pause animations: everything stops; content that waits for scroll is shown at once */
 .site[data-a11y-still] { --move: 0; }

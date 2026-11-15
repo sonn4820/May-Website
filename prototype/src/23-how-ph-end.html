@@ -12,15 +12,15 @@
         <div class="arrow"><svg class="ic"><use href="#i-arrow"/></svg></div>
         <div class="node"><p class="node__title"><svg class="ic"><use href="#i-browser"/></svg>Website</p><p class="node__sub">Astro + TypeScript. Trang dựng sẵn nên tải nhanh. Giờ mở cửa và thông báo lấy từ API, cache khoảng 1 phút.</p></div>
         <div class="arrow"><svg class="ic"><use href="#i-arrow"/></svg></div>
-        <div class="node"><p class="node__title"><svg class="ic"><use href="#i-server"/></svg>API nội bộ (/api)</p><p class="node__sub">Kiểm tra dữ liệu form. Giữ bản sao dự phòng khi Google lỗi. Khoá truy cập Google chỉ nằm ở server.</p></div>
+        <div class="node"><p class="node__title"><svg class="ic"><use href="#i-server"/></svg>API nội bộ (/api)</p><p class="node__sub">Kiểm tra thông tin đặt lịch trước khi gửi sang OpenDental. Khoá truy cập dịch vụ chỉ nằm ở server.</p></div>
         <div class="arrow"><svg class="ic"><use href="#i-arrow"/></svg></div>
-        <div class="node node--google"><p class="node__title"><svg class="ic"><use href="#i-grid"/></svg>Google Workspace</p><p class="node__sub">Google Sheet “Clinic Operations” có các tab Hours, Special dates, Website notice, New patients. Lịch hẹn thì nằm trong OpenDental. Google Docs lưu bản tóm tắt mỗi bệnh nhân mới. Excel tải thẳng từ Sheet.</p></div>
+        <div class="node node--google"><p class="node__title"><svg class="ic"><use href="#i-grid"/></svg>Google Workspace</p><p class="node__sub">Google Sheet “Clinic Operations” lưu giờ mở cửa, ngày đặc biệt và thông báo. Nhân viên có thể xem các form đã nhận trong tab New patients. Lịch hẹn nằm trong OpenDental.</p></div>
       </div>
       <p class="lane__label">Nhân viên cập nhật</p>
       <div class="lane">
         <div class="node"><p class="node__title"><svg class="ic"><use href="#i-users"/></svg>Nhân viên</p><p class="node__sub">Đăng nhập bằng tài khoản Google Workspace của phòng khám, không cần mật khẩu riêng.</p></div>
         <div class="arrow"><svg class="ic"><use href="#i-arrow"/></svg></div>
-        <div class="node"><p class="node__title"><svg class="ic"><use href="#i-lock"/></svg>Staff Portal (/staff)</p><p class="node__sub">Đổi giờ mở cửa, thêm ngày nghỉ, bật thông báo bằng 3 ngôn ngữ. Xem các form bệnh nhân gửi.</p></div>
+        <div class="node"><p class="node__title"><svg class="ic"><use href="#i-lock"/></svg>Staff Portal (/staff)</p><p class="node__sub">Đổi giờ mở cửa, thêm ngày nghỉ, bật thông báo bằng 3 ngôn ngữ. Xem các form đã nhận.</p></div>
         <div class="arrow"><svg class="ic"><use href="#i-arrow"/></svg></div>
         <div class="node"><p class="node__title"><svg class="ic"><use href="#i-server"/></svg>API nội bộ</p><p class="node__sub">Kiểm tra dữ liệu (ví dụ giờ đóng cửa phải sau giờ mở cửa) rồi ghi vào Google Sheet.</p></div>
         <div class="arrow"><svg class="ic"><use href="#i-arrow"/></svg></div>
@@ -44,14 +44,13 @@
       <div class="decision"><span class="ic-circle"><svg class="ic"><use href="#i-cal"/></svg></span><h3>Đặt lịch thẳng vào OpenDental</h3><p>Trang Đặt lịch giữ giao diện tờ lịch tháng. API riêng (/api/booking) hỏi OpenDental giờ trống, tìm hoặc tạo hồ sơ bệnh nhân, rồi tạo lịch hẹn 60 phút. Không dùng Google Calendar, website không lưu bản sao lịch hẹn.</p></div>
     </div>
 
-    <div class="changes" style="margin-top:0"><h3>Trước khi nhận dữ liệu bệnh nhân thật</h3><p>Form bệnh nhân mới chứa thông tin sức khoẻ, nên chịu quy định HIPAA. Phòng khám cần dùng Google Workspace bản trả phí và ký BAA (Business Associate Agreement) với Google. Không dùng Gmail cá nhân cho dữ liệu bệnh nhân.</p></div>
+    <div class="changes" style="margin-top:0"><h3>Trước khi nhận dữ liệu bệnh nhân thật</h3><p>Dữ liệu sức khoẻ của bệnh nhân chịu quy định HIPAA. Phòng khám cần dùng Google Workspace bản trả phí và ký BAA (Business Associate Agreement) với Google. Không dùng Gmail cá nhân cho dữ liệu bệnh nhân.</p></div>
 
-    <h2>Bốn luồng chính</h2>
+    <h2>Ba luồng chính</h2>
     <div class="flows">
       <div class="flowcard"><h3>Nhân viên đổi giờ</h3><ol><li>Mở Staff Portal, vào Opening hours.</li><li>Sửa giờ rồi bấm Publish.</li><li>API ghi vào tab Hours.</li><li>Website hiện giờ mới sau khoảng 1 phút.</li></ol></div>
       <div class="flowcard"><h3>Bệnh nhân đặt lịch</h3><ol><li>Trang Đặt lịch hỏi API giờ trống (lấy từ lịch bác sĩ trong OpenDental).</li><li>Bệnh nhân chọn ngày, giờ, điền tên, ngày sinh, số điện thoại.</li><li>API hỏi lại OpenDental giờ đó còn trống không.</li><li>Tìm hồ sơ theo họ + tên + ngày sinh, không có thì tạo mới.</li><li>Tạo lịch hẹn trong OpenDental, kèm ghi chú lý do và ngôn ngữ.</li></ol></div>
-      <div class="flowcard"><h3>Bệnh nhân gửi form</h3><ol><li>Bệnh nhân điền form bằng ngôn ngữ của mình.</li><li>API kiểm tra dữ liệu.</li><li>Thêm 1 dòng vào tab New patients.</li><li>Tạo Google Doc tóm tắt (tuỳ chọn).</li><li>Nhân viên xem, đổi trạng thái, tải Excel.</li></ol></div>
-      <div class="flowcard"><h3>Khi Google gặp sự cố</h3><ol><li>Website dùng bản sao gần nhất của giờ và thông báo.</li><li>Form báo lỗi dễ hiểu, hiện số điện thoại và giữ nguyên nội dung đã nhập.</li><li>Hệ thống báo cho người quản trị.</li></ol></div>
+      <div class="flowcard"><h3>Khi Google gặp sự cố</h3><ol><li>Website dùng bản sao gần nhất của giờ và thông báo.</li><li>Hệ thống báo cho người quản trị.</li></ol></div>
     </div>
   </div>
 </section>

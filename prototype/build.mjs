@@ -15,14 +15,14 @@ const js = pick(".js").map(read).join("\n");
 const head = read("01-head.html").replace("/*__CSS__*/", () => css);
 // Images in src/assets are inlined as data: URIs so index.html stays a single file
 const MIME = { ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".webp": "image/webp", ".svg": "image/svg+xml" };
-const inlineAssets = (html) => html.replace(/src="assets\/([\w.-]+)"/g, (m, f) => {
+const inlineAssets = (html) => html.replace(/\b(src|href)="assets\/([\w.-]+)"/g, (_, attr, f) => {
   const type = MIME[f.slice(f.lastIndexOf(".")).toLowerCase()];
   if (!type) throw new Error("Unknown asset type: " + f);
-  return 'src="data:' + type + ";base64," + readFileSync(join(src, "assets", f)).toString("base64") + '"';
+  return attr + '="data:' + type + ";base64," + readFileSync(join(src, "assets", f)).toString("base64") + '"';
 });
 const body = inlineAssets(pick(".html").map(read).join("\n")).replace("/*__JS__*/", () => js);
 
-const out = head + body;
+const out = inlineAssets(head) + body;
 writeFileSync(join(here, "index.html"), out, "utf8");
 try { new Function(js); console.log("script syntax: OK"); } catch (e) { console.error("script syntax error:", e.message); process.exitCode = 1; }
 

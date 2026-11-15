@@ -37,7 +37,6 @@ function onClick(e) {
   if (d.soon !== undefined) return toast(PROTO_MSG.soon);
   if (d.call !== undefined) return toast(PROTO_MSG.call());
   if (d.link) return toast(PROTO_MSG.link(d.link));
-  if (d.gotoSubs) { state.signedIn = true; state.stTab = "subs"; state.sheetTab = d.gotoSubs; return setView("staff"); }
   if (d.demo) return toast(d.demo === "sheet" ? PROTO_MSG.sheet() : PROTO_MSG.xlsx);
   if (d.st) return setStTab(d.st);
   if (d.sheet) { if (d.sheet !== state.sheetTab) { state.sheetTab = d.sheet; renderSheet(true); } return; }
@@ -79,9 +78,6 @@ function onClick(e) {
     case "schAgain": return resetSch();
     case "calPrev": return stepMonth(-1);
     case "calNext": return stepMonth(1);
-    case "npAgain": return resetNp();
-    case "npNext": { const bad = validateNpStep(npStep); if (bad) bad.focus(); else showNpStep(npStep + 1, true); return; }
-    case "npBack": return showNpStep(Math.max(1, npStep - 1), true);
     case "stSigninBtn": state.signedIn = true; renderStaff(); $("#st-tab-" + state.stTab).focus(); return;
     case "stSignout": state.signedIn = false; renderStaff(); $("#stSigninBtn").focus(); return;
     case "stViewSite": return setView("site");
@@ -104,8 +100,7 @@ function copyTokens() {
 
 function onInput(e) {
   const el = e.target;
-  if (el.id === "sch-lang" || el.id === "np-lang") el.dataset.touched = "1";
-  if (el.name === "hasins" && el.checked) { setCollapse($("#npInsFields"), el.value === "yes"); clearFieldError(fieldOf(el)); }
+  if (el.id === "sch-lang") el.dataset.touched = "1";
   if (el.closest && el.closest(".field.has-error") && e.type === "change") {
     // Re-check gently once the person fixes a field
     const f = el.closest(".field");
@@ -150,7 +145,6 @@ function init() {
   applyI18n();
   renderSite();
   loadAvailability();
-  showNpStep(1);
   setupReveal();
   renderPhTable();
   updateProtoH();
@@ -161,7 +155,6 @@ function init() {
   document.addEventListener("change", onInput);
   document.addEventListener("keydown", onKey);
   $("#schForm").addEventListener("submit", onSchSubmit);
-  $("#npForm").addEventListener("submit", onNpSubmit);
   $("#stDateForm").addEventListener("submit", onStDateSubmit);
   // Back/Forward between website pages (the prototype's own views keep their state)
   window.addEventListener("popstate", () => {

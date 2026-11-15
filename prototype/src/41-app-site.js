@@ -234,14 +234,12 @@ function stepMonth(dir) {
 }
 
 function renderMonthSelect() {
-  ["#np-dob-m", "#sch-dob-m"].forEach((s) => {
-    const sel = $(s);
-    const v = sel.value;
-    sel.innerHTML = "";
-    sel.appendChild(new Option(t("f_choose"), ""));
-    for (let m = 0; m < 12; m++) sel.appendChild(new Option(cap(new Intl.DateTimeFormat(LOCALE[state.lang], { month: "long" }).format(new Date(2000, m, 1))), String(m + 1)));
-    sel.value = v;
-  });
+  const sel = $("#sch-dob-m");
+  const v = sel.value;
+  sel.innerHTML = "";
+  sel.appendChild(new Option(t("f_choose"), ""));
+  for (let m = 0; m < 12; m++) sel.appendChild(new Option(cap(new Intl.DateTimeFormat(LOCALE[state.lang], { month: "long" }).format(new Date(2000, m, 1))), String(m + 1)));
+  sel.value = v;
 }
 
 function renderSite() {
@@ -251,10 +249,10 @@ function renderSite() {
   renderChanges();
   renderBooker();
   renderMonthSelect();
-  renderStepText();
   renderReadTimes();
   if (state.page === "doc") renderDoc();
-  ["#sch-lang", "#np-lang"].forEach((s) => { const el = $(s); if (!el.dataset.touched) el.value = state.lang; });
+  const bookingLanguage = $("#sch-lang");
+  if (!bookingLanguage.dataset.touched) bookingLanguage.value = state.lang;
   if (!$("#schOk").hidden && state.lastBooking) $("#schOkBody").textContent = bookedText(state.lastBooking);
 }
 
@@ -613,84 +611,4 @@ function resetSch() {
   swapCard($("#schCard"), $("#schOk"), f);
   const first = $("#calGrid .cal__day[aria-pressed=true]") || $("#calGrid .has-slots");
   if (first) first.focus({ preventScroll: true });
-}
-
-// ---------- New patient form (3 steps) ----------
-let npStep = 1;
-function renderStepText() { $("#npStepText").textContent = t("step_of", { n: npStep, name: t("npf_step" + npStep) }); }
-function showNpStep(n, focus, instant) {
-  const dir = instant ? "" : n > npStep ? "enter-next" : n < npStep ? "enter-back" : "";
-  const run = instant ? (el, fn) => fn() : animateHeight;
-  run($("#npCard"), () => {
-    npStep = n;
-    $$("#npForm .form-step").forEach((s) => {
-      const on = Number(s.dataset.step) === n;
-      s.hidden = !on;
-      s.classList.remove("enter-next", "enter-back");
-      if (on && dir) { void s.offsetWidth; s.classList.add(dir); }
-    });
-    $$("#npStepper li").forEach((li, i) => { li.classList.toggle("is-current", i + 1 === n); li.classList.toggle("is-done", i + 1 < n); });
-    $("#npBack").hidden = n === 1;
-    $("#npNext").hidden = n === 3;
-    $("#npSubmit").hidden = n !== 3;
-    renderStepText();
-  });
-  const card = $("#npCard");
-  if (dir && card.getBoundingClientRect().top < 0) animateScrollTo(sectionTop(card));
-  if (focus) { const first = $('#npForm .form-step[data-step="' + n + '"] input, #npForm .form-step[data-step="' + n + '"] select'); if (first) first.focus({ preventScroll: true }); }
-}
-function validateNpStep(n) {
-  if (n === 1) {
-    const d = Number($("#np-dob-d").value), y = Number($("#np-dob-y").value), m = $("#np-dob-m").value;
-    return check([
-      [$("#np-first").value.trim().length >= 1, $("#np-first"), "err_first"],
-      [$("#np-last").value.trim().length >= 1, $("#np-last"), "err_last"],
-      [!!m && d >= 1 && d <= 31 && y >= 1900 && y <= new Date().getFullYear(), $('[data-field="dob"]'), "err_dob"]
-    ]);
-  }
-  if (n === 2) {
-    const email = $("#np-email").value.trim();
-    const hasins = ($('input[name="hasins"]:checked') || {}).value;
-    const list = [
-      [digits($("#np-phone").value).length >= 10, $("#np-phone"), "err_phone"],
-      [!email || validEmail(email), $("#np-email"), "err_email"],
-      [!!hasins, $('[data-field="hasins"]'), "err_choose"]
-    ];
-    if (hasins === "yes") list.push([$("#np-insco").value.trim().length >= 2, $("#np-insco"), "err_insco"]);
-    else clearFieldError(fieldOf($("#np-insco")));
-    return check(list);
-  }
-  return check([[$("#np-consent").checked, $('[data-field="consent"]'), "err_consent"]]);
-}
-function onNpSubmit(e) {
-  e.preventDefault();
-  if (npStep !== 3) { const bad = validateNpStep(npStep); if (bad) bad.focus(); else showNpStep(npStep + 1, true); return; }
-  for (const n of [1, 2, 3]) { const bad = validateNpStep(n); if (bad) { showNpStep(n); bad.focus(); return; } }
-  const hasins = $('input[name="hasins"]:checked').value;
-  const row = {
-    received: new Date(),
-    name: $("#np-first").value.trim() + " " + $("#np-last").value.trim(),
-    dob: $("#np-dob-y").value + "-" + pad($("#np-dob-m").value) + "-" + pad($("#np-dob-d").value),
-    lang: $("#np-lang").value, phone: $("#np-phone").value.trim(), email: $("#np-email").value.trim(),
-    address: $("#np-address").value.trim(),
-    insurance: hasins === "yes" ? $("#np-insco").value.trim() : "None", member: hasins === "yes" ? $("#np-member").value.trim() : "",
-    meds: $("#np-meds").value.trim(), allergies: $("#np-allergies").value.trim(), notes: $("#np-notes").value.trim(),
-    status: "new", doc: "", isNew: true
-  };
-  withSending($("#npSubmit"), () => {
-    state.subs.np.push(row);
-    swapCard($("#npCard"), $("#npForm"), $("#npOk"));
-    updateSubsCount();
-  });
-}
-function resetNp() {
-  const f = $("#npForm");
-  f.reset();
-  $$(".field", f).forEach(clearFieldError);
-  setCollapse($("#npInsFields"), false);
-  delete $("#np-lang").dataset.touched;
-  $("#np-lang").value = state.lang;
-  showNpStep(1, false, true);
-  swapCard($("#npCard"), $("#npOk"), f);
-  $("#np-first").focus({ preventScroll: true });
 }

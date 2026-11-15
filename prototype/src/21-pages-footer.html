@@ -117,73 +117,6 @@
       <div class="np-card reveal"><span class="ic-circle"><svg class="ic"><use href="#i-clock"/></svg></span><h3 data-i18n="np_first_t"></h3><p data-i18n="np_first_d"></p></div>
       <div class="np-card reveal"><span class="ic-circle"><svg class="ic"><use href="#i-info"/></svg></span><h3 data-i18n="np_pay_t"></h3><p data-i18n="np_pay_d"></p><a href="#" data-route="home" data-scroll="insurance" data-i18n="np_pay_link"></a></div>
     </div>
-    <div class="wrap np-form">
-      <div class="form-card" id="npCard">
-        <form id="npForm" novalidate>
-          <h2 data-i18n="npf_title"></h2>
-          <p class="form-intro" data-i18n="npf_intro"></p>
-          <ol class="stepper" id="npStepper">
-            <li class="is-current"><span class="stepper__bar"></span><span data-i18n="npf_step1"></span></li>
-            <li><span class="stepper__bar"></span><span data-i18n="npf_step2"></span></li>
-            <li><span class="stepper__bar"></span><span data-i18n="npf_step3"></span></li>
-          </ol>
-          <p class="hint" id="npStepText" aria-live="polite"></p>
-
-          <div class="form-step" data-step="1">
-            <div class="field" data-field="first"><label for="np-first" data-i18n="f_first"></label><input type="text" id="np-first" name="first" autocomplete="given-name"></div>
-            <div class="field" data-field="last"><label for="np-last" data-i18n="f_last"></label><input type="text" id="np-last" name="last" autocomplete="family-name"></div>
-            <fieldset class="field" data-field="dob">
-              <legend data-i18n="f_dob"></legend>
-              <div class="dob">
-                <label for="np-dob-m"><span data-i18n="f_month"></span><select id="np-dob-m" name="dobm" autocomplete="bday-month"></select></label>
-                <label for="np-dob-d"><span data-i18n="f_day"></span><input type="text" inputmode="numeric" id="np-dob-d" name="dobd" maxlength="2" autocomplete="bday-day"></label>
-                <label for="np-dob-y"><span data-i18n="f_year"></span><input type="text" inputmode="numeric" id="np-dob-y" name="doby" maxlength="4" autocomplete="bday-year"></label>
-              </div>
-            </fieldset>
-            <div class="field"><label for="np-lang" data-i18n="f_pref_lang"></label><select id="np-lang" name="lang"><option value="en">English</option><option value="vi">Tiếng Việt</option><option value="es">Español</option></select></div>
-          </div>
-
-          <div class="form-step" data-step="2" hidden>
-            <div class="field" data-field="phone"><label for="np-phone" data-i18n="f_phone"></label><input type="tel" id="np-phone" name="phone" autocomplete="tel"></div>
-            <div class="field" data-field="email"><label for="np-email"><span data-i18n="f_email"></span> <span class="opt" data-i18n="optional"></span></label><input type="email" id="np-email" name="email" autocomplete="email"></div>
-            <div class="field"><label for="np-address"><span data-i18n="f_address"></span> <span class="opt" data-i18n="optional"></span></label><textarea id="np-address" name="address" autocomplete="street-address"></textarea></div>
-            <fieldset class="field" data-field="hasins">
-              <legend data-i18n="f_has_ins"></legend>
-              <div class="choices">
-                <label class="choice"><input type="radio" name="hasins" id="np-ins-yes" value="yes"><span data-i18n="yes"></span></label>
-                <label class="choice"><input type="radio" name="hasins" id="np-ins-no" value="no"><span data-i18n="no"></span></label>
-              </div>
-            </fieldset>
-            <div class="collapse" id="npInsFields"><div class="collapse__inner">
-              <div class="field"><label for="np-insco" data-i18n="f_ins_co"></label><input type="text" id="np-insco" name="insco"></div>
-              <div class="field"><label for="np-member"><span data-i18n="f_member"></span> <span class="opt" data-i18n="optional"></span></label><input type="text" id="np-member" name="member"></div>
-            </div></div>
-          </div>
-
-          <div class="form-step" data-step="3" hidden>
-            <div class="field"><label for="np-meds"><span data-i18n="f_meds"></span> <span class="opt" data-i18n="optional"></span></label><textarea id="np-meds" name="meds"></textarea></div>
-            <div class="field"><label for="np-allergies"><span data-i18n="f_allergies"></span> <span class="opt" data-i18n="optional"></span></label><textarea id="np-allergies" name="allergies"></textarea></div>
-            <div class="field"><label for="np-notes"><span data-i18n="f_notes"></span> <span class="opt" data-i18n="optional"></span></label><p class="hint" id="np-notes-hint" data-i18n="f_notes_hint"></p><textarea id="np-notes" name="notes" aria-describedby="np-notes-hint"></textarea></div>
-            <div class="field" data-field="consent"><label class="choice"><input type="checkbox" id="np-consent" name="consent"><span data-i18n="f_consent"></span></label></div>
-          </div>
-
-          <div class="form-actions">
-            <button type="button" class="btn btn--ghost" id="npBack" hidden><span data-i18n="back"></span></button>
-            <button type="button" class="btn btn--primary btn--lg" id="npNext"><span data-i18n="next"></span><svg class="ic"><use href="#i-arrow"/></svg></button>
-            <button type="submit" class="btn btn--cta btn--lg" id="npSubmit" hidden><svg class="ic"><use href="#i-check"/></svg><span data-i18n="npf_submit"></span></button>
-          </div>
-          <p class="privacy-note"><svg class="ic"><use href="#i-lock"/></svg><span data-i18n="privacy_np"></span></p>
-        </form>
-        <div class="success" id="npOk" hidden tabindex="-1">
-          <span class="success__icon"><svg class="ic"><use href="#i-check"/></svg></span>
-          <h2 data-i18n="np_ok_title"></h2>
-          <p data-i18n="np_ok_body"></p>
-          <div class="proto-callout"><span>Prototype: form vừa được thêm thành 1 dòng mới trong Google Sheet “New patients”. Từ Staff Portal có thể tạo Google Doc tóm tắt cho hồ sơ.</span><button type="button" data-goto-subs="np">Xem trong Staff Portal</button></div>
-          <div><button type="button" class="btn btn--ghost" id="npAgain" data-i18n="np_again"></button></div>
-        </div>
-      </div>
-    </div>
-
     <section class="section section--wash" id="faq" aria-labelledby="faq-title">
       <div class="wrap">
         <div class="section__head reveal"><p class="eyebrow" data-i18n="faq_eyebrow"></p><h2 id="faq-title" data-i18n="faq_title"></h2></div>
@@ -240,8 +173,7 @@
   <footer class="footer">
     <div class="wrap footer__grid">
       <div class="footer__brand">
-        <div class="footer__logo"><span class="brand__logo"><svg class="ic"><use href="#i-tooth"/></svg></span><span class="ph" data-ph="LOGO"></span></div>
-        <p class="brand__name" data-info="CLINIC_NAME"></p>
+        <img class="clinic-logo" src="assets/excelcare-logo.png" alt="Excelcare Dental" width="512" height="512">
         <p data-i18n="doctor_name"></p>
         <p><span data-info="CLINIC_ADDRESS"></span></p>
         <p><span data-info="CLINIC_PHONE"></span></p>

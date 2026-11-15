@@ -76,11 +76,13 @@
 .header { position: sticky; top: var(--stick); z-index: 50; background: var(--enamel); border-bottom: 1px solid var(--line); transition: box-shadow .2s ease; }
 .header.is-stuck { box-shadow: 0 6px 18px rgba(16, 33, 52, .1); }
 .header__inner { display: flex; align-items: center; gap: 1rem 1.5rem; min-height: 5.25rem; padding-block: .6rem; }
-.brand { display: flex; align-items: center; gap: .8rem; text-decoration: none !important; color: var(--ink) !important; min-width: 0; }
+.brand { display: grid; align-items: center; text-decoration: none !important; color: var(--ink) !important; min-width: 0; }
+.clinic-logo { display: block; width: 9rem; height: auto; aspect-ratio: 5 / 3; object-fit: cover; }
+.footer__brand .clinic-logo, .site[data-a11y-contrast="2"] .brand .clinic-logo { filter: contrast(.55) brightness(1.7); }
+.brand > * { grid-area: 1 / 1; }
+.brand__label { display: none; font-weight: 700; }
 .brand__logo { width: 3.4rem; height: 3.4rem; border-radius: 16px; background: var(--sky); border: 2px dashed var(--line); display: grid; place-items: center; color: var(--blue); flex: none; }
 .brand__logo .ic { width: 1.9rem; height: 1.9rem; }
-.brand__text { display: grid; min-width: 0; line-height: 1.25; }
-.brand__name { font-family: var(--font-display); font-weight: 800; font-size: 1.35rem; }
 .header__actions { margin-left: auto; display: flex; align-items: center; gap: 1rem; }
 .header__phone { display: flex; align-items: center; gap: .65rem; color: var(--ink) !important; text-decoration: none !important; min-width: 0; }
 .header__phone-icon { width: 2.9rem; height: 2.9rem; border-radius: 50%; background: var(--sky); color: var(--blue); display: grid; place-items: center; flex: none; }
@@ -95,6 +97,7 @@
 .menu-btn__bars { display: grid; gap: 4px; }
 .menu-btn__bars i { display: block; width: 20px; height: 2.5px; border-radius: 2px; background: currentColor; }
 .header.show-menu .menu-btn { display: inline-flex; }
+.device[data-w="narrow"] .header__inner { column-gap: .75rem; }
 .device[data-w="narrow"] .header__phone, .device[data-w="narrow"] .header .btn--cta { display: none; }
 .device[data-w="narrow"] .menu-btn { display: inline-flex; }
 .device[data-w="medium"] .header__phone-label { display: none; }
