@@ -3,12 +3,6 @@
 const docText = (id) => (DOCS[state.lang] && DOCS[state.lang][id]) || DOCS.en[id];
 const docTitle = (id) => t(DOC_META[id].titleKey);
 const docLink = (id, inner, cls = "") => '<a href="#' + id + '" data-route="doc" data-doc="' + id + '"' + (cls ? ' class="' + cls + '"' : "") + ">" + inner + "</a>";
-const DOC_PROTO = {
-  service: "Prototype: nội dung bản nháp, cần nha sĩ xem lại trước khi đăng (đặc biệt các dịch vụ phòng khám thực sự làm).",
-  about: "Prototype: tiểu sử tiếng Anh do phòng khám cung cấp; bản tiếng Việt và tiếng Tây Ban Nha là bản dịch, cần người bản ngữ xem lại.",
-  tip: "Prototype: bài viết bản nháp theo hướng dẫn chung của ADA, cần nha sĩ xem lại trước khi đăng.",
-  legal: "Prototype: bản nháp dựa trên mẫu của Bộ Y tế Hoa Kỳ (HHS). Cần luật sư hoặc chuyên viên HIPAA duyệt trước khi đăng."
-};
 
 // All words of a page, for the reading time on health tips (counted on the English text so every language shows the same)
 function docWords(node) {
@@ -63,8 +57,7 @@ function renderDoc() {
   metaEl.innerHTML = meta.kind === "tip" ? esc(t("read_n", { n: readMinutes(id) })) : meta.kind === "legal" ? renderStr(t("doc_effective")) : "";
   $("#docAbout").hidden = meta.kind !== "about";
 
-  let body = '<div class="proto-callout proto-callout--soft"><span>' + esc(DOC_PROTO[meta.kind]) + "</span></div>";
-  body += d.sections.map(docSectionHtml).join("");
+  let body = d.sections.map(docSectionHtml).join("");
   if (meta.kind === "tip") body += '<p class="doc-disclaimer">' + esc(t("doc_tip_disclaimer")) + "</p>";
   $("#docBody").innerHTML = body;
 

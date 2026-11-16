@@ -1,15 +1,19 @@
 # Website nha khoa — Excelcare Dental (Dr. Van H Nguyen, DMD)
 
-Website cho người lớn tuổi, có 3 ngôn ngữ (English mặc định, Tiếng Việt, Español). Hiện có **prototype giao diện** và **API đặt lịch vào OpenDental** (`server/`, xem [server/README.md](server/README.md)). Website thật và Staff Portal là bước tiếp theo.
+Website cho người lớn tuổi, có 3 ngôn ngữ (English mặc định, Tiếng Việt, Español), chạy tại **https://excelcaredental.com** (GitHub Pages). Kèm **API đặt lịch vào OpenDental** (`server/`, xem [server/README.md](server/README.md)), chưa được host.
 
-## Xem prototype
+## Deploy
 
-- Mở thẳng `prototype/index.html` bằng Chrome/Edge, hoặc
-- `npm run proto:serve` rồi mở http://localhost:4321
+Mỗi lần push lên `main`, GitHub Actions ([.github/workflows/pages.yml](.github/workflows/pages.yml)) build, chạy `proto:test`, rồi đăng `prototype/index.html` lên GitHub Pages. Tên miền `excelcaredental.com` trỏ về GitHub Pages (DNS ở DigitalSpace; giữ nguyên các bản ghi email Google).
 
-Nút **Thu gọn** ở góc trên bên trái ẩn thanh công cụ prototype (chỉ còn một dòng mỏng) để xem website gần giống bản thật; bấm **Mở rộng** để hiện lại. Trạng thái được nhớ khi tải lại trang.
+GitHub Pages chỉ phục vụ file tĩnh, nên API đặt lịch không chạy ở đó. Khi trang Đặt lịch không gọi được API, website hiện số điện thoại thay cho tờ lịch, không bao giờ hiện giờ trống giả.
 
-Link mở thẳng một màn hình: `#vi`, `#es`, `#phone`, `#schedule`, `#new-patients`, `#staff`, `#staff-app`, `#staff-submissions`, `#how-it-works`, `#placeholders`.
+## Xem trên máy
+
+- Mở thẳng `prototype/index.html` bằng Chrome/Edge (trang Đặt lịch sẽ hiện số điện thoại vì không có API), hoặc
+- `npm run proto:serve` rồi mở http://localhost:4321 (có API đặt lịch chạy với OpenDental giả lập)
+
+Link mở thẳng: `#vi`, `#es`, `#schedule`, `#new-patients`.
 
 Mọi trang của website đều có địa chỉ riêng, nút Back/Forward của trình duyệt hoạt động:
 
@@ -22,12 +26,20 @@ Mọi trang của website đều có địa chỉ riêng, nút Back/Forward củ
 
 Nội dung các trang này nằm trong `prototype/src/35-docs-en.js`, `36-docs-vi.js`, `37-docs-es.js` (danh sách trang ở `34-docs-meta.js`). Nút gọi điện và Google Maps dùng thông tin đã xác nhận. Google Reviews và mạng xã hội được tạm ẩn, theo dõi trong [PLACEHOLDERS.md](PLACEHOLDERS.md).
 
-Dữ liệu trong prototype chỉ nằm trong trang (hoặc trong OpenDental giả lập khi chạy `proto:serve`), không gửi đi đâu. Đừng nhập thông tin bệnh nhân thật.
+## Đổi giờ, ngày nghỉ, thông báo
+
+Sửa trong `prototype/src/40-app-core.js` rồi push:
+
+- `CLINIC_HOURS`: giờ mở cửa hằng tuần.
+- `CLINIC_DATES`: ngày nghỉ lễ hoặc giờ đặc biệt (có ví dụ ngay trong file). Chỉ thêm ngày phòng khám đã xác nhận.
+- `CLINIC_NOTICE`: dải thông báo đầu trang, hoặc `null` để ẩn.
+
+Thông tin phòng khám (tên, điện thoại, địa chỉ, email, link Google Maps) nằm ở `prototype/src/33-clinic.js`.
 
 ## Sửa và kiểm tra
 
-- Mã nguồn nằm ở `prototype/src/` (CSS, HTML, 3 file dịch, JS). `npm run proto:build` ghép tất cả thành `prototype/index.html` và sinh lại `PLACEHOLDERS.md`.
-- `npm install` một lần, sau đó `npm run proto:test` chạy các bài kiểm tra chức năng bằng jsdom (đổi ngôn ngữ, Staff Portal, đặt hẹn, 14 trang nội dung, nút Back, Google Sheet giả lập, FAQ…).
+- Mã nguồn nằm ở `prototype/src/` (CSS, HTML, 3 file dịch, JS). `npm run proto:build` ghép tất cả thành `prototype/index.html` và sinh lại `PLACEHOLDERS.md` từ `prototype/placeholders.js` (danh sách này không nằm trong website). Lệnh build báo lỗi nếu trang còn chữ "prototype", "demo", "Staff Portal" hay token `INPUT_INFO_ABOUT_`.
+- `npm install` một lần, sau đó `npm run proto:test` chạy các bài kiểm tra chức năng bằng jsdom (đổi ngôn ngữ, đặt hẹn qua API, trang Đặt lịch khi không có API, 14 trang nội dung, nút Back, FAQ, menu hỗ trợ dễ đọc…).
 - `npm run api:test` chạy 16 bài kiểm tra cho API đặt lịch với OpenDental giả lập. Cần Node 24 trở lên (chạy thẳng TypeScript).
 - `npm run proto:motion` mở Chrome/Edge chạy ngầm và đo xem animation có chạy dần đều thật không. Script đo các thao tác: cuộn khi bấm menu, hiện dần khi cuộn tới, dropdown, chuyển trang, FAQ.
 
@@ -42,17 +54,16 @@ Lấy cảm hứng từ dentex-vik-studio.webflow.io. Toàn bộ nằm trong `pr
 - Chuyển trang thì trang cũ mờ đi, trang mới hiện lên.
 - FAQ và các ô điền thêm mở ra, thu lại theo chiều cao.
 
-Nếu máy tính tắt “Animation effects” (Windows) hoặc bật “Reduce motion” (macOS/iOS), website thật chỉ giữ hiệu ứng mờ dần và bỏ phần di chuyển, để người dễ chóng mặt xem thoải mái. Trong prototype, nút **Animation: Đầy đủ / Theo cài đặt máy** cho phép xem cả hai chế độ.
+Nếu máy tính tắt “Animation effects” (Windows) hoặc bật “Reduce motion” (macOS/iOS), website chỉ giữ hiệu ứng mờ dần và bỏ phần di chuyển, để người dễ chóng mặt xem thoải mái.
 
 ## Quyết định chính
 
-1. **Một dự án, một lần deploy**: Astro + TypeScript cho website, API nội bộ và Staff Portal, chạy trong 1 Docker container. API vẫn tách riêng trong code để sau này chuyển sang server khác được.
-2. **Google Workspace là nơi lưu dữ liệu website**: Google Sheet “Clinic Operations” (Hours, Special dates, Website notice, New patients). Excel tải thẳng từ Sheet; Google Docs dùng cho bản tóm tắt bệnh nhân mới.
-3. **Lịch hẹn chỉ nằm trong OpenDental**: trang Đặt lịch gọi API riêng (`server/booking`), API gọi OpenDental API để lấy giờ trống, tìm/tạo bệnh nhân và tạo lịch hẹn. Không dùng Google Calendar.
-4. **Staff Portal** đăng nhập bằng tài khoản Google của phòng khám. Nhân viên đổi giờ, ngày nghỉ, thông báo mà không cần động vào code.
-5. **3 ngôn ngữ**: EN ở `/`, VI ở `/vi/`, ES ở `/es/`. Câu nào thiếu bản dịch thì hiện tiếng Anh.
-6. **Placeholder** dạng `INPUT_INFO_ABOUT_<...>_HERE`, theo dõi trong [PLACEHOLDERS.md](PLACEHOLDERS.md).
-7. **Email/SMS nhắc lịch** để sau, cắm vào qua adapter.
+1. **Website tĩnh trên GitHub Pages**: một file `index.html` tự chứa (CSS, JS, ảnh nhúng sẵn). API đặt lịch tách riêng trong `server/`, cần host ở chỗ khác (ví dụ một server Node) rồi cho trang gọi tới.
+2. **Lịch hẹn chỉ nằm trong OpenDental**: trang Đặt lịch gọi API riêng (`server/booking`), API gọi OpenDental API để lấy giờ trống, tìm/tạo bệnh nhân và tạo lịch hẹn. Không dùng Google Calendar. Không có API thì trang hiện số điện thoại.
+3. **Giờ, ngày nghỉ, thông báo nằm trong code** (`40-app-core.js`). Staff Portal (nhân viên tự sửa, đăng nhập bằng Google) để sau.
+4. **3 ngôn ngữ**: English mặc định, nút đổi sang Tiếng Việt / Español; lựa chọn được nhớ trên máy. Câu nào thiếu bản dịch thì hiện tiếng Anh.
+5. **Thông tin còn thiếu** được ẩn khỏi website và theo dõi trong [PLACEHOLDERS.md](PLACEHOLDERS.md).
+6. **Email/SMS nhắc lịch** để sau, cắm vào qua adapter.
 
 ## Thiết kế
 

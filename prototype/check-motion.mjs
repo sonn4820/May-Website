@@ -1,6 +1,6 @@
 // Confirms in a real browser that motion is animated, not instant: drives headless Chrome/Edge over
-// the DevTools protocol, emulates "reduce motion" (like a Windows PC with Animation effects off),
-// and samples values while each interaction plays. Run: npm run proto:motion
+// the DevTools protocol and samples values while each interaction plays, then emulates "reduce motion"
+// (like a Windows PC with Animation effects off) and checks scrolling still eases. Run: npm run proto:motion
 import { spawn } from "node:child_process";
 import { existsSync, mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -40,18 +40,16 @@ const ok = (name, cond, extra = "") => results.push({ name, pass: !!cond, extra 
 
 await send("Page.enable");
 await send("Runtime.enable");
-await send("Emulation.setEmulatedMedia", { features: [{ name: "prefers-reduced-motion", value: "reduce" }] });
+await send("Emulation.setEmulatedMedia", { features: [{ name: "prefers-reduced-motion", value: "no-preference" }] });
 await send("Page.navigate", { url: pathToFileURL(fileURLToPath(new URL("./index.html", import.meta.url))).href });
 await sleep(2500);
-
-ok("prototype defaults to full motion", await js("document.documentElement.classList.contains('motion-full')"));
 
 // Nav link -> smooth scroll down to the section
 await js("window.scrollTo(0, 0); document.querySelector('.nav__link[data-scroll=\"insurance\"]').click(); true");
 const scrolls = await sample("Math.round(window.scrollY)", 16, 70);
 ok("nav click scrolls smoothly (many in-between positions)", varied(scrolls) >= 7, scrolls.join(" "));
 await sleep(400);
-const gap = await js("0 + Math.round(document.getElementById('insurance').getBoundingClientRect().top - (document.getElementById('protoBar').offsetHeight + document.getElementById('siteHeader').offsetHeight + 12))");
+const gap = await js("0 + Math.round(document.getElementById('insurance').getBoundingClientRect().top - (document.getElementById('siteHeader').offsetHeight + 12))");
 ok("lands right under the sticky header", Math.abs(gap) <= 3, "offset " + gap);
 ok("arrival underline on the heading", await js("document.getElementById('insurance').classList.contains('is-arrived')"));
 
@@ -78,13 +76,14 @@ await js("document.getElementById('faq-q1').scrollIntoView(); document.getElemen
 const faq = await sample("Math.round(document.getElementById('faq-a1').getBoundingClientRect().height)", 10, 50);
 ok("FAQ answer grows smoothly", varied(faq) >= 4, faq.join(" "));
 
-// "Theo cài đặt máy": travel removed, scroll still eased but short
-await js("document.querySelector('[data-motion=\"system\"]').click(); true");
+// Visitor has "reduce motion" on: travel removed, scroll still eased but short
+await send("Emulation.setEmulatedMedia", { features: [{ name: "prefers-reduced-motion", value: "reduce" }] });
+ok("follows the reduce-motion setting", await js("matchMedia('(prefers-reduced-motion: reduce)').matches && getComputedStyle(document.documentElement).getPropertyValue('--move').trim() === '0'"));
 await js("document.querySelector('[data-route=\"home\"][data-scroll=\"top\"]').click(); true");
 await sleep(900);
 await js("window.scrollTo(0, 0); document.querySelector('.nav__link[data-scroll=\"visit\"]').click(); true");
 const short = await sample("Math.round(window.scrollY)", 8, 50);
-ok("system mode still eases the scroll (no jump)", varied(short) >= 3, short.join(" "));
+ok("reduce motion still eases the scroll (no jump)", varied(short) >= 3, short.join(" "));
 
 const errors = await js("(window.__errors || []).length");
 ws.close();

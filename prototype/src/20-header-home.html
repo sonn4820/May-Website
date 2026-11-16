@@ -1,30 +1,4 @@
-<div class="proto-bar" id="protoBar">
-  <div class="proto-bar__inner">
-    <button type="button" class="proto-toggle" id="protoToggle" aria-expanded="true" aria-controls="protoTabs protoTools protoHint" title="Thu gọn thanh công cụ prototype"><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg><span class="proto-toggle__text">Thu gọn</span></button>
-    <div class="proto-brand"><span class="proto-dot" aria-hidden="true"></span>Prototype · Website nha khoa</div>
-    <div class="proto-tabs" id="protoTabs" role="tablist" aria-label="Chế độ xem">
-      <button type="button" role="tab" id="tab-site" aria-selected="true" aria-controls="view-site" data-view="site"><svg class="ic"><use href="#i-browser"/></svg>Website</button>
-      <button type="button" role="tab" id="tab-staff" aria-selected="false" aria-controls="view-staff" data-view="staff"><svg class="ic"><use href="#i-users"/></svg>Staff Portal</button>
-      <button type="button" role="tab" id="tab-how" aria-selected="false" aria-controls="view-how" data-view="how"><svg class="ic"><use href="#i-server"/></svg>Cách hoạt động</button>
-      <button type="button" role="tab" id="tab-ph" aria-selected="false" aria-controls="view-ph" data-view="ph">Placeholders <span class="proto-count" id="phCount">0</span></button>
-    </div>
-    <div class="proto-tools" id="protoTools">
-      <div class="proto-seg" role="group" aria-label="Thiết bị" id="deviceSeg">
-        <button type="button" data-device="desktop" aria-pressed="true">Desktop</button>
-        <button type="button" data-device="phone" aria-pressed="false">Điện thoại</button>
-      </div>
-      <div class="proto-seg" role="group" aria-label="Animation">
-        <span class="proto-seg__label">Animation:</span>
-        <button type="button" data-motion="full" aria-pressed="true">Đầy đủ</button>
-        <button type="button" data-motion="system" aria-pressed="false">Theo cài đặt máy</button>
-      </div>
-    </div>
-  </div>
-  <p class="proto-hint" id="protoHint"><strong>Bản demo:</strong> dữ liệu chỉ nằm trong trang này, không gửi đi đâu, nên đừng nhập thông tin bệnh nhân thật. Thử đổi giờ trong <strong>Staff Portal</strong> rồi quay lại <strong>Website</strong>.</p>
-</div>
-
-<main class="stage" id="stage">
-<section class="view" id="view-site" role="tabpanel" aria-labelledby="tab-site">
+<!-- #device carries the width class (data-w: narrow / medium / wide) that the layout CSS keys off -->
 <div class="device" id="device" data-w="wide">
 <div class="device__screen" id="screen">
 <div class="site" id="site" lang="en">

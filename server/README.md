@@ -1,6 +1,6 @@
 # API đặt lịch online (OpenDental)
 
-Trang Đặt lịch giữ nguyên giao diện tờ lịch tháng của prototype. Phía sau là API riêng, gọi thẳng vào OpenDental:
+Trang Đặt lịch là tờ lịch tháng. Phía sau là API riêng, gọi thẳng vào OpenDental:
 
 ```
 Bệnh nhân ──► Trang Đặt lịch ──► /api/booking (server/booking) ──► OpenDental API ──► eConnector ở phòng khám ──► OpenDental
@@ -59,7 +59,7 @@ Thiếu khoá, ProvNum hoặc OpNum khi `BOOKING_MODE=opendental` thì server b�
 1. **Đăng ký Developer Key**: gửi email tới vendor.relations@opendental.com (tên công ty, email/địa chỉ nhận hoá đơn, mô tả ứng dụng, danh sách quyền: Appointments đọc + tạo, Patients đọc + tạo). OpenDental xử lý trong 1–3 ngày làm việc.
 2. **Chi phí**: tạo lịch hẹn và bệnh nhân cần gói API **$30/tháng cho mỗi địa điểm** (gói chỉ đọc miễn phí không đủ). Bên giữ Developer Key trả tiền cho OpenDental.
 3. **Phòng khám**: bật API trong OpenDental (Setup > Advanced Setup > API, dán Customer Key, tích Enabled). eConnector phải luôn chạy, vì OpenDental chuyển yêu cầu về máy chủ ở phòng khám qua eConnector. Máy chủ tắt thì trang Đặt lịch báo "xin gọi điện".
-4. **Lịch của bác sĩ trong OpenDental**: giờ trống tính theo Schedule của bác sĩ trong OpenDental, không theo giờ mở cửa trên website. Khi đổi giờ hoặc nghỉ lễ, nhớ sửa cả trong OpenDental (Staff Portal chỉ đổi phần hiển thị trên website).
+4. **Lịch của bác sĩ trong OpenDental**: giờ trống tính theo Schedule của bác sĩ trong OpenDental, không theo giờ mở cửa trên website. Khi đổi giờ hoặc nghỉ lễ, nhớ sửa cả trong OpenDental (`CLINIC_HOURS` / `CLINIC_DATES` trong `prototype/src/40-app-core.js` chỉ đổi phần hiển thị trên website).
 5. **HIPAA**: OpenDental yêu cầu bên làm API ký BAA với phòng khám.
 6. **Thử trên cơ sở dữ liệu test của OpenDental** trước khi bật cho phòng khám thật (OpenDental có test database và khoá test công khai trên trang API Developer Setup).
 
@@ -67,7 +67,7 @@ Thiếu khoá, ProvNum hoặc OpNum khi `BOOKING_MODE=opendental` thì server b�
 
 ```bash
 npm run api:test        # 16 bài kiểm tra với OpenDental giả lập
-npm run proto:serve     # prototype + API ở http://localhost:4321 (mặc định OpenDental giả lập)
+npm run proto:serve     # website + API ở http://localhost:4321 (mặc định OpenDental giả lập)
 ```
 
 Node 24 chạy thẳng file TypeScript, không cần build. Khi dựng website Astro, mỗi endpoint chỉ cần gọi `handlers.availability(request)` / `handlers.book(request, ip)` từ `createBookingFromEnv()`.

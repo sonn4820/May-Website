@@ -18,8 +18,14 @@
       <div class="form-card" id="schCard">
         <form id="schForm" novalidate>
           <h2 data-i18n="sch_form_title"></h2>
+          <!-- Shown when the booking API cannot be reached: no made-up times, just the phone number -->
+          <div class="sch-offline" id="schOffline" hidden>
+            <p data-i18n="slots_down"></p>
+            <p class="callcard__num"><span data-info="CLINIC_PHONE"></span></p>
+            <a class="btn btn--cta btn--lg" href="#" data-call><svg class="ic"><use href="#i-phone"/></svg><span data-i18n="call_now"></span></a>
+          </div>
+          <div id="schOnline">
           <p class="form-intro" data-i18n="sch_form_intro"></p>
-          <div class="proto-callout proto-callout--soft"><span id="schSourceNote"></span></div>
 
           <div class="field booker" data-field="slot">
             <div class="step-label" data-err-anchor><span class="step-dot" aria-hidden="true">1</span><span data-i18n="sch_step_day"></span></div>
@@ -83,12 +89,12 @@
           <div class="hp" aria-hidden="true"><label for="sch-website">Website</label><input type="text" id="sch-website" name="website" tabindex="-1" autocomplete="off"></div>
           <div class="form-actions"><button type="submit" class="btn btn--cta btn--lg"><svg class="ic"><use href="#i-cal"/></svg><span data-i18n="sch_submit"></span></button></div>
           <p class="privacy-note"><svg class="ic"><use href="#i-lock"/></svg><span data-i18n="privacy"></span></p>
+          </div>
         </form>
         <div class="success" id="schOk" hidden tabindex="-1">
           <span class="success__icon"><svg class="ic"><use href="#i-check"/></svg></span>
           <h2 data-i18n="sch_ok_title"></h2>
           <p id="schOkBody"></p>
-          <div class="proto-callout"><span>Prototype: lịch hẹn được tạo thẳng trong OpenDental qua API (bệnh nhân + lịch hẹn, ghi chú lý do và ngôn ngữ gọi lại). Website không lưu bản sao. Giờ này không còn hiện là giờ trống nữa.</span></div>
           <div><button type="button" class="btn btn--ghost" id="schAgain" data-i18n="sch_again"></button></div>
         </div>
       </div>
@@ -220,4 +226,3 @@
 </div>
 </div>
 </div>
-</section>

@@ -1,7 +1,7 @@
 # Thông tin cần bổ sung
 
-File này tự sinh từ `prototype/src/33-placeholders.js` mỗi lần chạy `npm run proto:build`. Đừng sửa tay.
-Các nội dung và liên kết chưa có thông tin thật đang được tạm ẩn trên prototype. Dùng bảng này để theo dõi những mục cần bổ sung.
+File này tự sinh từ `prototype/placeholders.js` mỗi lần chạy `npm run proto:build`. Đừng sửa tay.
+Các nội dung và liên kết chưa có thông tin thật đang được tạm ẩn trên website. Dùng bảng này để theo dõi những mục cần bổ sung.
 
 | Token | Cần gì | Dùng ở đâu |
 |---|---|---|
@@ -19,7 +19,3 @@ Các nội dung và liên kết chưa có thông tin thật đang được tạm
 | `INPUT_INFO_ABOUT_PRIVACY_CONTACT_HERE` | Tên và chức danh người phụ trách quyền riêng tư (HIPAA) và dân quyền (Section 1557) của phòng khám | Trang Notice of Privacy Practices, Nondiscrimination |
 | `INPUT_INFO_ABOUT_LEGAL_EFFECTIVE_DATE_HERE` | Ngày bắt đầu áp dụng các trang chính sách (sau khi luật sư duyệt) | Các trang Privacy & legal |
 | `INPUT_INFO_ABOUT_SOCIAL_MEDIA_LINKS_HERE` | Link Facebook, Instagram (nếu có) | Footer |
-| `INPUT_INFO_ABOUT_STAFF_GOOGLE_EMAIL_HERE` | Danh sách email Google Workspace của nhân viên được vào Staff Portal | Staff Portal |
-| `INPUT_INFO_ABOUT_GOOGLE_SHEET_LINK_HERE` | Google Sheet “Clinic Operations” (mình sẽ tạo mẫu sẵn các tab) | Staff Portal, cấu hình server |
-| `INPUT_INFO_ABOUT_GOOGLE_DRIVE_FOLDER_HERE` | Thư mục Google Drive chứa Google Docs tóm tắt bệnh nhân | Staff Portal, cấu hình server |
-| `INPUT_INFO_ABOUT_DOMAIN_NAME_HERE` | Tên miền của website | Cấu hình server, SEO |

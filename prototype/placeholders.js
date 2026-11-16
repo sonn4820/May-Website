@@ -1,5 +1,5 @@
-// Every piece of real clinic information still missing. In the real project this list lives in
-// one config file, and the production build fails while any INPUT_INFO_ABOUT_..._HERE remains.
+// Every piece of real clinic information still missing. Not part of the website: build.mjs reads it
+// to write PLACEHOLDERS.md and to check that every data-ph / {ph:...} in the pages is listed here.
 const PLACEHOLDERS = {
   DOCTOR_NAME_WITH_VIETNAMESE_DIACRITICS: { label: "Name in Vietnamese", need: "Tên bác sĩ viết đủ dấu tiếng Việt, nếu muốn (hiện dùng “Van H Nguyen” như bản tiếng Anh)", where: "Bản tiếng Việt", configOnly: true },
   PATIENT_REVIEW_1:            { label: "Patient review 1", need: "Đánh giá thật của bệnh nhân kèm tên hiển thị, có sự đồng ý của họ", where: "Mục Đánh giá" },
@@ -14,21 +14,5 @@ const PLACEHOLDERS = {
   AFTER_HOURS_EMERGENCY:       { label: "After-hours help", need: "Khi phòng khám đóng cửa, bệnh nhân cấp cứu gọi đâu (lời nhắn tổng đài, số trực, hay hướng dẫn đến phòng cấp cứu)", where: "Trang Cấp cứu nha khoa" },
   PRIVACY_CONTACT:             { label: "Privacy officer", need: "Tên và chức danh người phụ trách quyền riêng tư (HIPAA) và dân quyền (Section 1557) của phòng khám", where: "Trang Notice of Privacy Practices, Nondiscrimination" },
   LEGAL_EFFECTIVE_DATE:        { label: "Effective date", need: "Ngày bắt đầu áp dụng các trang chính sách (sau khi luật sư duyệt)", where: "Các trang Privacy & legal" },
-  SOCIAL_MEDIA_LINKS:          { label: "Social links", need: "Link Facebook, Instagram (nếu có)", where: "Footer" },
-  STAFF_GOOGLE_EMAIL:          { label: "Staff email", need: "Danh sách email Google Workspace của nhân viên được vào Staff Portal", where: "Staff Portal" },
-  GOOGLE_SHEET_LINK:           { label: "Google Sheet", need: "Google Sheet “Clinic Operations” (mình sẽ tạo mẫu sẵn các tab)", where: "Staff Portal, cấu hình server", configOnly: true },
-  GOOGLE_DRIVE_FOLDER:         { label: "Drive folder", need: "Thư mục Google Drive chứa Google Docs tóm tắt bệnh nhân", where: "Staff Portal, cấu hình server", configOnly: true },
-  DOMAIN_NAME:                 { label: "Domain", need: "Tên miền của website", where: "Cấu hình server, SEO", configOnly: true }
+  SOCIAL_MEDIA_LINKS:          { label: "Social links", need: "Link Facebook, Instagram (nếu có)", where: "Footer" }
 };
-// Real clinic information already confirmed. Markup shows it with data-info="NAME".
-const CLINIC_INFO = {
-  CLINIC_NAME:    "Excelcare Dental",
-  CLINIC_PHONE:   "847-548-2222",
-  CLINIC_ADDRESS: "1227 N Illinois 83 Ste E, Grayslake, IL 60030",
-  CLINIC_EMAIL:   "business@excelcaredental.com",
-  // Google share link from the clinic (opens the Excelcare Dental business profile on Google)
-  CLINIC_MAPS_URL: "https://share.google/fyuOVADZM7Bpl3VVZ"
-};
-// "Get directions" opens Google Maps directions straight away (Maps URLs, no API key; opens the Maps app on phones)
-const directionsUrl = () => "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(CLINIC_INFO.CLINIC_NAME + ", " + CLINIC_INFO.CLINIC_ADDRESS);
-const phToken = (name) => "INPUT_INFO_ABOUT_" + name + "_HERE";

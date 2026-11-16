@@ -27,12 +27,12 @@ writeFileSync(join(here, "index.html"), out, "utf8");
 try { new Function(js); console.log("script syntax: OK"); } catch (e) { console.error("script syntax error:", e.message); process.exitCode = 1; }
 
 // PLACEHOLDERS.md at the project root is generated from the registry, so the tracking list never drifts
-const reg = new Function(read("33-placeholders.js") + "\nreturn PLACEHOLDERS;")();
+const reg = new Function(readFileSync(join(here, "placeholders.js"), "utf8") + "\nreturn PLACEHOLDERS;")();
 const md = [
   "# Thông tin cần bổ sung",
   "",
-  "File này tự sinh từ `prototype/src/33-placeholders.js` mỗi lần chạy `npm run proto:build`. Đừng sửa tay.",
-  "Các nội dung và liên kết chưa có thông tin thật đang được tạm ẩn trên prototype. Dùng bảng này để theo dõi những mục cần bổ sung.",
+  "File này tự sinh từ `prototype/placeholders.js` mỗi lần chạy `npm run proto:build`. Đừng sửa tay.",
+  "Các nội dung và liên kết chưa có thông tin thật đang được tạm ẩn trên website. Dùng bảng này để theo dõi những mục cần bổ sung.",
   "",
   "| Token | Cần gì | Dùng ở đâu |",
   "|---|---|---|",
@@ -47,3 +47,6 @@ const missing = [...referenced].filter((n) => !Object.hasOwn(reg, n));
 console.log("index.html:", (out.length / 1024).toFixed(1), "KB");
 console.log("placeholders referenced:", referenced.size, "| in registry:", Object.keys(reg).length, "| literal tokens:", tokens.size);
 if (missing.length) { console.error("Not in registry:", missing.join(", ")); process.exitCode = 1; }
+// Ship guard: the published page must not carry demo tooling, placeholder tokens or reviewer notes
+const leftovers = [/prototype/i, /\bdemo\b/i, /Staff Portal/, /INPUT_INFO_ABOUT_/, /dentproto/].filter((re) => re.test(out));
+if (leftovers.length) { console.error("Not ready to ship, found:", leftovers.map(String).join(" ")); process.exitCode = 1; }

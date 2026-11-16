@@ -4,7 +4,7 @@ const noteText = (entry, lang = state.lang) => (entry.note[lang] || "").trim() |
 function dayInfo(d) {
   const sp = state.dates.find((x) => x.date === isoDate(d));
   if (sp) return sp.type === "closed" ? { open: false, special: sp } : { open: true, from: sp.from, to: sp.to, special: sp };
-  const h = state.pub.hours[DAY_KEYS[d.getDay()]];
+  const h = state.hours[DAY_KEYS[d.getDay()]];
   return h.open ? { open: true, from: h.from, to: h.to, special: null } : { open: false, special: null };
 }
 
@@ -52,11 +52,10 @@ function renderHours() {
   const todayKey = DAY_KEYS[now.getDay()];
   WEEK_ORDER.forEach((k) => {
     const isToday = k === todayKey;
-    const h = state.pub.hours[k];
+    const h = state.hours[k];
     const info = isToday ? dayInfo(now) : h.open ? { open: true, from: h.from, to: h.to } : { open: false };
     const tr = document.createElement("tr");
     if (isToday) tr.className = "is-today";
-    if (state.flashDays && state.flashDays.includes(k)) tr.classList.add("is-changed");
     const th = document.createElement("th");
     th.scope = "row";
     th.textContent = weekdayName(k);
@@ -73,13 +72,11 @@ function renderHours() {
     tr.append(th, td);
     body.appendChild(tr);
   });
-  // Keep the "just changed" flash until the website is actually on screen
-  if (state.view === "site") state.flashDays = null;
 }
 
 function renderChanges() {
   // A closure on a day the office is closed anyway is not a change, so patients do not see it here
-  const list = upcomingDates().filter((d) => d.type !== "closed" || state.pub.hours[DAY_KEYS[fromIso(d.date).getDay()]].open).slice(0, 4);
+  const list = upcomingDates().filter((d) => d.type !== "closed" || state.hours[DAY_KEYS[fromIso(d.date).getDay()]].open).slice(0, 4);
   $("#changesBox").hidden = list.length === 0;
   const ul = $("#changesList");
   ul.innerHTML = "";
@@ -107,43 +104,35 @@ function renderNotice() {
 }
 
 // ---------- Booking calendar ----------
-// Open times come from the booking API (server/booking → OpenDental) when the page is served over http
-// (npm run proto:serve runs it against a mock OpenDental). Opened as a file, the page falls back to
-// demo openings: every open hour is a 60-minute visit, and a fixed pseudo-random 40% are already taken.
+// Open times come only from the booking API (server/booking → OpenDental). When the API cannot be
+// reached (no server behind this host, or OpenDental is down), the page shows the phone number instead
+// of a calendar: it never offers times it cannot really book.
 const BOOK_DAYS = 56;
-const SLOT_MIN = 60;
 const booker = { month: null, day: null, slot: null };
-// mode: "demo" (in-page data) | "loading" | "api" (from /api/booking) | "down" (API answered that OpenDental is unreachable)
-const bookApi = { mode: "demo", days: {}, from: null, to: null };
+// mode: "loading" | "api" (open times from /api/booking) | "down" (no API here, or OpenDental unreachable)
+const bookApi = { mode: "loading", days: {}, from: null, to: null };
 const monthKey = (d) => d.getFullYear() * 12 + d.getMonth();
-function hashStr(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
 function bookRange() {
   if (bookApi.mode === "api") return { first: fromIso(bookApi.from), last: fromIso(bookApi.to) };
   const d0 = new Date(); d0.setHours(0, 0, 0, 0); return { first: addDays(d0, 1), last: addDays(d0, BOOK_DAYS) };
 }
 async function loadAvailability() {
-  if (!/^https?:$/.test(location.protocol) || typeof fetch !== "function") return;
+  if (!/^https?:$/.test(location.protocol) || typeof fetch !== "function") { bookApi.mode = "down"; renderBooker(); return; }
   if (bookApi.mode !== "api") bookApi.mode = "loading";
   renderBooker();
   try {
     const r = await fetch("api/booking/availability", { headers: { accept: "application/json" }, cache: "no-store" });
-    if (r.status === 503) { bookApi.mode = "down"; }
-    else if (!r.ok) throw new Error(String(r.status));
-    else { const a = await r.json(); Object.assign(bookApi, { mode: "api", days: a.days, from: a.from, to: a.to }); }
-  } catch (e) { if (bookApi.mode !== "api") bookApi.mode = "demo"; } // no API here (static file host): demo data
+    if (!r.ok) throw new Error(String(r.status));
+    const a = await r.json();
+    if (!a || typeof a.days !== "object" || !a.from || !a.to) throw new Error("bad response");
+    Object.assign(bookApi, { mode: "api", days: a.days, from: a.from, to: a.to });
+  } catch (e) { bookApi.mode = "down"; }
   renderBooker();
 }
 function daySlots(d) {
-  const iso0 = isoDate(d);
-  if (bookApi.mode === "api") return (bookApi.days[iso0] || []).filter((s) => !state.booked.includes(iso0 + " " + s));
-  if (bookApi.mode !== "demo") return [];
-  const info = dayInfo(d);
-  if (!info.open) return [];
-  const iso = isoDate(d), all = [];
-  for (let m = toMin(info.from); m + SLOT_MIN <= toMin(info.to); m += SLOT_MIN) all.push(pad(Math.floor(m / 60)) + ":" + pad(m % 60));
-  const notBooked = all.filter((s) => !state.booked.includes(iso + " " + s));
-  const free = notBooked.filter((s) => hashStr(iso + s) % 10 >= 4);
-  return free.length ? free : notBooked.slice(-1);
+  if (bookApi.mode !== "api") return [];
+  const iso = isoDate(d);
+  return (bookApi.days[iso] || []).filter((s) => !state.booked.includes(iso + " " + s));
 }
 function firstOpenDay() {
   const { first, last } = bookRange();
@@ -180,9 +169,8 @@ function renderBooker() {
     grid.appendChild(b);
   }
   $("#schCard").setAttribute("aria-busy", String(bookApi.mode === "loading"));
-  $("#schSourceNote").textContent = bookApi.mode === "demo"
-    ? "Prototype: giờ trống là dữ liệu giả trong trang, tính theo giờ mở cửa và ngày nghỉ trong Staff Portal. Mở bằng npm run proto:serve để chạy qua API đặt lịch."
-    : "Prototype: giờ trống đang lấy từ API đặt lịch (/api/booking), chạy với OpenDental giả lập. Khi có khoá API OpenDental thật, chỉ cần đổi cấu hình, giao diện giữ nguyên.";
+  $("#schOffline").hidden = bookApi.mode !== "down";
+  $("#schOnline").hidden = bookApi.mode === "down";
   renderSlots();
 }
 function renderSlots() {
@@ -257,16 +245,10 @@ function renderSite() {
 }
 
 // ---------- Navigation, menu, dropdown ----------
-const scroller = () => (state.device === "phone" ? $("#screen") : window);
-const reducedMotion = () => !!state.a11y.still || (!document.documentElement.classList.contains("motion-full") && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-function setMotion(mode) {
-  state.motion = mode;
-  store.set("motion", mode);
-  document.documentElement.classList.toggle("motion-full", mode === "full");
-  $$("[data-motion]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.motion === mode)));
-}
+// Follows the visitor's "reduce motion" setting, or "Pause animations" in the accessibility menu
+const reducedMotion = () => !!state.a11y.still || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
-function scrollTopNow() { const s = scroller(); if (s === window) window.scrollTo(0, 0); else s.scrollTop = 0; }
+function scrollTopNow() { window.scrollTo(0, 0); }
 
 // Smooth scrolling we control ourselves (ease-in-out), so every browser animates the same way.
 // Any wheel, touch or key input from the person cancels it.
@@ -274,32 +256,28 @@ let scrollRaf = 0;
 function cancelScroll() { if (scrollRaf) { cancelAnimationFrame(scrollRaf); scrollRaf = 0; } }
 function animateScrollTo(y) {
   cancelScroll();
-  const s = scroller(), isWin = s === window;
-  const start = isWin ? window.scrollY : s.scrollTop;
-  const max = isWin ? document.documentElement.scrollHeight - window.innerHeight : s.scrollHeight - s.clientHeight;
+  const start = window.scrollY;
+  const max = document.documentElement.scrollHeight - window.innerHeight;
   const to = Math.max(0, Math.min(Math.round(y), Math.max(0, max)));
   const dist = to - start;
   if (Math.abs(dist) < 2) return Promise.resolve();
   // "Pause animations" in the accessibility menu: jump straight there
-  if (state.a11y.still) { if (isWin) window.scrollTo(0, to); else s.scrollTop = to; return Promise.resolve(); }
+  if (state.a11y.still) { window.scrollTo(0, to); return Promise.resolve(); }
   const dur = reducedMotion() ? 300 : Math.min(1200, Math.max(600, Math.abs(dist) * 0.5));
   const ease = (p) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
   return new Promise((resolve) => {
     const t0 = performance.now();
     const step = (now) => {
       const p = Math.min(1, (now - t0) / dur);
-      const pos = start + dist * ease(p);
-      if (isWin) window.scrollTo(0, pos); else s.scrollTop = pos;
+      window.scrollTo(0, start + dist * ease(p));
       if (p < 1) scrollRaf = requestAnimationFrame(step); else { scrollRaf = 0; resolve(); }
     };
     scrollRaf = requestAnimationFrame(step);
   });
 }
+// Where a section lands: just below the sticky header
 function sectionTop(el) {
-  const s = scroller();
-  const offset = (state.device === "phone" ? 0 : $("#protoBar").offsetHeight) + $("#siteHeader").offsetHeight + 12;
-  const top = el.getBoundingClientRect().top;
-  return s === window ? window.scrollY + top - offset : s.scrollTop + top - s.getBoundingClientRect().top - offset;
+  return window.scrollY + el.getBoundingClientRect().top - $("#siteHeader").offsetHeight - 12;
 }
 function arrive(el) {
   el.setAttribute("tabindex", "-1");
@@ -393,8 +371,7 @@ function openMenu() {
   menuReturnFocus = document.activeElement;
   m.inert = false;
   m.classList.add("is-open");
-  $("#device").classList.add("menu-open");
-  if (state.device !== "phone") document.body.classList.add("menu-open");
+  document.body.classList.add("menu-open");
   $("#menuBtn").setAttribute("aria-expanded", "true");
   setTimeout(() => $("#menuClose").focus(), 60);
 }
@@ -403,7 +380,6 @@ function closeMenu() {
   if (!m || !m.classList.contains("is-open")) return;
   m.classList.remove("is-open");
   m.inert = true;
-  $("#device").classList.remove("menu-open");
   document.body.classList.remove("menu-open");
   $("#menuBtn").setAttribute("aria-expanded", "false");
   if (menuReturnFocus && document.contains(menuReturnFocus) && menuReturnFocus.offsetParent) menuReturnFocus.focus({ preventScroll: true });
@@ -435,8 +411,7 @@ function onSiteScroll() {
     if (!hdr.offsetParent) return;
     const navGone = !nav.offsetParent || nav.getBoundingClientRect().bottom <= hdr.getBoundingClientRect().bottom + 1;
     hdr.classList.toggle("show-menu", navGone);
-    const s = scroller();
-    hdr.classList.toggle("is-stuck", (s === window ? window.scrollY : s.scrollTop) > 40);
+    hdr.classList.toggle("is-stuck", window.scrollY > 40);
   });
 }
 
@@ -494,15 +469,6 @@ function setFieldError(field, key) {
     ids.push(p.id);
     ctl.setAttribute("aria-describedby", ids.join(" "));
   });
-}
-// Visible "Sending…" feedback on the submit button (the real API call goes here)
-function withSending(btn, done) {
-  const html = btn.innerHTML;
-  btn.disabled = true;
-  btn.setAttribute("aria-busy", "true");
-  btn.innerHTML = '<span class="spinner" aria-hidden="true"></span><span></span>';
-  btn.lastChild.textContent = t("sending");
-  setTimeout(() => { btn.disabled = false; btn.removeAttribute("aria-busy"); btn.innerHTML = html; applyI18n(btn); done(); }, 700);
 }
 const digits = (s) => s.replace(/\D/g, "");
 const validEmail = (s) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
@@ -567,7 +533,8 @@ function onSchSubmit(e) {
     swapCard($("#schCard"), f, $("#schOk"));
   };
   const btn = $('button[type="submit"]', f);
-  if (bookApi.mode !== "api") return withSending(btn, done);
+  // Only the booking API can book; without it, say so and point to the phone
+  if (bookApi.mode !== "api") { setFieldError(slotField, "err_book_down"); focusSlot(); return; }
 
   withBusy(btn, async () => {
     let res, body = {};

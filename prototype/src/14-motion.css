@@ -11,9 +11,8 @@
   --t-reveal: 1s;
   --move: 1;
 }
-/* The prototype bar can force full motion (html.motion-full) so reviewers whose OS has
-   "reduce motion" on still see the designed animation. The live site follows the OS setting. */
-@media (prefers-reduced-motion: reduce) { :root:not(.motion-full) { --move: 0; --t-reveal: .6s; } }
+/* Follows the visitor's OS setting: with "reduce motion" on, fades stay but nothing travels. */
+@media (prefers-reduced-motion: reduce) { :root { --move: 0; --t-reveal: .6s; } }
 
 /* Keep sideways reveals from creating a horizontal scrollbar while they travel */
 .site { overflow-x: clip; }
@@ -102,11 +101,10 @@
 @media (prefers-reduced-motion: no-preference) {
   .status.is-open .status-dot { animation: breathe 2.4s ease-in-out infinite; }
 }
-.motion-full .status.is-open .status-dot { animation: breathe 2.4s ease-in-out infinite; }
 @keyframes breathe { 0%, 100% { box-shadow: 0 0 0 0 rgba(23, 102, 58, .35); } 60% { box-shadow: 0 0 0 .4em rgba(23, 102, 58, 0); } }
 
 /* Forms */
-.site input, .site select, .site textarea, .app input, .app select, .app textarea { transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease; }
+.site input, .site select, .site textarea { transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease; }
 .site input:focus, .site select:focus, .site textarea:focus { box-shadow: 0 0 0 4px var(--sky-2); }
 .choice, .cal__day, .slot, .cal__nav { transition: border-color .2s ease, background-color .2s ease, color .2s ease, transform .2s var(--out-quart); }
 .cal__day.has-slots:active, .slot:active { transform: scale(.96); }
@@ -115,10 +113,6 @@
 @keyframes err-in { from { opacity: 0; transform: translateY(calc(-6px * var(--move))); } to { opacity: 1; transform: none; } }
 .success { animation: reveal-pop .55s var(--out-quart); }
 .success__icon { animation: reveal-pop .6s var(--out-quart) .15s backwards; }
-
-/* Website rows that staff just changed flash once */
-.hours tr.is-changed th, .hours tr.is-changed td { animation: flash 1.8s ease; }
-@keyframes flash { 0%, 35% { background: var(--sun); } 100% { background: transparent; } }
 
 /* FAQ accordion (reference: 500ms height + icon turn) */
 .faq { display: grid; gap: .75rem; max-width: 52rem; }
@@ -133,14 +127,8 @@
 .faq__q[aria-expanded="true"] .faq__icon { transform: rotate(135deg); background: var(--sky-2); }
 .faq__a p { padding: 0 1.35rem 1.25rem; color: var(--ink-soft); }
 
-/* Staff Portal and prototype views */
-.panel.is-entering, .view.is-entering, .sheet__scroll.is-entering { animation: page-in .45s var(--out-quart); }
-.sd-item.is-new { animation: item-new 1.6s var(--out-quart); }
-@keyframes item-new { 0% { opacity: 0; transform: translateY(calc(-10px * var(--move))); background: var(--sun); } 30% { opacity: 1; transform: none; background: var(--sun); } 100% { background: transparent; } }
-.sd-item.is-removing { opacity: 0; transform: translateX(calc(24px * var(--move))); transition: opacity .3s ease, transform .3s ease; }
-.app__nav button { transition: background-color var(--t) ease, border-color var(--t) ease, color var(--t) ease, box-shadow var(--t) ease; }
-.icon-btn, .seg button, .notice__close, .mmenu__close, .menu-btn { transition: background-color var(--t) ease, border-color var(--t) ease, color var(--t) ease, transform .2s var(--out-quart); }
-.icon-btn:active, .seg button:active { transform: scale(.96); }
+.seg button, .notice__close, .mmenu__close, .menu-btn { transition: background-color var(--t) ease, border-color var(--t) ease, color var(--t) ease, transform .2s var(--out-quart); }
+.seg button:active { transform: scale(.96); }
 
-/* Smooth cross-fade for whole-page swaps (language, text size, device) where the browser supports it */
+/* Smooth cross-fade for whole-page swaps (language, text size) where the browser supports it */
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .38s; animation-timing-function: var(--in-out); }

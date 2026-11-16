@@ -2,7 +2,6 @@
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-const clone = (o) => JSON.parse(JSON.stringify(o));
 const pad = (n) => String(n).padStart(2, "0");
 const isoDate = (d) => d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
 const fromIso = (s) => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
@@ -11,8 +10,8 @@ const toMin = (hhmm) => { const [h, m] = hhmm.split(":").map(Number); return h *
 const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 
 const store = {
-  get(k, d) { try { const v = localStorage.getItem("dentproto:" + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
-  set(k, v) { try { localStorage.setItem("dentproto:" + k, JSON.stringify(v)); } catch (e) { /* storage blocked: keep going */ } }
+  get(k, d) { try { const v = localStorage.getItem("excelcare:" + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem("excelcare:" + k, JSON.stringify(v)); } catch (e) { /* storage blocked: keep going */ } }
 };
 
 const LANGS = ["en", "vi", "es"];
@@ -20,17 +19,8 @@ const LOCALE = { en: "en-US", vi: "vi-VN", es: "es-US" };
 const DAY_KEYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 const WEEK_ORDER = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 
-// ---------- Clinic hours (from the clinic, Nov 2026; staff change them in the Staff Portal) ----------
-function nthWeekday(year, month, weekday, n) { const d = new Date(year, month, 1); const shift = (weekday - d.getDay() + 7) % 7; return new Date(year, month, 1 + shift + (n - 1) * 7); }
-function upcoming(builder, today) { let d = builder(today.getFullYear()); if (isoDate(d) < isoDate(today)) d = builder(today.getFullYear() + 1); return d; }
-
-const TODAY = new Date();
-const thanksgiving = upcoming((y) => nthWeekday(y, 10, 4, 4), TODAY);
-const xmasEve = upcoming((y) => new Date(y, 11, 24), TODAY);
-const xmas = upcoming((y) => new Date(y, 11, 25), TODAY);
-const newYear = upcoming((y) => new Date(y, 0, 1), TODAY);
-
-const SAMPLE_HOURS = {
+// ---------- Clinic hours (confirmed by the clinic, Nov 2026) ----------
+const CLINIC_HOURS = {
   mon: { open: true, from: "10:00", to: "19:00" },
   tue: { open: true, from: "09:00", to: "17:00" },
   wed: { open: true, from: "09:00", to: "17:00" },
@@ -39,32 +29,26 @@ const SAMPLE_HOURS = {
   sat: { open: true, from: "09:00", to: "14:00" },
   sun: { open: false, from: "09:00", to: "14:00" }
 };
+// Holidays and one-off hours. Add only dates the clinic has confirmed; they show under "Upcoming changes"
+// and in today's status. Examples:
+//   { date: "2026-12-25", type: "closed", note: { en: "Christmas Day", vi: "Lễ Giáng sinh", es: "Navidad" } }
+//   { date: "2026-12-24", type: "special", from: "09:00", to: "12:00", note: { en: "Christmas Eve", vi: "Đêm Giáng sinh", es: "Nochebuena" } }
+const CLINIC_DATES = [];
+// Banner across the top of every page, or null for none. Example:
+//   { active: true, from: "2026-11-20", to: "2026-11-26", text: { en: "…", vi: "…", es: "…" } }
+const CLINIC_NOTICE = null;
 
 const state = {
   lang: LANGS.includes(store.get("lang", "en")) ? store.get("lang", "en") : "en",
   scale: [1, 1.15, 1.3].includes(store.get("scale", 1)) ? store.get("scale", 1) : 1,
-  protoCollapsed: false,
   a11y: {},
-  device: "desktop",
-  view: "site",
   page: "home",
   doc: null,
-  pub: { hours: clone(SAMPLE_HOURS), at: null },
-  draft: clone(SAMPLE_HOURS),
-  dates: [
-    { id: 1, date: isoDate(thanksgiving), type: "closed", note: { en: "Thanksgiving", vi: "Lễ Tạ Ơn", es: "Día de Acción de Gracias" } },
-    { id: 2, date: isoDate(xmasEve), type: "special", from: "09:00", to: "12:00", note: { en: "Christmas Eve", vi: "Đêm Giáng sinh", es: "Nochebuena" } },
-    { id: 3, date: isoDate(xmas), type: "closed", note: { en: "Christmas Day", vi: "Lễ Giáng sinh", es: "Navidad" } },
-    { id: 4, date: isoDate(newYear), type: "closed", note: { en: "New Year's Day", vi: "Tết Dương lịch", es: "Año Nuevo" } }
-  ],
-  notice: null,
-  noticeDraft: null,
+  hours: CLINIC_HOURS,
+  dates: CLINIC_DATES,
+  notice: CLINIC_NOTICE,
   noticeDismissed: false,
-  subs: { np: [] },
-  booked: [],
-  signedIn: false,
-  stTab: "hours",
-  sheetTab: "np"
+  booked: []
 };
 
 // ---------- Text and formatting ----------
@@ -80,23 +64,6 @@ const weekdayShort = (key, lang = state.lang) => { const base = new Date(2024, 0
 const fmtDayInSentence = (d, lang = state.lang) => new Intl.DateTimeFormat(LOCALE[lang], { weekday: "long" }).format(d);
 const fmtDateLong = (d, lang = state.lang) => { const s = new Intl.DateTimeFormat(LOCALE[lang], { weekday: "long", month: "long", day: "numeric" }).format(d); return lang === "es" ? s.replace(",", "") : s; };
 const fmtDateShort = (d, lang = state.lang) => cap(new Intl.DateTimeFormat(LOCALE[lang], { weekday: "short", month: "short", day: "numeric" }).format(d));
-const fmtStamp = (d) => new Intl.DateTimeFormat(LOCALE[state.lang], { hour: "numeric", minute: "2-digit", second: "2-digit" }).format(d);
-
-function sampleNotice() {
-  const day = thanksgiving;
-  let next = addDays(thanksgiving, 1);
-  for (let i = 0; i < 14 && !dayInfo(next).open; i++) next = addDays(next, 1);
-  return {
-    active: true,
-    from: isoDate(TODAY),
-    to: isoDate(thanksgiving),
-    text: {
-      en: "We are closed on " + fmtDateLong(day, "en") + " for Thanksgiving. We open again on " + fmtDateLong(next, "en") + ".",
-      vi: "Phòng khám nghỉ " + fmtDateLong(day, "vi") + " nhân dịp Lễ Tạ Ơn. Mở cửa lại vào " + fmtDateLong(next, "vi") + ".",
-      es: "Cerramos el " + fmtDateLong(day, "es") + " por el Día de Acción de Gracias. Abrimos de nuevo el " + fmtDateLong(next, "es") + "."
-    }
-  };
-}
 
 // Keep missing fields out of the rendered text.
 const renderStr = (s) => esc(s)
@@ -130,21 +97,8 @@ function renderPlaceholders(root = document) {
   });
 }
 
-// ---------- Prototype chrome ----------
-function toast(msg) {
-  const box = $("#toasts");
-  const el = document.createElement("div");
-  el.className = "toast";
-  el.innerHTML = '<svg class="ic"><use href="#i-info"/></svg>';
-  const span = document.createElement("span");
-  span.textContent = msg;
-  el.appendChild(span);
-  box.appendChild(el);
-  while (box.children.length > 3) box.firstElementChild.remove();
-  setTimeout(() => { el.classList.add("is-leaving"); setTimeout(() => el.remove(), 250); }, 4200);
-}
-
-// Whole-page changes (language, text size, device, view) cross-fade where the browser supports
+// ---------- Page-wide changes ----------
+// Whole-page changes (language, text size) cross-fade where the browser supports
 // View Transitions; elsewhere the changed area fades in. Skipped while the page is booting.
 let booted = false;
 function smoothUpdate(fn, fallbackEl) {
@@ -160,8 +114,7 @@ function smoothUpdate(fn, fallbackEl) {
   if (booted && fallbackEl) { fallbackEl.classList.remove("is-entering-soft"); void fallbackEl.offsetWidth; fallbackEl.classList.add("is-entering-soft"); }
 }
 
-function updateProtoH() { document.documentElement.style.setProperty("--proto-h", $("#protoBar").offsetHeight + "px"); }
-
+// Layout width class on #device: the CSS keys its narrow / medium / wide layouts off data-w
 function updateBreakpoint() {
   const site = $("#site");
   if (!site || !site.offsetParent) return;
@@ -170,47 +123,6 @@ function updateBreakpoint() {
   const val = r < 48 ? "narrow" : r < 72 ? "medium" : "wide";
   const device = $("#device");
   if (device.dataset.w !== val) { device.dataset.w = val; if (val !== "narrow") closeMenu(); }
-}
-
-function setView(v) {
-  if (v === state.view && booted) return;
-  closeA11y(false);
-  smoothUpdate(() => {
-    state.view = v;
-    $$("[data-view]").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.view === v)));
-    ["site", "staff", "how", "ph"].forEach((x) => { $("#view-" + x).hidden = x !== v; });
-    $("#deviceSeg").hidden = v !== "site";
-    if (v === "site") { renderSite(); requestAnimationFrame(() => { updateBreakpoint(); refreshReveal(); }); }
-    if (v === "staff") renderStaff();
-    if (v === "ph") renderPhTable();
-    updateProtoH();
-    window.scrollTo(0, 0);
-  }, $("#view-" + v));
-}
-
-function setDevice(d) {
-  closeMenu();
-  smoothUpdate(() => {
-    state.device = d;
-    $("#device").classList.toggle("is-phone", d === "phone");
-    $$("[data-device]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.device === d)));
-    updateBreakpoint();
-  }, $("#device"));
-  requestAnimationFrame(() => { updateBreakpoint(); refreshReveal(); });
-}
-
-// Top-left "Thu gọn / Mở rộng" button: collapses the prototype bar to one slim row
-function setProtoCollapsed(c) {
-  smoothUpdate(() => {
-    state.protoCollapsed = c;
-    store.set("protoCollapsed", c);
-    $("#protoBar").classList.toggle("is-collapsed", c);
-    const btn = $("#protoToggle");
-    btn.setAttribute("aria-expanded", String(!c));
-    btn.title = c ? "Mở rộng thanh công cụ prototype" : "Thu gọn thanh công cụ prototype";
-    btn.querySelector(".proto-toggle__text").textContent = c ? "Mở rộng" : "Thu gọn";
-    updateProtoH();
-  }, $("#protoBar"));
 }
 
 function setScale(s) {
@@ -230,27 +142,10 @@ function setLang(l) {
     state.lang = l;
     store.set("lang", l);
     $("#site").lang = l;
-    $("#view-staff").lang = l;
+    document.documentElement.lang = l;
     $$("[data-lang]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === l)));
     applyI18n();
     renderA11y();
     renderSite();
-    if (state.view === "staff") renderStaff();
-  }, state.view === "staff" ? $("#view-staff") : $("#site"));
-}
-
-// ---------- Placeholder list ----------
-function renderPhTable() {
-  const entries = Object.entries(PLACEHOLDERS);
-  const body = $("#phBody");
-  body.innerHTML = "";
-  entries.forEach(([name, reg]) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = '<td><span class="ph"></span></td><td></td><td></td>';
-    tr.children[0].firstChild.textContent = phToken(name);
-    tr.children[1].textContent = reg.need;
-    tr.children[2].textContent = reg.where;
-    body.appendChild(tr);
-  });
-  $("#phCount").textContent = entries.length;
+  }, $("#site"));
 }

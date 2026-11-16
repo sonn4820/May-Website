@@ -1,15 +1,4 @@
 // ---------- Events ----------
-const PROTO_MSG = {
-  soon: "Trang này sẽ được làm ở giai đoạn tiếp theo, sau khi bạn xác nhận nội dung.",
-  sheet: "Prototype: chưa kết nối Google Sheet.",
-  xlsx: "Prototype: hệ thống thật tải file .xlsx xuất thẳng từ Google Sheet, không cần code thêm.",
-  doc: (name) => "Prototype: đã tạo bản ghi mô phỏng “New patient – " + name + "”.",
-  motionFull: "Đang xem animation đầy đủ như thiết kế.",
-  motionSystem: "Đang theo cài đặt máy. Nếu Windows tắt “Animation effects”, website chỉ giữ hiệu ứng mờ dần, bỏ phần di chuyển, như bệnh nhân sẽ thấy.",
-  copied: "Đã sao chép danh sách token.",
-  copyFail: "Không sao chép được. Danh sách đã được chọn sẵn, bấm Ctrl+C để sao chép."
-};
-
 function onClick(e) {
   if (a11yIsOpen() && !e.target.closest("#a11yPanel, #a11yBtn")) closeA11y(false);
   if (e.target.closest(".mmenu__backdrop")) return closeMenu();
@@ -20,9 +9,6 @@ function onClick(e) {
   const d = el.dataset;
   if (d.maps !== undefined || d.call !== undefined) return; // Let the browser open real links.
   if (el.tagName === "A") e.preventDefault();
-  if (d.view) return setView(d.view);
-  if (d.device) return setDevice(d.device);
-  if (d.motion) { setMotion(d.motion); return toast(d.motion === "full" ? PROTO_MSG.motionFull : PROTO_MSG.motionSystem); }
   if (d.lang) return setLang(d.lang);
   if (d.scale) return setScale(Number(d.scale));
   if (d.a11y) return stepA11y(d.a11y);
@@ -31,40 +17,13 @@ function onClick(e) {
   if (d.closeMenu !== undefined) return closeMenu();
   if (d.skip !== undefined) return $("#main").focus();
   if (d.route) return goPage(d.route, d.scroll, d.doc);
-  if (d.soon !== undefined) return toast(PROTO_MSG.soon);
-  if (d.demo) return toast(d.demo === "sheet" ? PROTO_MSG.sheet : PROTO_MSG.xlsx);
-  if (d.st) return setStTab(d.st);
-  if (d.sheet) { if (d.sheet !== state.sheetTab) { state.sheetTab = d.sheet; renderSheet(true); } return; }
-  if (d.sdtype) {
-    state.sdType = d.sdtype;
-    $$("[data-sdtype]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.sdtype === d.sdtype)));
-    setCollapse($("#stSdTimes"), d.sdtype === "special");
-    return;
-  }
   if (el.classList.contains("faq__q")) {
     const open = el.getAttribute("aria-expanded") !== "true";
     el.setAttribute("aria-expanded", String(open));
     return setCollapse($("#" + el.getAttribute("aria-controls")), open);
   }
-  if (d.plang) { state.prevLang = d.plang; return refreshNoticeMeta(); }
-  if (d.del) { state.confirmDelete = Number(d.del); renderStDates(); const no = $("[data-del-no]"); if (no) no.focus(); return; }
-  if (d.delNo !== undefined) { state.confirmDelete = null; return renderStDates(); }
-  if (d.delYes) return removeStDate(Number(d.delYes));
-  if (d.mkdoc !== undefined) {
-    const r = state.subs.np[Number(d.mkdoc)];
-    if (r) { r.doc = "New patient – " + r.name; renderSheet(); toast(PROTO_MSG.doc(r.name)); }
-    return;
-  }
-  if (el.classList.contains("switch") && el.closest("#stHoursBody")) {
-    const k = el.closest("tr").dataset.day;
-    state.draft[k].open = !state.draft[k].open;
-    renderStHours();
-    $('#stHoursBody tr[data-day="' + k + '"] .switch').focus();
-    return;
-  }
   switch (el.id) {
     case "menuBtn": return $("#mobileMenu").classList.contains("is-open") ? closeMenu() : openMenu();
-    case "protoToggle": return setProtoCollapsed(!state.protoCollapsed);
     case "a11yBtn": return a11yIsOpen() ? closeA11y() : openA11y();
     case "a11yClose": return closeA11y();
     case "a11yReset": return resetA11y();
@@ -73,24 +32,7 @@ function onClick(e) {
     case "schAgain": return resetSch();
     case "calPrev": return stepMonth(-1);
     case "calNext": return stepMonth(1);
-    case "stSigninBtn": state.signedIn = true; renderStaff(); $("#st-tab-" + state.stTab).focus(); return;
-    case "stSignout": state.signedIn = false; renderStaff(); $("#stSigninBtn").focus(); return;
-    case "stViewSite": return setView("site");
-    case "stHoursPublish": return publishHours();
-    case "stHoursUndo": state.draft = clone(state.pub.hours); renderStHours(); return toast(t("st_undone"));
-    case "stNoticeSwitch": state.noticeDraft.active = !state.noticeDraft.active; return renderStNotice();
-    case "stNoticePublish": return publishNotice();
-    case "phCopy": return copyTokens();
   }
-}
-
-function copyTokens() {
-  const text = Object.keys(PLACEHOLDERS).map((n) => phToken(n) + "\t" + PLACEHOLDERS[n].need).join("\n");
-  const area = $("#phCopyArea");
-  const fallback = () => { area.value = text; area.classList.remove("sr-only"); area.style.cssText = "width:100%;min-height:10rem"; area.removeAttribute("aria-hidden"); area.select(); $("#phCopyStatus").textContent = PROTO_MSG.copyFail; };
-  try {
-    navigator.clipboard.writeText(text).then(() => { $("#phCopyStatus").textContent = PROTO_MSG.copied; }, fallback);
-  } catch (err) { fallback(); }
 }
 
 function onInput(e) {
@@ -101,14 +43,6 @@ function onInput(e) {
     const f = el.closest(".field");
     if ((el.type === "radio" || el.type === "checkbox") && el.checked) clearFieldError(f);
   }
-  if (el.dataset.edge && el.closest("#stHoursBody")) {
-    const k = el.closest("tr").dataset.day;
-    if (el.value) state.draft[k][el.dataset.edge] = el.value;
-    refreshHoursMeta();
-  }
-  const map = { "st-n-en": "en", "st-n-vi": "vi", "st-n-es": "es" };
-  if (map[el.id]) { state.noticeDraft.text[map[el.id]] = el.value; refreshNoticeMeta(); }
-  if (el.id === "st-n-from" || el.id === "st-n-to") { state.noticeDraft[el.id === "st-n-from" ? "from" : "to"] = el.value; refreshNoticeMeta(); }
 }
 
 function onKey(e) {
@@ -123,26 +57,17 @@ function onKey(e) {
 
 // ---------- Start ----------
 function init() {
-  state.notice = sampleNotice();
-  state.noticeDraft = clone(state.notice);
-  state.prevLang = "en";
-  state.sdType = "closed";
-  state.confirmDelete = null;
-  setMotion(store.get("motion", "full") === "system" ? "system" : "full");
-  setProtoCollapsed(store.get("protoCollapsed", false) === true);
   state.a11y = loadA11y();
   buildA11y();
   applyA11y();
   setScale(state.scale);
   $("#site").lang = state.lang;
-  $("#view-staff").lang = state.lang;
+  document.documentElement.lang = state.lang;
   $$("[data-lang]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === state.lang)));
   applyI18n();
   renderSite();
   loadAvailability();
   setupReveal();
-  renderPhTable();
-  updateProtoH();
   updateBreakpoint();
 
   document.addEventListener("click", onClick);
@@ -150,21 +75,11 @@ function init() {
   document.addEventListener("change", onInput);
   document.addEventListener("keydown", onKey);
   $("#schForm").addEventListener("submit", onSchSubmit);
-  $("#stDateForm").addEventListener("submit", onStDateSubmit);
-  // Back/Forward between website pages (the prototype's own views keep their state)
-  window.addEventListener("popstate", () => {
-    const h = decodeURIComponent(location.hash.slice(1));
-    if (state.view !== "site" && (DOC_META[h] || ["", "schedule", "new-patients"].includes(h))) setView("site");
-    routeFromHash(true);
-  });
+  // Back/Forward between pages
+  window.addEventListener("popstate", () => routeFromHash(true));
   window.addEventListener("scroll", onSiteScroll, { passive: true });
-  $("#screen").addEventListener("scroll", onSiteScroll, { passive: true });
-  window.addEventListener("resize", () => { updateProtoH(); updateBreakpoint(); onSiteScroll(); });
-  if ("ResizeObserver" in window) {
-    const ro = new ResizeObserver(() => { updateProtoH(); updateBreakpoint(); onSiteScroll(); });
-    ro.observe($("#site"));
-    ro.observe($("#protoBar"));
-  }
+  window.addEventListener("resize", () => { updateBreakpoint(); onSiteScroll(); });
+  if ("ResizeObserver" in window) new ResizeObserver(() => { updateBreakpoint(); onSiteScroll(); }).observe($("#site"));
   ["wheel", "touchstart", "keydown"].forEach((ev) => window.addEventListener(ev, cancelScroll, { passive: true }));
   $$(".collapse").forEach((c) => c.setAttribute("aria-hidden", String(!c.classList.contains("is-open"))));
   setInterval(renderStatus, 60000);
@@ -173,17 +88,12 @@ function init() {
   booted = true;
 }
 
-// Plain #tokens open a view directly, e.g. index.html#staff-app or #new-patients
+// Links can open a language or a page directly, e.g. #vi, #schedule, #services/dentures
 function openFromHash() {
   const h = location.hash.slice(1);
   const actions = {
     vi: () => setLang("vi"), es: () => setLang("es"), en: () => setLang("en"),
-    phone: () => setDevice("phone"),
-    schedule: () => goPage("schedule"), "new-patients": () => goPage("new"),
-    staff: () => setView("staff"),
-    "staff-app": () => { state.signedIn = true; setView("staff"); },
-    "staff-submissions": () => { state.signedIn = true; state.stTab = "subs"; setView("staff"); },
-    "how-it-works": () => setView("how"), placeholders: () => setView("ph")
+    schedule: () => goPage("schedule"), "new-patients": () => goPage("new")
   };
   if (actions[h]) actions[h]();
   else routeFromHash(false);

@@ -40,7 +40,7 @@
 .btn__stack small { font-size: .78em; font-weight: 500; opacity: .95; }
 .btn .ic { width: 1.35em; height: 1.35em; }
 
-/* Notice banner (managed in the Staff Portal) */
+/* Notice banner (set in CLINIC_NOTICE, 40-app-core.js) */
 .notice { background: var(--sun); border-bottom: 2px solid var(--sun-line); }
 .notice__inner { display: flex; align-items: flex-start; gap: .85rem; padding-block: .85rem; font-size: 1.125rem; }
 .notice__inner > .ic { color: var(--ink); margin-top: .2em; }
@@ -155,7 +155,6 @@
 .mmenu__prefs { display: grid; gap: .6rem; padding-top: .5rem; border-top: 1px solid var(--line); }
 .mmenu__prefs p { font-weight: 600; margin-top: .5rem; }
 body.menu-open { overflow: hidden; }
-.device.is-phone.menu-open .device__screen { overflow: hidden; }
 
 /* Reveal, page and menu motion live in 14-motion.css */
 .site [id] { scroll-margin-top: calc(var(--stick) + 6rem); }
