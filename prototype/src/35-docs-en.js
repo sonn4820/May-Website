@@ -1,5 +1,5 @@
 // English text of the content pages. Section types: { h, p, list, steps: [[title, text]], faq: [[q, a]] },
-// { warn }, { note }, { more: "<page key>" }, { taglines: [[lang, text]] }. {ph:NAME} = placeholder, {info:NAME} = confirmed clinic info.
+// { warn }, { note }, { more: "<page key>" }, { taglines: [[lang, text]] }. {ph:field} = placeholder, {info:field} = confirmed clinic info.
 // Medical and legal text is a draft for the dentist and a lawyer to review before the site goes live.
 DOCS.en = {
   "services/checkups": {
@@ -136,7 +136,7 @@ DOCS.en = {
         "Broken tooth: rinse your mouth and keep any pieces. Hold a cold pack on your cheek to help with swelling.",
         "Lost crown: keep it safe and bring it with you."
       ] },
-      { h: "When the office is closed", p: "Call {info:CLINIC_PHONE}. {ph:AFTER_HOURS_EMERGENCY}" }
+      { h: "When the office is closed", p: "Call {info:CLINIC_PHONE}.{ph:AFTER_HOURS_EMERGENCY}" }
     ]
   },
   "about": {
@@ -270,7 +270,7 @@ DOCS.en = {
         "We will not use or share your information in other ways unless you tell us in writing that we can. You may change your mind at any time by letting us know in writing"
       ] },
       { h: "Changes to this notice", p: "We can change the terms of this notice, and the changes will apply to all the information we have about you. The new notice will be available on request, in our office and on this website." },
-      { h: "Questions and complaints", p: ["Contact our Privacy Officer, {ph:PRIVACY_CONTACT}, at {info:CLINIC_PHONE} or {info:CLINIC_EMAIL}.", "You can also file a complaint with the U.S. Department of Health and Human Services Office for Civil Rights by sending a letter to 200 Independence Avenue, S.W., Washington, D.C. 20201, calling 1-877-696-6775, or visiting www.hhs.gov/ocr/privacy/hipaa/complaints/.", "We will not take action against you for filing a complaint."] }
+      { h: "Questions and complaints", p: ["Contact our Privacy Officer{ph:PRIVACY_CONTACT} at {info:CLINIC_PHONE} or {info:CLINIC_EMAIL}.", "You can also file a complaint with the U.S. Department of Health and Human Services Office for Civil Rights by sending a letter to 200 Independence Avenue, S.W., Washington, D.C. 20201, calling 1-877-696-6775, or visiting www.hhs.gov/ocr/privacy/hipaa/complaints/.", "We will not take action against you for filing a complaint."] }
     ]
   },
   "accessibility": {
@@ -299,7 +299,7 @@ DOCS.en = {
         "Free aids and services to people with disabilities, such as qualified sign language interpreters and written information in other formats (large print, accessible electronic formats)",
         "Free language services to people whose main language is not English, such as qualified interpreters and information written in other languages"
       ], p: "If you need these services, call {info:CLINIC_PHONE}." },
-      { h: "If you believe we have not provided these services or have discriminated", p: "You can file a grievance with our Civil Rights Coordinator, {ph:PRIVACY_CONTACT}, in person, by mail, by phone at {info:CLINIC_PHONE} or by email at {info:CLINIC_EMAIL}. If you need help filing a grievance, our coordinator can help you." },
+      { h: "If you believe we have not provided these services or have discriminated", p: "You can file a grievance with our Civil Rights Coordinator{ph:PRIVACY_CONTACT} in person, by mail, by phone at {info:CLINIC_PHONE} or by email at {info:CLINIC_EMAIL}. If you need help filing a grievance, our coordinator can help you." },
       { h: "Complaints to the U.S. government", p: "You can also file a civil rights complaint with the U.S. Department of Health and Human Services, Office for Civil Rights, online at ocrportal.hhs.gov/ocr/portal/lobby.jsf, by mail at 200 Independence Avenue SW, Room 509F, HHH Building, Washington, DC 20201, or by phone at 1-800-368-1019 (TDD: 1-800-537-7697)." },
       { h: "Language help", taglines: [
         ["es", "ATENCIÓN: si habla español, tiene a su disposición servicios gratuitos de asistencia lingüística. Llame al {info:CLINIC_PHONE}."],

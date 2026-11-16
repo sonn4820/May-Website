@@ -32,7 +32,7 @@ const md = [
   "# Thông tin cần bổ sung",
   "",
   "File này tự sinh từ `prototype/src/33-placeholders.js` mỗi lần chạy `npm run proto:build`. Đừng sửa tay.",
-  "Khi có thông tin thật, thay token tương ứng. Bản production sẽ bị chặn nếu còn `INPUT_INFO_ABOUT_`.",
+  "Các nội dung và liên kết chưa có thông tin thật đang được tạm ẩn trên prototype. Dùng bảng này để theo dõi những mục cần bổ sung.",
   "",
   "| Token | Cần gì | Dùng ở đâu |",
   "|---|---|---|",
@@ -42,9 +42,8 @@ const md = [
 writeFileSync(join(here, "..", "PLACEHOLDERS.md"), md, "utf8");
 
 const tokens = new Set(out.match(/INPUT_INFO_ABOUT_[A-Z0-9_]+_HERE/g) || []);
-const dataPh = new Set([...out.matchAll(/data-(?:ph|link)="([A-Z0-9_]+)"/g)].map((m) => m[1]));
-const registry = new Set([...js.matchAll(/^\s{2}([A-Z0-9_]+):\s+\{ label:/gm)].map((m) => m[1]));
-const missing = [...dataPh].filter((n) => !registry.has(n));
+const referenced = new Set([...out.matchAll(/data-(?:ph|link)="([A-Z0-9_]+)"|\{ph:([A-Z0-9_]+)\}/g)].map((m) => m[1] || m[2]));
+const missing = [...referenced].filter((n) => !Object.hasOwn(reg, n));
 console.log("index.html:", (out.length / 1024).toFixed(1), "KB");
-console.log("placeholders used in markup:", dataPh.size, "| in registry:", registry.size, "| literal tokens:", tokens.size);
+console.log("placeholders referenced:", referenced.size, "| in registry:", Object.keys(reg).length, "| literal tokens:", tokens.size);
 if (missing.length) { console.error("Not in registry:", missing.join(", ")); process.exitCode = 1; }

@@ -1,7 +1,7 @@
 # Thông tin cần bổ sung
 
 File này tự sinh từ `prototype/src/33-placeholders.js` mỗi lần chạy `npm run proto:build`. Đừng sửa tay.
-Khi có thông tin thật, thay token tương ứng. Bản production sẽ bị chặn nếu còn `INPUT_INFO_ABOUT_`.
+Các nội dung và liên kết chưa có thông tin thật đang được tạm ẩn trên prototype. Dùng bảng này để theo dõi những mục cần bổ sung.
 
 | Token | Cần gì | Dùng ở đâu |
 |---|---|---|

@@ -135,7 +135,7 @@ DOCS.es = {
         "Diente roto: enjuáguese la boca y guarde los pedazos. Ponga una compresa fría en la mejilla para la hinchazón.",
         "Corona que se cayó: guárdela bien y tráigala con usted."
       ] },
-      { h: "Cuando el consultorio está cerrado", p: "Llame al {info:CLINIC_PHONE}. {ph:AFTER_HOURS_EMERGENCY}" }
+      { h: "Cuando el consultorio está cerrado", p: "Llame al {info:CLINIC_PHONE}.{ph:AFTER_HOURS_EMERGENCY}" }
     ]
   },
   "about": {
@@ -269,7 +269,7 @@ DOCS.es = {
         "No usaremos ni compartiremos su información de otras formas a menos que usted nos lo autorice por escrito. Puede cambiar de opinión en cualquier momento avisándonos por escrito"
       ] },
       { h: "Cambios a este aviso", p: "Podemos cambiar los términos de este aviso, y los cambios se aplicarán a toda la información que tenemos sobre usted. El nuevo aviso estará disponible si lo pide, en nuestro consultorio y en este sitio web." },
-      { h: "Preguntas y quejas", p: ["Comuníquese con la persona responsable de privacidad, {ph:PRIVACY_CONTACT}, al {info:CLINIC_PHONE} o a {info:CLINIC_EMAIL}.", "También puede presentar una queja ante la Oficina de Derechos Civiles del Departamento de Salud y Servicios Humanos de EE. UU. enviando una carta a 200 Independence Avenue, S.W., Washington, D.C. 20201, llamando al 1-877-696-6775 o visitando www.hhs.gov/ocr/privacy/hipaa/complaints/.", "No tomaremos ninguna medida en su contra por presentar una queja."] }
+      { h: "Preguntas y quejas", p: ["Comuníquese con la persona responsable de privacidad{ph:PRIVACY_CONTACT} al {info:CLINIC_PHONE} o a {info:CLINIC_EMAIL}.", "También puede presentar una queja ante la Oficina de Derechos Civiles del Departamento de Salud y Servicios Humanos de EE. UU. enviando una carta a 200 Independence Avenue, S.W., Washington, D.C. 20201, llamando al 1-877-696-6775 o visitando www.hhs.gov/ocr/privacy/hipaa/complaints/.", "No tomaremos ninguna medida en su contra por presentar una queja."] }
     ]
   },
   "accessibility": {
@@ -298,7 +298,7 @@ DOCS.es = {
         "Ayudas y servicios gratuitos para personas con discapacidades, como intérpretes de lenguaje de señas calificados e información escrita en otros formatos (letra grande, formatos electrónicos accesibles)",
         "Servicios de idiomas gratuitos para personas cuyo idioma principal no es el inglés, como intérpretes calificados e información escrita en otros idiomas"
       ], p: "Si necesita estos servicios, llame al {info:CLINIC_PHONE}." },
-      { h: "Si cree que no le dimos estos servicios o que le discriminamos", p: "Puede presentar una queja ante la persona coordinadora de derechos civiles, {ph:PRIVACY_CONTACT}, en persona, por correo postal, por teléfono al {info:CLINIC_PHONE} o por correo electrónico a {info:CLINIC_EMAIL}. Si necesita ayuda para presentar la queja, esa persona puede ayudarle." },
+      { h: "Si cree que no le dimos estos servicios o que le discriminamos", p: "Puede presentar una queja ante la persona coordinadora de derechos civiles{ph:PRIVACY_CONTACT} en persona, por correo postal, por teléfono al {info:CLINIC_PHONE} o por correo electrónico a {info:CLINIC_EMAIL}. Si necesita ayuda para presentar la queja, esa persona puede ayudarle." },
       { h: "Quejas ante el gobierno de EE. UU.", p: "También puede presentar una queja de derechos civiles ante la Oficina de Derechos Civiles del Departamento de Salud y Servicios Humanos de EE. UU., en línea en ocrportal.hhs.gov/ocr/portal/lobby.jsf, por correo a 200 Independence Avenue SW, Room 509F, HHH Building, Washington, DC 20201, o por teléfono al 1-800-368-1019 (TDD: 1-800-537-7697)." },
       { h: "Ayuda con el idioma", taglines: [
         ["es", "ATENCIÓN: si habla español, tiene a su disposición servicios gratuitos de asistencia lingüística. Llame al {info:CLINIC_PHONE}."],

@@ -19,7 +19,7 @@
       <div class="app__inner">
         <span class="app__title"><span class="brand__logo"><svg class="ic"><use href="#i-tooth"/></svg></span><span data-i18n="st_title"></span></span>
         <div class="app__user">
-          <span data-i18n="st_signed_as"></span><span class="ph" data-ph="STAFF_GOOGLE_EMAIL"></span>
+          <span hidden><span data-i18n="st_signed_as"></span> <span class="ph" data-ph="STAFF_GOOGLE_EMAIL"></span></span>
           <div class="seg seg--app lang" role="group" data-i18n-attr="aria-label:lang_label">
             <button type="button" data-lang="en" lang="en" aria-pressed="true">EN</button>
             <button type="button" data-lang="vi" lang="vi" aria-pressed="false">VI</button>
@@ -117,7 +117,7 @@
           <div class="sheet">
             <div class="sheet__bar">
               <span class="sheet__name"><svg class="ic"><use href="#i-grid"/></svg>Clinic Operations · Google Sheet</span>
-              <div class="sheet__actions">
+              <div class="sheet__actions" hidden>
                 <button type="button" class="icon-btn" data-demo="sheet"><svg class="ic"><use href="#i-external"/></svg><span data-i18n="st_open_sheet"></span></button>
                 <button type="button" class="icon-btn" data-demo="xlsx"><svg class="ic"><use href="#i-download"/></svg><span data-i18n="st_download_xlsx"></span></button>
               </div>

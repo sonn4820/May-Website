@@ -18,11 +18,6 @@
         <button type="button" data-motion="full" aria-pressed="true">Đầy đủ</button>
         <button type="button" data-motion="system" aria-pressed="false">Theo cài đặt máy</button>
       </div>
-      <div class="proto-seg" role="group" aria-label="Cách hiện placeholder">
-        <span class="proto-seg__label">Placeholder:</span>
-        <button type="button" data-phmode="token" aria-pressed="true">Token</button>
-        <button type="button" data-phmode="label" aria-pressed="false">Nhãn ngắn</button>
-      </div>
     </div>
   </div>
   <p class="proto-hint" id="protoHint"><strong>Bản demo:</strong> dữ liệu chỉ nằm trong trang này, không gửi đi đâu, nên đừng nhập thông tin bệnh nhân thật. Thử đổi giờ trong <strong>Staff Portal</strong> rồi quay lại <strong>Website</strong>.</p>
@@ -221,7 +216,7 @@
       </div>
     </section>
 
-    <section class="section" id="reviews" aria-labelledby="reviews-title">
+    <section class="section" id="reviews" aria-labelledby="reviews-title" hidden>
       <div class="wrap">
         <div class="section__head reveal">
           <p class="eyebrow" data-i18n="reviews_eyebrow"></p>
@@ -232,7 +227,7 @@
           <li class="quote reveal"><span class="quote__mark" aria-hidden="true">“</span><blockquote><p><span class="ph" data-ph="PATIENT_REVIEW_2"></span></p></blockquote></li>
           <li class="quote reveal"><span class="quote__mark" aria-hidden="true">“</span><blockquote><p><span class="ph" data-ph="PATIENT_REVIEW_3"></span></p></blockquote></li>
         </ul>
-        <div class="center-actions reveal">
+        <div class="center-actions reveal" hidden>
           <a class="btn btn--ghost" href="#" data-link="GOOGLE_REVIEWS_LINK"><svg class="ic"><use href="#i-external"/></svg><span data-i18n="reviews_more"></span></a>
           <a class="btn btn--ghost" href="#" data-link="GOOGLE_REVIEWS_LINK"><span data-i18n="reviews_leave"></span></a>
         </div>

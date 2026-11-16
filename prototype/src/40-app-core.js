@@ -43,7 +43,6 @@ const SAMPLE_HOURS = {
 const state = {
   lang: LANGS.includes(store.get("lang", "en")) ? store.get("lang", "en") : "en",
   scale: [1, 1.15, 1.3].includes(store.get("scale", 1)) ? store.get("scale", 1) : 1,
-  phMode: "token",
   protoCollapsed: false,
   a11y: {},
   device: "desktop",
@@ -99,8 +98,10 @@ function sampleNotice() {
   };
 }
 
-// {ph:NAME} inside dictionary strings becomes a placeholder chip
-const renderStr = (s) => esc(s).replace(/\{ph:([A-Z0-9_]+)\}/g, (m, n) => '<span class="ph" data-ph="' + n + '"></span>');
+// Keep missing fields out of the rendered text.
+const renderStr = (s) => esc(s)
+  .replace(/\{ph:[A-Z0-9_]+\}/g, "")
+  .replace(/\{info:([A-Z0-9_]+)\}/g, (_, n) => '<span data-info="' + n + '"></span>');
 
 function applyI18n(root = document) {
   $$("[data-i18n]", root).forEach((el) => { el.innerHTML = renderStr(t(el.dataset.i18n)); });
@@ -111,14 +112,8 @@ function applyI18n(root = document) {
 }
 
 function renderPlaceholders(root = document) {
-  $$(".ph[data-ph]", root).forEach((el) => {
-    const name = el.dataset.ph;
-    const reg = PLACEHOLDERS[name];
-    el.textContent = state.phMode === "token" ? phToken(name) : (reg ? reg.label : name);
-    el.classList.toggle("is-label", state.phMode === "label");
-    el.title = phToken(name);
-  });
   $$("[data-info]", root).forEach((el) => { el.textContent = CLINIC_INFO[el.dataset.info]; });
+  $$("[data-call]", root).forEach((el) => { el.href = "tel:+1-" + CLINIC_INFO.CLINIC_PHONE; });
   // Live map, in the page language. Only reload the frame when the address or language really changes.
   $$("[data-map-embed]", root).forEach((el) => {
     const src = "https://maps.google.com/maps?q=" + encodeURIComponent(CLINIC_INFO.CLINIC_NAME + ", " + CLINIC_INFO.CLINIC_ADDRESS) + "&z=16&hl=" + state.lang + "&output=embed";
@@ -218,14 +213,6 @@ function setProtoCollapsed(c) {
   }, $("#protoBar"));
 }
 
-function setPhMode(m) {
-  smoothUpdate(() => {
-    state.phMode = m;
-    $$("[data-phmode]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.phmode === m)));
-    renderPlaceholders();
-  });
-}
-
 function setScale(s) {
   smoothUpdate(() => {
     state.scale = s;
@@ -254,22 +241,16 @@ function setLang(l) {
 
 // ---------- Placeholder list ----------
 function renderPhTable() {
-  const counts = {};
-  $$(".ph[data-ph]").forEach((el) => { counts[el.dataset.ph] = (counts[el.dataset.ph] || 0) + 1; });
-  $$("[data-link]").forEach((el) => { counts[el.dataset.link] = (counts[el.dataset.link] || 0) + 1; });
-  const names = Object.keys(PLACEHOLDERS);
-  Object.keys(counts).forEach((n) => { if (!names.includes(n)) names.push(n); });
+  const entries = Object.entries(PLACEHOLDERS);
   const body = $("#phBody");
   body.innerHTML = "";
-  names.forEach((n) => {
-    const reg = PLACEHOLDERS[n] || { need: "Chưa có mô tả", where: "" };
+  entries.forEach(([name, reg]) => {
     const tr = document.createElement("tr");
-    const used = counts[n] ? " · xuất hiện " + counts[n] + " lần trên trang" : "";
     tr.innerHTML = '<td><span class="ph"></span></td><td></td><td></td>';
-    tr.children[0].firstChild.textContent = phToken(n);
+    tr.children[0].firstChild.textContent = phToken(name);
     tr.children[1].textContent = reg.need;
-    tr.children[2].textContent = reg.where + used;
+    tr.children[2].textContent = reg.where;
     body.appendChild(tr);
   });
-  $("#phCount").textContent = names.length;
+  $("#phCount").textContent = entries.length;
 }

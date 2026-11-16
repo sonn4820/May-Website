@@ -20,7 +20,7 @@ Mọi trang của website đều có địa chỉ riêng, nút Back/Forward củ
 | Kiến thức nha khoa (3) | `#tips/denture-care`, `#tips/dry-mouth`, `#tips/implants-guide` |
 | Chính sách (4) | `#privacy`, `#privacy-practices`, `#accessibility`, `#nondiscrimination` |
 
-Nội dung các trang này nằm trong `prototype/src/35-docs-en.js`, `36-docs-vi.js`, `37-docs-es.js` (danh sách trang ở `34-docs-meta.js`). Các link ra ngoài (gọi điện, Google Maps, Google Reviews, mạng xã hội) vẫn chỉ hiện thông báo, sẽ gắn sau.
+Nội dung các trang này nằm trong `prototype/src/35-docs-en.js`, `36-docs-vi.js`, `37-docs-es.js` (danh sách trang ở `34-docs-meta.js`). Nút gọi điện và Google Maps dùng thông tin đã xác nhận. Google Reviews và mạng xã hội được tạm ẩn, theo dõi trong [PLACEHOLDERS.md](PLACEHOLDERS.md).
 
 Dữ liệu trong prototype chỉ nằm trong trang (hoặc trong OpenDental giả lập khi chạy `proto:serve`), không gửi đi đâu. Đừng nhập thông tin bệnh nhân thật.
 
@@ -62,7 +62,7 @@ Theo skill UI/UX Pro Max (các nhóm Dental Practice, Senior Care, Medical Clini
 - Chữ nội dung 20px, tương phản theo chuẩn WCAG AAA.
 - Nút Schedule màu cam đậm: nút vàng trên nền trắng khó thấy với mắt người lớn tuổi.
 - Ưu đãi **Online New Patient Special** ($89 khám tổng quát + chụp X-quang toàn hàm, cho bệnh nhân không có bảo hiểm) nằm ngay dưới dải giờ/địa chỉ/điện thoại ở trang chủ và đầu trang New Patients, nút dẫn tới trang Đặt lịch.
-- Có mục đánh giá, bảo hiểm & thanh toán. Mục ảnh trước/sau đang tạm ẩn (bỏ thuộc tính `hidden` ở `#gallery` để hiện lại).
+- Có mục bảo hiểm & thanh toán. Mục đánh giá và ảnh trước/sau đang tạm ẩn cho đến khi có nội dung thật.
 - Trang Đặt lịch là tờ lịch tháng: bệnh nhân chọn ngày còn giờ trống, chọn giờ, rồi điền họ, tên, ngày sinh, số điện thoại. Mỗi lượt khám mặc định 60 phút, cho đặt trước 8 tuần.
 - Mục thanh toán dùng logo chính thức: Visa, Mastercard, American Express (Wikimedia Commons), Cherry, CareCredit (lấy từ website của hãng). File nằm ở `prototype/src/assets/`.
 - Ảnh lớn đầu trang chủ là ảnh stock miễn phí của Kaboompics (Karolina Grabowska) trên Pexels (giấy phép Pexels, dùng thương mại được, không bắt buộc ghi nguồn): https://www.pexels.com/photo/6627527/

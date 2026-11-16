@@ -1,5 +1,5 @@
 // UI text. English is the default; any key missing in vi/es falls back to English.
-// {ph:NAME} renders the placeholder token INPUT_INFO_ABOUT_NAME_HERE. {x} is filled at runtime.
+// {ph:field} marks missing content. {x} is filled at runtime.
 const I18N = {};
 I18N.en = {
   skip: "Skip to main content",

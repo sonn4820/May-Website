@@ -134,7 +134,7 @@ DOCS.vi = {
         "Răng bị gãy: súc miệng và giữ lại các mảnh vỡ. Chườm lạnh lên má để đỡ sưng.",
         "Rơi mão răng: giữ mão cẩn thận và mang theo khi đến khám."
       ] },
-      { h: "Khi phòng khám đóng cửa", p: "Gọi số {info:CLINIC_PHONE}. {ph:AFTER_HOURS_EMERGENCY}" }
+      { h: "Khi phòng khám đóng cửa", p: "Gọi số {info:CLINIC_PHONE}.{ph:AFTER_HOURS_EMERGENCY}" }
     ]
   },
   "about": {
@@ -268,7 +268,7 @@ DOCS.vi = {
         "Chúng tôi sẽ không sử dụng hoặc chia sẻ thông tin theo cách khác trừ khi quý vị đồng ý bằng văn bản. Quý vị có thể đổi ý bất cứ lúc nào bằng cách báo cho chúng tôi bằng văn bản"
       ] },
       { h: "Thay đổi thông báo này", p: "Chúng tôi có thể thay đổi nội dung thông báo này, và thay đổi sẽ áp dụng cho mọi thông tin chúng tôi có về quý vị. Bản mới sẽ có khi quý vị yêu cầu, tại phòng khám và trên website này." },
-      { h: "Câu hỏi và khiếu nại", p: ["Liên hệ Người phụ trách Quyền riêng tư của chúng tôi, {ph:PRIVACY_CONTACT}, qua số {info:CLINIC_PHONE} hoặc email {info:CLINIC_EMAIL}.", "Quý vị cũng có thể khiếu nại với Văn phòng Dân quyền (Office for Civil Rights) thuộc Bộ Y tế và Dịch vụ Nhân sinh Hoa Kỳ bằng cách gửi thư đến 200 Independence Avenue, S.W., Washington, D.C. 20201, gọi số 1-877-696-6775, hoặc vào trang www.hhs.gov/ocr/privacy/hipaa/complaints/.", "Chúng tôi sẽ không có bất kỳ hành động bất lợi nào đối với quý vị vì đã khiếu nại."] }
+      { h: "Câu hỏi và khiếu nại", p: ["Liên hệ Người phụ trách Quyền riêng tư của chúng tôi{ph:PRIVACY_CONTACT} qua số {info:CLINIC_PHONE} hoặc email {info:CLINIC_EMAIL}.", "Quý vị cũng có thể khiếu nại với Văn phòng Dân quyền (Office for Civil Rights) thuộc Bộ Y tế và Dịch vụ Nhân sinh Hoa Kỳ bằng cách gửi thư đến 200 Independence Avenue, S.W., Washington, D.C. 20201, gọi số 1-877-696-6775, hoặc vào trang www.hhs.gov/ocr/privacy/hipaa/complaints/.", "Chúng tôi sẽ không có bất kỳ hành động bất lợi nào đối với quý vị vì đã khiếu nại."] }
     ]
   },
   "accessibility": {
@@ -297,7 +297,7 @@ DOCS.vi = {
         "Phương tiện và dịch vụ hỗ trợ miễn phí cho người khuyết tật, như thông dịch viên ngôn ngữ ký hiệu đủ trình độ và tài liệu ở định dạng khác (chữ in lớn, định dạng điện tử dễ tiếp cận)",
         "Dịch vụ ngôn ngữ miễn phí cho người có ngôn ngữ chính không phải tiếng Anh, như thông dịch viên đủ trình độ và tài liệu viết bằng ngôn ngữ khác"
       ], p: "Nếu cần các dịch vụ này, xin gọi {info:CLINIC_PHONE}." },
-      { h: "Nếu quý vị cho rằng chúng tôi không cung cấp các dịch vụ này hoặc đã phân biệt đối xử", p: "Quý vị có thể gửi khiếu nại đến Người phụ trách Dân quyền của chúng tôi, {ph:PRIVACY_CONTACT}, trực tiếp, qua thư, qua điện thoại số {info:CLINIC_PHONE} hoặc email {info:CLINIC_EMAIL}. Nếu cần giúp viết khiếu nại, người phụ trách sẽ hỗ trợ quý vị." },
+      { h: "Nếu quý vị cho rằng chúng tôi không cung cấp các dịch vụ này hoặc đã phân biệt đối xử", p: "Quý vị có thể gửi khiếu nại đến Người phụ trách Dân quyền của chúng tôi{ph:PRIVACY_CONTACT} trực tiếp, qua thư, qua điện thoại số {info:CLINIC_PHONE} hoặc email {info:CLINIC_EMAIL}. Nếu cần giúp viết khiếu nại, người phụ trách sẽ hỗ trợ quý vị." },
       { h: "Khiếu nại với chính phủ Hoa Kỳ", p: "Quý vị cũng có thể khiếu nại về dân quyền với Văn phòng Dân quyền thuộc Bộ Y tế và Dịch vụ Nhân sinh Hoa Kỳ, trực tuyến tại ocrportal.hhs.gov/ocr/portal/lobby.jsf, qua thư đến 200 Independence Avenue SW, Room 509F, HHH Building, Washington, DC 20201, hoặc qua điện thoại số 1-800-368-1019 (TDD: 1-800-537-7697)." },
       { h: "Hỗ trợ ngôn ngữ", taglines: [
         ["es", "ATENCIÓN: si habla español, tiene a su disposición servicios gratuitos de asistencia lingüística. Llame al {info:CLINIC_PHONE}."],

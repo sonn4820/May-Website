@@ -59,7 +59,7 @@ function renderDoc() {
   $("#docTitle").textContent = docTitle(id);
   $("#docLead").innerHTML = renderStr(d.lead || "");
   const metaEl = $("#docMeta");
-  metaEl.hidden = !(meta.kind === "tip" || meta.kind === "legal");
+  metaEl.hidden = meta.kind !== "tip"; // Show the legal date once it is confirmed.
   metaEl.innerHTML = meta.kind === "tip" ? esc(t("read_n", { n: readMinutes(id) })) : meta.kind === "legal" ? renderStr(t("doc_effective")) : "";
   $("#docAbout").hidden = meta.kind !== "about";
 

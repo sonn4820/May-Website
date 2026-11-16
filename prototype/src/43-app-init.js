@@ -1,11 +1,9 @@
 // ---------- Events ----------
 const PROTO_MSG = {
   soon: "Trang này sẽ được làm ở giai đoạn tiếp theo, sau khi bạn xác nhận nội dung.",
-  call: () => "Trên website thật, nút này gọi ngay số " + CLINIC_INFO.CLINIC_PHONE + ".",
-  link: (n) => "Trên website thật, link này mở: " + phToken(n) + ".",
-  sheet: () => "Prototype: hệ thống thật mở Google Sheet " + phToken("GOOGLE_SHEET_LINK") + ".",
+  sheet: "Prototype: chưa kết nối Google Sheet.",
   xlsx: "Prototype: hệ thống thật tải file .xlsx xuất thẳng từ Google Sheet, không cần code thêm.",
-  doc: (name) => "Prototype: hệ thống thật tạo Google Doc “New patient – " + name + "” từ mẫu và lưu vào " + phToken("GOOGLE_DRIVE_FOLDER") + ".",
+  doc: (name) => "Prototype: đã tạo bản ghi mô phỏng “New patient – " + name + "”.",
   motionFull: "Đang xem animation đầy đủ như thiết kế.",
   motionSystem: "Đang theo cài đặt máy. Nếu Windows tắt “Animation effects”, website chỉ giữ hiệu ứng mờ dần, bỏ phần di chuyển, như bệnh nhân sẽ thấy.",
   copied: "Đã sao chép danh sách token.",
@@ -20,11 +18,10 @@ function onClick(e) {
   const el = e.target.closest("button, a");
   if (!el) return;
   const d = el.dataset;
-  if (d.maps !== undefined) return; // real link to Google Maps: let the browser open it
+  if (d.maps !== undefined || d.call !== undefined) return; // Let the browser open real links.
   if (el.tagName === "A") e.preventDefault();
   if (d.view) return setView(d.view);
   if (d.device) return setDevice(d.device);
-  if (d.phmode) return setPhMode(d.phmode);
   if (d.motion) { setMotion(d.motion); return toast(d.motion === "full" ? PROTO_MSG.motionFull : PROTO_MSG.motionSystem); }
   if (d.lang) return setLang(d.lang);
   if (d.scale) return setScale(Number(d.scale));
@@ -35,9 +32,7 @@ function onClick(e) {
   if (d.skip !== undefined) return $("#main").focus();
   if (d.route) return goPage(d.route, d.scroll, d.doc);
   if (d.soon !== undefined) return toast(PROTO_MSG.soon);
-  if (d.call !== undefined) return toast(PROTO_MSG.call());
-  if (d.link) return toast(PROTO_MSG.link(d.link));
-  if (d.demo) return toast(d.demo === "sheet" ? PROTO_MSG.sheet() : PROTO_MSG.xlsx);
+  if (d.demo) return toast(d.demo === "sheet" ? PROTO_MSG.sheet : PROTO_MSG.xlsx);
   if (d.st) return setStTab(d.st);
   if (d.sheet) { if (d.sheet !== state.sheetTab) { state.sheetTab = d.sheet; renderSheet(true); } return; }
   if (d.sdtype) {

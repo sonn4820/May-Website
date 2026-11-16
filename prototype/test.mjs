@@ -39,7 +39,8 @@ const text = (s) => ($(s) ? $(s).textContent.trim() : "");
 
 ok("loads without script errors", errors.length === 0, errors.join(" | "));
 ok("English hero title", text("#page-home h1") === "Gentle dental care, at your pace.", text("#page-home h1"));
-ok("placeholders render as tokens", text(".quote .ph") === "INPUT_INFO_ABOUT_PATIENT_REVIEW_1_HERE");
+ok("unfinished reviews and social links are hidden", $("#reviews").hidden && $$("[data-link]").every((a) => a.closest("[hidden]")) && $("[data-ph=SOCIAL_MEDIA_LINKS]").parentElement.hidden);
+ok("clinic phone buttons use the confirmed number", $$("[data-call]").length > 0 && $$("[data-call]").every((a) => a.getAttribute("href") === "tel:+1-847-548-2222"));
 ok("home doctor section shows only name and More about button", !$("#doctor .ph") && !$("#doctor dl") && !!$('#doctor [data-doc="about"]'));
 const headerLogo = $(".header .brand img");
 const footerLogo = $(".footer__brand img");
@@ -219,6 +220,7 @@ ok("New Patients offer opens booking", !$("#page-schedule").hidden && w.location
 click($("#tab-staff"));
 click($("#st-tab-subs"));
 ok("staff subs tab open", !$('[data-st-panel="subs"]').hidden);
+ok("missing Staff Portal account and external tools are hidden", $("[data-ph=STAFF_GOOGLE_EMAIL]").parentElement.hidden && $(".sheet__actions").hidden);
 ok("staff sheet shows the empty state", !$("#stSheetEmpty").hidden);
 w.eval("state.subs.np").push({
   received: new w.Date(), name: "Ana Tran", lang: "en", insurance: "Delta Dental", status: "new", doc: ""
@@ -226,7 +228,7 @@ w.eval("state.subs.np").push({
 w.renderSheet();
 ok("staff sheet shows an existing row", $("#stSheetGrid").textContent.includes("Ana Tran") && $("#stSheetGrid").textContent.includes("Delta Dental"));
 click($("[data-mkdoc]"));
-ok("Google Doc created", $("#stSheetGrid").textContent.includes("✓ New patient – Ana Tran"));
+ok("Google Doc simulation omits the missing Drive folder", text("#stSheetGrid").includes("✓ New patient – Ana Tran") && !text("#toasts").includes("INPUT_INFO_ABOUT_"));
 click($('[data-sheet="hours"]'));
 ok("Hours sheet shows published data", $("#stSheetGrid").textContent.includes("Saturday"));
 
@@ -248,7 +250,7 @@ w.history.back();
 await sleep(400);
 ok("browser Back returns to the previous page", text("#docTitle") === "Dentures & Partials" && w.location.hash === "#services/dentures", text("#docTitle"));
 await openDoc('#servicesMenu [data-doc="services/emergency"]');
-ok("services menu opens a service page with the 911 warning", text("#docTitle") === "Emergency Care" && !!$("#docBody .doc-warn") && text("#docBody").includes("INPUT_INFO_ABOUT_AFTER_HOURS_EMERGENCY_HERE"));
+ok("emergency page keeps the warning and phone while omitting the missing after-hours details", text("#docTitle") === "Emergency Care" && !!$("#docBody .doc-warn") && text("#docBody").includes("Call 847-548-2222.") && !text("#docBody").includes("AFTER_HOURS_EMERGENCY"));
 await openDoc('#servicesMenu [data-doc="services/checkups"]');
 const docFaq = $("#docBody .faq__q");
 click(docFaq);
@@ -256,8 +258,14 @@ ok("FAQ on a content page opens", docFaq.getAttribute("aria-expanded") === "true
 await openDoc('.nav__link[data-doc="about"]');
 ok("About the Doctor page with photo and facts", !$("#docAbout").hidden && $("#docAbout img").src.startsWith("data:image/jpeg") && text("#docTitle") === "Dr. Van H Nguyen, DMD" && $('.nav__link[data-doc="about"]').getAttribute("aria-current") === "page");
 ok("About page shows the doctor bio", text("#docAbout").includes("Midwestern University College of Dentistry") && text("#docAbout").includes("Fun fact: Her dog is named Eggroll") && !$("#docAbout .ph") && $(".doc-about__pet img").src.startsWith("data:image/jpeg") && $(".doc-about__pet img").alt.startsWith("Eggroll"), text("#docAbout").slice(0, 80));
+for (const [lang, title] of [["vi", "Địa chỉ"], ["es", "Dirección"], ["en", "Visit us"]]) {
+  click($(`[data-lang="${lang}"]`));
+  const address = $$("#docBody h2").find((h) => h.textContent === title)?.nextElementSibling?.textContent;
+  ok(`About page shows the clinic address (${lang})`, address === "1227 N Illinois 83 Ste E, Grayslake, IL 60030", address);
+}
 await openDoc('.footer [data-doc="privacy-practices"]');
-ok("Notice of Privacy Practices opens from the footer", text("#docTitle") === "Notice of Privacy Practices" && text("#docLead").startsWith("This notice describes how medical information") && text("#docMeta").includes("INPUT_INFO_ABOUT_LEGAL_EFFECTIVE_DATE_HERE") && $("#docAbout").hidden);
+ok("Notice of Privacy Practices opens from the footer", text("#docTitle") === "Notice of Privacy Practices" && text("#docLead").startsWith("This notice describes how medical information") && $("#docAbout").hidden);
+ok("privacy notice leaves out the unconfirmed date and name", $("#docMeta").hidden && text("#docBody").includes("Contact our Privacy Officer at 847-548-2222") && !text("#docBody").includes("PRIVACY_CONTACT"));
 await openDoc('.footer [data-doc="nondiscrimination"]');
 ok("Nondiscrimination notice has Spanish and Vietnamese taglines", $$('#docBody .doc-taglines li[lang="es"], #docBody .doc-taglines li[lang="vi"]').length === 2);
 click($('[data-lang="vi"]'));
@@ -271,7 +279,7 @@ ok("article cards show reading time", $$("[data-readtime]").every((el) => /^\d+ 
 
 // Placeholders, menu, dropdown, text size, device
 click($("#tab-ph"));
-ok("placeholder table rows", $$("#phBody tr").length === Number(text("#phCount")));
+ok("placeholder list includes missing links and content", $$("#phBody tr").length === Number(text("#phCount")) && ["GOOGLE_REVIEWS_LINK", "PRIVACY_CONTACT", "AFTER_HOURS_EMERGENCY"].every((name) => text("#phBody").includes("INPUT_INFO_ABOUT_" + name + "_HERE")));
 click($("#phCopy"));
 await sleep(30);
 ok("copy confirms", text("#phCopyStatus").startsWith("Đã sao chép"), text("#phCopyStatus"));
@@ -326,8 +334,6 @@ ok("prototype bar expands", !$("#protoBar").classList.contains("is-collapsed") &
 
 click($('[data-device="phone"]'));
 ok("phone frame", $("#device").classList.contains("is-phone"));
-click($('[data-phmode="label"]'));
-ok("label mode", text(".quote .ph") === "Patient review 1");
 ok("no script errors during the run", errors.length === 0, errors.join(" | "));
 await sleep(50);
 dom.window.close();
