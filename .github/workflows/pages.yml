@@ -1,0 +1,49 @@
+# Builds prototype/index.html and publishes it to GitHub Pages on every push to main.
+# The custom domain is set in the repo's Pages settings (Settings → Pages → Custom domain).
+# GitHub Pages only serves static files: the booking API in server/ does not run here,
+# so the Schedule page falls back to its in-page demo openings.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run proto:test
+      - name: Collect site files
+        run: |
+          mkdir _site
+          cp prototype/index.html _site/index.html
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
